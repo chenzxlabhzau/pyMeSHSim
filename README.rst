@@ -56,7 +56,7 @@ Currently, pyMeSHSim consists of three subpackages:
     + It provided useful APIs to retrieve the MeSH dataset.
     + It implemented four methods of semantic similarity measures based on information content.It implemented one method of semantic similarity measures based on path.
 
-More details can be seen in the reference.
+More details can be seen in the `reference <http://pymeshsim.systemsgenetics.cn/>`_.
 
 
 
