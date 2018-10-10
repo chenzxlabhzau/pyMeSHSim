@@ -30,7 +30,9 @@ Although MeSH has potential for bio-NE recognition, normalization, and compariso
 still a lack of MeSH tools to automatically recognize bio-NEs from free text and measure the
 semantic similarity between bio-NEs after normalization.
 
-**pyMeSHSim**,Here, we developed an integrative, lightweight and data-rich python package
+pyMeSHSim
+^^^^^^^^^^^^^^^^^
+Here, we developed an integrative, lightweight and data-rich python package
 named pyMeSHSim to curate MeSH terms from free text and measure the semantic similarity
 between the MeSH terms.
 
@@ -81,7 +83,7 @@ MetaMap installation
 =======================
 | MetaMap is the base implement of the subpackage metamapWrap.
 | You need to activate a UMLS Terminology Services (UTS) account to fetch MetaMap. Please see `MetaMap <https://metamap.nlm.nih.gov/>`_ for more information.
-| The 2016 version has some important featrue, it will be helpful when parsing the text.
+
 
     MetaMap depends on Java. To install openJDK::
 
@@ -98,7 +100,7 @@ At this point, you have successfully installed MetaMap.
 
     Please add the bin directory to the environment variable PATH in bashrc for convenience::
 
-        $ export PATH=$PATH:/home/luozhihui/Project/UMLS/public_mm/bin
+        $ export PATH=$PATH:/path_to_MetaMap/bin
 
     Then, launch MetaMap server before running pyMeSHSim::
 

@@ -30,7 +30,9 @@ Although MeSH has potential for bio-NE recognition, normalization, and compariso
 still a lack of MeSH tools to automatically recognize bio-NEs from free text and measure the
 semantic similarity between bio-NEs after normalization.
 
-**pyMeSHSim**,Here, we developed an integrative, lightweight and data-rich python package
+pyMeSHSim
+^^^^^^^^^^^^^^^^^^
+Here, we developed an integrative, lightweight and data-rich python package
 named pyMeSHSim to curate MeSH terms from free text and measure the semantic similarity
 between the MeSH terms.
 
