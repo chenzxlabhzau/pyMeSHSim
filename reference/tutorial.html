@@ -1,0 +1,477 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Tutorial &mdash; pyMeSHSim 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Library reference" href="reference.html" />
+    <link rel="prev" title="Install" href="install.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> pyMeSHSim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Install</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#parsing-free-text">Parsing free text</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#parsing-short-sentence">Parsing short sentence</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#parsing-long-sentence">Parsing long sentence</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#filtering-the-result">Filtering the result</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#term-library">Term library</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#obtaining-mesh-terms-from-umls-concepts">Obtaining MeSH terms from UMLS concepts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#obtaining-mesh-term-detail-from-mesh-id">Obtaining MeSH term detail from MeSH ID</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#obtaining-umls-concept-from-mesh-id">Obtaining UMLS concept from MeSH ID</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#obtaining-the-category-of-mesh-terms">Obtaining the category of MeSH terms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#obtaining-narrow-or-broad-terms-of-a-mesh-term">Obtaining narrow or broad terms of a mesh term</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#obtaining-parent-or-child-terms-of-a-mesh-term">Obtaining parent or child terms of a MeSH term</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#obtaining-the-top-term-of-a-mesh-term">Obtaining the top term of a MeSH term</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#obtaining-the-ancestors-or-offsprings">Obtaining the ancestors or offsprings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#retrieving-mesh-id-by-mesh-tree-code">Retrieving MeSH ID by MeSH tree code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#obtaining-the-preffered-name-by-mesh-id">Obtaining the preffered name by MeSH ID</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#calculating-similarity">Calculating similarity</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#calculating-similarity-between-mesh-terms">Calculating similarity between MeSH terms</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">Library reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pyMeSHSim</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Tutorial</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/tutorial.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tutorial">
+<h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="parsing-free-text">
+<h2>Parsing free text<a class="headerlink" href="#parsing-free-text" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="parsing-short-sentence">
+<h3>Parsing short sentence<a class="headerlink" href="#parsing-short-sentence" title="Permalink to this headline">¶</a></h3>
+<p>We can access MetaMap with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyMeSHSim.metamapWrap.MetamapInterface</span> <span class="k">import</span> <span class="n">MetaMap</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">metamap</span> <span class="o">=</span> <span class="n">MetaMap</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s2">&quot;/home/luozhihui/Project/UMLS/public_mm/bin/metamap16&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">concept</span> <span class="o">=</span> <span class="n">metamap</span><span class="o">.</span><span class="n">runMetaMap</span><span class="p">(</span><span class="n">semantic_types</span><span class="o">=</span><span class="n">metamap</span><span class="o">.</span><span class="n">semanticTypes</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Ataxias, Gait&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">concept</span><span class="p">)</span>
+<span class="go">[{&#39;index&#39;: &#39;00000000&#39;, &#39;mm&#39;: &#39;MMI&#39;, &#39;score&#39;: &#39;20.95&#39;, &#39;preferred_name&#39;: &#39;Gait Ataxia&#39;, &#39;cui&#39;: &#39;C0751837&#39;, &#39;semtypes&#39;: &#39;[sosy]&#39;, &#39;trigger&#39;: &#39;[&quot;Gait Ataxia&quot;-tx-1-&quot;Ataxias Gait&quot;-noun-0]&#39;, &#39;location&#39;: &#39;TX&#39;,</span>
+<span class="go">&#39;pos_info&#39;: &#39;0/7,9/4&#39;, &#39;tree_codes&#39;: &#39;C10.597.350.090.750;C10.597.404.450;C23.888.592.350.090.600;C23.888.592.413.450&#39;, &#39;MeSHID&#39;: &#39;D020234&#39;}]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="parsing-long-sentence">
+<h3>Parsing long sentence<a class="headerlink" href="#parsing-long-sentence" title="Permalink to this headline">¶</a></h3>
+<p>When parsing a long sentence, we should turn off the parameters “conjunction”, “term_processing” as following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyMeSHSim.metamapWrap.MetamapInterface</span> <span class="k">import</span> <span class="n">MetaMap</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">metamap</span> <span class="o">=</span> <span class="n">MetaMap</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s2">&quot;/home/luozhihui/Project/UMLS/public_mm/bin/metamap16&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">concept</span> <span class="o">=</span> <span class="n">metamap</span><span class="o">.</span><span class="n">runMetaMap</span><span class="p">(</span><span class="n">semantic_types</span><span class="o">=</span><span class="n">metamap</span><span class="o">.</span><span class="n">semanticTypes</span> <span class="p">,</span> <span class="n">conjunction</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">term_processing</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;131-I-TM-601 is investigated in clinical trials for treating brain cancer. 131-I-TM-601 is a solid. Tx binds to and reduces the activity of a matrix metalloproteinase (MMP) that regulates functioning of the chloride channels on cell membranes. TM-601 is a small 36-amino-acid peptide that selectively binds to glioma cells but not normal brain parenchyma. It is a synthetic version of a neurotoxin isolated from the venom of the Giant Yellow Israeli scorpion Leiurus quinquestriatus. The synthetic version of this peptide has been manufactured and covalently linked to iodine 131 ((131)I-TM-601) as a means of targeting radiation to tumor cells in the treatment of brain cancer. The selective effects of TM-601 are regulated by its action on MMP2 receptors.&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">con</span> <span class="ow">in</span> <span class="n">concept</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="nb">print</span><span class="p">(</span><span class="n">con</span><span class="p">)</span>
+<span class="go">{&#39;index&#39;: &#39;00000000&#39;, &#39;mm&#39;: &#39;MMI&#39;, &#39;score&#39;: &#39;19.34&#39;, &#39;preferred_name&#39;: &#39;Glioma&#39;, &#39;cui&#39;: &#39;C0017638&#39;, &#39;semtypes&#39;: &#39;[neop]&#39;, &#39;trigger&#39;: &#39;[&quot;Glioma&quot;-tx-4-&quot;glioma&quot;-noun-0]&#39;, &#39;location&#39;: &#39;TX&#39;, &#39;pos_info&#39;: &#39;310/6&#39;, &#39;tree_codes&#39;: &#39;C04.557.465.625.600.380;C04.557.470.670.380;C04.557.580.625.600.380&#39;, &#39;MeSHID&#39;: &#39;D005910&#39;}</span>
+<span class="go">{&#39;index&#39;: &#39;00000000&#39;, &#39;mm&#39;: &#39;MMI&#39;, &#39;score&#39;: &#39;16.22&#39;, &#39;preferred_name&#39;: &#39;Brain Neoplasms&#39;, &#39;cui&#39;: &#39;C0006118&#39;, &#39;semtypes&#39;: &#39;[neop]&#39;, &#39;trigger&#39;: &#39;[&quot;Brain Neoplasms&quot;-tx-6-&quot;tumor the of brain&quot;-noun-0]&#39;, &#39;location&#39;: &#39;TX&#39;, &#39;pos_info&#39;: &#39;633/5,648/3,662/8&#39;, &#39;tree_codes&#39;: &#39;C04.588.614.250.195;C10.228.140.211;C10.551.240.250&#39;, &#39;MeSHID&#39;: &#39;D001932&#39;}</span>
+<span class="go">{&#39;index&#39;: &#39;00000000&#39;, &#39;mm&#39;: &#39;MMI&#39;, &#39;score&#39;: &#39;13.00&#39;, &#39;preferred_name&#39;: &#39;Gigantism&#39;, &#39;cui&#39;: &#39;C0017547&#39;, &#39;semtypes&#39;: &#39;[dsyn]&#39;, &#39;trigger&#39;: &#39;[&quot;Gigantism&quot;-tx-5-&quot;Giant&quot;-adj-0]&#39;, &#39;location&#39;: &#39;TX&#39;, &#39;pos_info&#39;: &#39;429/5&#39;, &#39;tree_codes&#39;: &#39;C05.116.099.492;C05.116.132.479;C19.700.355.528&#39;, &#39;MeSHID&#39;: &#39;D005877&#39;}</span>
+<span class="go">{&#39;index&#39;: &#39;00000000&#39;, &#39;mm&#39;: &#39;MMI&#39;, &#39;score&#39;: &#39;12.89&#39;, &#39;preferred_name&#39;: &#39;Electromagnetic Radiation&#39;, &#39;cui&#39;: &#39;C0034519&#39;, &#39;semtypes&#39;: &#39;[npop]&#39;, &#39;trigger&#39;: &#39;[&quot;Electromagnetic Radiation&quot;-tx-6-&quot;radiation&quot;-noun-0]&#39;, &#39;location&#39;: &#39;TX&#39;, &#39;pos_info&#39;: &#39;620/9&#39;, &#39;tree_codes&#39;: &#39;G01.358.500.505;G01.750.250&#39;, &#39;MeSHID&#39;: &#39;D060733&#39;}</span>
+<span class="go">{&#39;index&#39;: &#39;00000000&#39;, &#39;mm&#39;: &#39;MMI&#39;, &#39;score&#39;: &#39;10.06&#39;, &#39;preferred_name&#39;: &#39;Plasma membrane&#39;, &#39;cui&#39;: &#39;C0007603&#39;, &#39;semtypes&#39;: &#39;[celc]&#39;, &#39;trigger&#39;: &#39;[&quot;Plasma Membrane&quot;-tx-3-&quot;cell membranes&quot;-noun-0]&#39;, &#39;location&#39;: &#39;TX&#39;, &#39;pos_info&#39;: &#39;228/14&#39;, &#39;tree_codes&#39;: &#39;A11.284.149&#39;, &#39;MeSHID&#39;: &#39;D002462&#39;}</span>
+<span class="go">{&#39;index&#39;: &#39;00000000&#39;, &#39;mm&#39;: &#39;MMI&#39;, &#39;score&#39;: &#39;9.92&#39;, &#39;preferred_name&#39;: &#39;Brain&#39;, &#39;cui&#39;: &#39;C0006104&#39;, &#39;semtypes&#39;: &#39;[bpoc]&#39;, &#39;trigger&#39;: &#39;[&quot;Brain&quot;-tx-4-&quot;brain&quot;-noun-0]&#39;, &#39;location&#39;: &#39;TX&#39;, &#39;pos_info&#39;: &#39;338/5&#39;, &#39;tree_codes&#39;: &#39;A08.186.211&#39;, &#39;MeSHID&#39;: &#39;D001921&#39;}</span>
+<span class="go">{&#39;index&#39;: &#39;00000000&#39;, &#39;mm&#39;: &#39;MMI&#39;, &#39;score&#39;: &#39;9.69&#39;, &#39;preferred_name&#39;: &#39;Genetic Selection&#39;, &#39;cui&#39;: &#39;C0036576&#39;, &#39;semtypes&#39;: &#39;[genf]&#39;, &#39;trigger&#39;: &#39;[&quot;Genetic Selection&quot;-tx-7-&quot;selective&quot;-adj-0]&#39;, &#39;location&#39;: &#39;TX&#39;, &#39;pos_info&#39;: &#39;683/9&#39;, &#39;tree_codes&#39;: &#39;G05.355.800&#39;, &#39;MeSHID&#39;: &#39;D012641&#39;}</span>
+<span class="go">{&#39;index&#39;: &#39;00000000&#39;, &#39;mm&#39;: &#39;MMI&#39;, &#39;score&#39;: &#39;7.17&#39;, &#39;preferred_name&#39;: &#39;Malignant neoplasm of brain&#39;, &#39;cui&#39;: &#39;C0153633&#39;, &#39;semtypes&#39;: &#39;[neop]&#39;, &#39;trigger&#39;: &#39;[&quot;Brain Neoplasm, Malignant&quot;-tx-6-&quot;the of brain cancer&quot;-noun-0,&quot;Brain Neoplasm, Malignant&quot;-tx-1-&quot;brain cancer&quot;-noun-0]&#39;, &#39;location&#39;: &#39;TX&#39;, &#39;pos_info&#39;: &#39;648/3,662/15;61/12&#39;, &#39;tree_codes&#39;: &#39;&#39;, &#39;MeSHID&#39;: None}</span>
+<span class="go">{&#39;index&#39;: &#39;00000000&#39;, &#39;mm&#39;: &#39;MMI&#39;, &#39;score&#39;: &#39;7.15&#39;, &#39;preferred_name&#39;: &#39;Cells&#39;, &#39;cui&#39;: &#39;C0007634&#39;, &#39;semtypes&#39;: &#39;[cell]&#39;, &#39;trigger&#39;: &#39;[&quot;Cells&quot;-tx-6-&quot;cells&quot;-noun-0,&quot;Cells&quot;-tx-4-&quot;cells&quot;-noun-0]&#39;, &#39;location&#39;: &#39;TX&#39;, &#39;pos_info&#39;: &#39;639/5;317/5&#39;, &#39;tree_codes&#39;: &#39;A11&#39;, &#39;MeSHID&#39;: &#39;D002477&#39;}</span>
+<span class="go">{&#39;index&#39;: &#39;00000000&#39;, &#39;mm&#39;: &#39;MMI&#39;, &#39;score&#39;: &#39;6.58&#39;, &#39;preferred_name&#39;: &#39;Radiation&#39;, &#39;cui&#39;: &#39;C0851346&#39;, &#39;semtypes&#39;: &#39;[npop]&#39;, &#39;trigger&#39;: &#39;[&quot;Radiation&quot;-tx-6-&quot;radiation&quot;-noun-0]&#39;, &#39;location&#39;: &#39;TX&#39;, &#39;pos_info&#39;: &#39;620/9&#39;, &#39;tree_codes&#39;: &#39;G01.750&#39;, &#39;MeSHID&#39;: &#39;D011827&#39;}</span>
+<span class="go">{&#39;index&#39;: &#39;00000000&#39;, &#39;mm&#39;: &#39;MMI&#39;, &#39;score&#39;: &#39;3.54&#39;, &#39;preferred_name&#39;: &#39;Neoplasms&#39;, &#39;cui&#39;: &#39;C0027651&#39;, &#39;semtypes&#39;: &#39;[neop]&#39;, &#39;trigger&#39;: &#39;[&quot;Neoplasms&quot;-tx-6-&quot;tumor&quot;-noun-0]&#39;, &#39;location&#39;: &#39;TX&#39;, &#39;pos_info&#39;: &#39;633/5&#39;, &#39;tree_codes&#39;: &#39;C04&#39;, &#39;MeSHID&#39;: &#39;D009369&#39;}</span>
+<span class="go">{&#39;index&#39;: &#39;00000000&#39;, &#39;mm&#39;: &#39;MMI&#39;, &#39;score&#39;: &#39;3.42&#39;, &#39;preferred_name&#39;: &#39;Malignant Neoplasms&#39;, &#39;cui&#39;: &#39;C0006826&#39;, &#39;semtypes&#39;: &#39;[neop]&#39;, &#39;trigger&#39;: &#39;[&quot;Cancer&quot;-tx-6-&quot;cancer&quot;-noun-0]&#39;, &#39;location&#39;: &#39;TX&#39;, &#39;pos_info&#39;: &#39;671/6&#39;, &#39;tree_codes&#39;: &#39;&#39;, &#39;MeSHID&#39;: None}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="filtering-the-result">
+<h3>Filtering the result<a class="headerlink" href="#filtering-the-result" title="Permalink to this headline">¶</a></h3>
+<p>While parsing a long sentence, we will get many results. We can discard the ancestor concepts.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyMeSHSim.Sim.similarity</span> <span class="k">import</span> <span class="n">metamapFilter</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">filter</span> <span class="o">=</span> <span class="n">metamapFilter</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s2">&quot;/home/luozhihui/Project/UMLS/public_mm/bin/metamap16&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">concepts</span> <span class="o">=</span> <span class="nb">filter</span><span class="o">.</span><span class="n">runMetaMap</span><span class="p">(</span><span class="n">semantic_types</span><span class="o">=</span><span class="nb">filter</span><span class="o">.</span><span class="n">semanticTypes</span> <span class="p">,</span> <span class="n">conjunction</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">term_processing</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;131-I-TM-601 is investigated in clinical trials for treating brain cancer. 131-I-TM-601 is a solid. Tx binds to and reduces the activity of a matrix metalloproteinase (MMP) that regulates functioning of the chloride channels on cell membranes. TM-601 is a small 36-amino-acid peptide that selectively binds to glioma cells but not normal brain parenchyma. It is a synthetic version of a neurotoxin isolated from the venom of the Giant Yellow Israeli scorpion Leiurus quinquestriatus. The synthetic version of this peptide has been manufactured and covalently linked to iodine 131 ((131)I-TM-601) as a means of targeting radiation to tumor cells in the treatment of brain cancer. The selective effects of TM-601 are regulated by its action on MMP2 receptors.&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">results</span> <span class="o">=</span> <span class="nb">filter</span><span class="o">.</span><span class="n">discardAncestor</span><span class="p">(</span><span class="n">concepts</span><span class="o">=</span><span class="n">concepts</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">res</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="nb">print</span> <span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="go">{&#39;index&#39;: &#39;00000000&#39;, &#39;mm&#39;: &#39;MMI&#39;, &#39;score&#39;: &#39;6.58&#39;, &#39;preferred_name&#39;: &#39;Radiation&#39;, &#39;cui&#39;: &#39;C0851346&#39;, &#39;semtypes&#39;: &#39;[npop]&#39;, &#39;trigger&#39;: &#39;[&quot;Radiation&quot;-tx-6-&quot;radiation&quot;-noun-0]&#39;, &#39;location&#39;: &#39;TX&#39;, &#39;pos_info&#39;: &#39;620/9&#39;, &#39;tree_codes&#39;: &#39;G01.750&#39;, &#39;MeSHID&#39;: &#39;D011827&#39;}</span>
+<span class="go">{&#39;index&#39;: &#39;00000000&#39;, &#39;mm&#39;: &#39;MMI&#39;, &#39;score&#39;: &#39;9.69&#39;, &#39;preferred_name&#39;: &#39;Genetic Selection&#39;, &#39;cui&#39;: &#39;C0036576&#39;, &#39;semtypes&#39;: &#39;[genf]&#39;, &#39;trigger&#39;: &#39;[&quot;Genetic Selection&quot;-tx-7-&quot;selective&quot;-adj-0]&#39;, &#39;location&#39;: &#39;TX&#39;, &#39;pos_info&#39;: &#39;683/9&#39;, &#39;tree_codes&#39;: &#39;G05.355.800&#39;, &#39;MeSHID&#39;: &#39;D012641&#39;}</span>
+<span class="go">{&#39;index&#39;: &#39;00000000&#39;, &#39;mm&#39;: &#39;MMI&#39;, &#39;score&#39;: &#39;16.22&#39;, &#39;preferred_name&#39;: &#39;Brain Neoplasms&#39;, &#39;cui&#39;: &#39;C0006118&#39;, &#39;semtypes&#39;: &#39;[neop]&#39;, &#39;trigger&#39;: &#39;[&quot;Brain Neoplasms&quot;-tx-6-&quot;tumor the of brain&quot;-noun-0]&#39;, &#39;location&#39;: &#39;TX&#39;, &#39;pos_info&#39;: &#39;633/5,648/3,662/8&#39;, &#39;tree_codes&#39;: &#39;C04.588.614.250.195;C10.228.140.211;C10.551.240.250&#39;, &#39;MeSHID&#39;: &#39;D001932&#39;}</span>
+<span class="go">{&#39;index&#39;: &#39;00000000&#39;, &#39;mm&#39;: &#39;MMI&#39;, &#39;score&#39;: &#39;13.00&#39;, &#39;preferred_name&#39;: &#39;Gigantism&#39;, &#39;cui&#39;: &#39;C0017547&#39;, &#39;semtypes&#39;: &#39;[dsyn]&#39;, &#39;trigger&#39;: &#39;[&quot;Gigantism&quot;-tx-5-&quot;Giant&quot;-adj-0]&#39;, &#39;location&#39;: &#39;TX&#39;, &#39;pos_info&#39;: &#39;429/5&#39;, &#39;tree_codes&#39;: &#39;C05.116.099.492;C05.116.132.479;C19.700.355.528&#39;, &#39;MeSHID&#39;: &#39;D005877&#39;}</span>
+<span class="go">{&#39;index&#39;: &#39;00000000&#39;, &#39;mm&#39;: &#39;MMI&#39;, &#39;score&#39;: &#39;7.15&#39;, &#39;preferred_name&#39;: &#39;Cells&#39;, &#39;cui&#39;: &#39;C0007634&#39;, &#39;semtypes&#39;: &#39;[cell]&#39;, &#39;trigger&#39;: &#39;[&quot;Cells&quot;-tx-6-&quot;cells&quot;-noun-0,&quot;Cells&quot;-tx-4-&quot;cells&quot;-noun-0]&#39;, &#39;location&#39;: &#39;TX&#39;, &#39;pos_info&#39;: &#39;639/5;317/5&#39;, &#39;tree_codes&#39;: &#39;A11&#39;, &#39;MeSHID&#39;: &#39;D002477&#39;}</span>
+<span class="go">{&#39;index&#39;: &#39;00000000&#39;, &#39;mm&#39;: &#39;MMI&#39;, &#39;score&#39;: &#39;9.92&#39;, &#39;preferred_name&#39;: &#39;Brain&#39;, &#39;cui&#39;: &#39;C0006104&#39;, &#39;semtypes&#39;: &#39;[bpoc]&#39;, &#39;trigger&#39;: &#39;[&quot;Brain&quot;-tx-4-&quot;brain&quot;-noun-0]&#39;, &#39;location&#39;: &#39;TX&#39;, &#39;pos_info&#39;: &#39;338/5&#39;, &#39;tree_codes&#39;: &#39;A08.186.211&#39;, &#39;MeSHID&#39;: &#39;D001921&#39;}</span>
+<span class="go">{&#39;index&#39;: &#39;00000000&#39;, &#39;mm&#39;: &#39;MMI&#39;, &#39;score&#39;: &#39;12.89&#39;, &#39;preferred_name&#39;: &#39;Electromagnetic Radiation&#39;, &#39;cui&#39;: &#39;C0034519&#39;, &#39;semtypes&#39;: &#39;[npop]&#39;, &#39;trigger&#39;: &#39;[&quot;Electromagnetic Radiation&quot;-tx-6-&quot;radiation&quot;-noun-0]&#39;, &#39;location&#39;: &#39;TX&#39;, &#39;pos_info&#39;: &#39;620/9&#39;, &#39;tree_codes&#39;: &#39;G01.358.500.505;G01.750.250&#39;, &#39;MeSHID&#39;: &#39;D060733&#39;}</span>
+<span class="go">{&#39;index&#39;: &#39;00000000&#39;, &#39;mm&#39;: &#39;MMI&#39;, &#39;score&#39;: &#39;19.34&#39;, &#39;preferred_name&#39;: &#39;Glioma&#39;, &#39;cui&#39;: &#39;C0017638&#39;, &#39;semtypes&#39;: &#39;[neop]&#39;, &#39;trigger&#39;: &#39;[&quot;Glioma&quot;-tx-4-&quot;glioma&quot;-noun-0]&#39;, &#39;location&#39;: &#39;TX&#39;, &#39;pos_info&#39;: &#39;310/6&#39;, &#39;tree_codes&#39;: &#39;C04.557.465.625.600.380;C04.557.470.670.380;C04.557.580.625.600.380&#39;, &#39;MeSHID&#39;: &#39;D005910&#39;}</span>
+<span class="go">{&#39;index&#39;: &#39;00000000&#39;, &#39;mm&#39;: &#39;MMI&#39;, &#39;score&#39;: &#39;3.54&#39;, &#39;preferred_name&#39;: &#39;Neoplasms&#39;, &#39;cui&#39;: &#39;C0027651&#39;, &#39;semtypes&#39;: &#39;[neop]&#39;, &#39;trigger&#39;: &#39;[&quot;Neoplasms&quot;-tx-6-&quot;tumor&quot;-noun-0]&#39;, &#39;location&#39;: &#39;TX&#39;, &#39;pos_info&#39;: &#39;633/5&#39;, &#39;tree_codes&#39;: &#39;C04&#39;, &#39;MeSHID&#39;: &#39;D009369&#39;}</span>
+<span class="go">{&#39;index&#39;: &#39;00000000&#39;, &#39;mm&#39;: &#39;MMI&#39;, &#39;score&#39;: &#39;10.06&#39;, &#39;preferred_name&#39;: &#39;Plasma membrane&#39;, &#39;cui&#39;: &#39;C0007603&#39;, &#39;semtypes&#39;: &#39;[celc]&#39;, &#39;trigger&#39;: &#39;[&quot;Plasma Membrane&quot;-tx-3-&quot;cell membranes&quot;-noun-0]&#39;, &#39;location&#39;: &#39;TX&#39;, &#39;pos_info&#39;: &#39;228/14&#39;, &#39;tree_codes&#39;: &#39;A11.284.149&#39;, &#39;MeSHID&#39;: &#39;D002462&#39;}</span>
+</pre></div>
+</div>
+<p>We can also discard general MeSH terms with too many descendants.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyMeSHSim.Sim.similarity</span> <span class="k">import</span> <span class="n">metamapFilter</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">filter</span> <span class="o">=</span> <span class="n">metamapFilter</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s2">&quot;/home/luozhihui/Project/UMLS/public_mm/bin/metamap16&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">concepts</span> <span class="o">=</span> <span class="nb">filter</span><span class="o">.</span><span class="n">runMetaMap</span><span class="p">(</span><span class="n">semantic_types</span><span class="o">=</span><span class="nb">filter</span><span class="o">.</span><span class="n">semanticTypes</span> <span class="p">,</span> <span class="n">conjunction</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">term_processing</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;131-I-TM-601 is investigated in clinical trials for treating brain cancer. 131-I-TM-601 is a solid. Tx binds to and reduces the activity of a matrix metalloproteinase (MMP) that regulates functioning of the chloride channels on cell membranes. TM-601 is a small 36-amino-acid peptide that selectively binds to glioma cells but not normal brain parenchyma. It is a synthetic version of a neurotoxin isolated from the venom of the Giant Yellow Israeli scorpion Leiurus quinquestriatus. The synthetic version of this peptide has been manufactured and covalently linked to iodine 131 ((131)I-TM-601) as a means of targeting radiation to tumor cells in the treatment of brain cancer. The selective effects of TM-601 are regulated by its action on MMP2 receptors.&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">results</span> <span class="o">=</span> <span class="nb">filter</span><span class="o">.</span><span class="n">discardNodeHigh</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">concepts</span><span class="o">=</span><span class="n">concepts</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">res</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="nb">print</span> <span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="go">{&#39;index&#39;: &#39;00000000&#39;, &#39;mm&#39;: &#39;MMI&#39;, &#39;score&#39;: &#39;19.34&#39;, &#39;preferred_name&#39;: &#39;Glioma&#39;, &#39;cui&#39;: &#39;C0017638&#39;, &#39;semtypes&#39;: &#39;[neop]&#39;, &#39;trigger&#39;: &#39;[&quot;Glioma&quot;-tx-4-&quot;glioma&quot;-noun-0]&#39;, &#39;location&#39;: &#39;TX&#39;, &#39;pos_info&#39;: &#39;310/6&#39;, &#39;tree_codes&#39;: &#39;C04.557.465.625.600.380;C04.557.470.670.380;C04.557.580.625.600.380&#39;, &#39;MeSHID&#39;: &#39;D005910&#39;}</span>
+<span class="go">{&#39;index&#39;: &#39;00000000&#39;, &#39;mm&#39;: &#39;MMI&#39;, &#39;score&#39;: &#39;16.22&#39;, &#39;preferred_name&#39;: &#39;Brain Neoplasms&#39;, &#39;cui&#39;: &#39;C0006118&#39;, &#39;semtypes&#39;: &#39;[neop]&#39;, &#39;trigger&#39;: &#39;[&quot;Brain Neoplasms&quot;-tx-6-&quot;tumor the of brain&quot;-noun-0]&#39;, &#39;location&#39;: &#39;TX&#39;, &#39;pos_info&#39;: &#39;633/5,648/3,662/8&#39;, &#39;tree_codes&#39;: &#39;C04.588.614.250.195;C10.228.140.211;C10.551.240.250&#39;, &#39;MeSHID&#39;: &#39;D001932&#39;}</span>
+<span class="go">{&#39;index&#39;: &#39;00000000&#39;, &#39;mm&#39;: &#39;MMI&#39;, &#39;score&#39;: &#39;13.00&#39;, &#39;preferred_name&#39;: &#39;Gigantism&#39;, &#39;cui&#39;: &#39;C0017547&#39;, &#39;semtypes&#39;: &#39;[dsyn]&#39;, &#39;trigger&#39;: &#39;[&quot;Gigantism&quot;-tx-5-&quot;Giant&quot;-adj-0]&#39;, &#39;location&#39;: &#39;TX&#39;, &#39;pos_info&#39;: &#39;429/5&#39;, &#39;tree_codes&#39;: &#39;C05.116.099.492;C05.116.132.479;C19.700.355.528&#39;, &#39;MeSHID&#39;: &#39;D005877&#39;}</span>
+<span class="go">{&#39;index&#39;: &#39;00000000&#39;, &#39;mm&#39;: &#39;MMI&#39;, &#39;score&#39;: &#39;12.89&#39;, &#39;preferred_name&#39;: &#39;Electromagnetic Radiation&#39;, &#39;cui&#39;: &#39;C0034519&#39;, &#39;semtypes&#39;: &#39;[npop]&#39;, &#39;trigger&#39;: &#39;[&quot;Electromagnetic Radiation&quot;-tx-6-&quot;radiation&quot;-noun-0]&#39;, &#39;location&#39;: &#39;TX&#39;, &#39;pos_info&#39;: &#39;620/9&#39;, &#39;tree_codes&#39;: &#39;G01.358.500.505;G01.750.250&#39;, &#39;MeSHID&#39;: &#39;D060733&#39;}</span>
+<span class="go">{&#39;index&#39;: &#39;00000000&#39;, &#39;mm&#39;: &#39;MMI&#39;, &#39;score&#39;: &#39;10.06&#39;, &#39;preferred_name&#39;: &#39;Plasma membrane&#39;, &#39;cui&#39;: &#39;C0007603&#39;, &#39;semtypes&#39;: &#39;[celc]&#39;, &#39;trigger&#39;: &#39;[&quot;Plasma Membrane&quot;-tx-3-&quot;cell membranes&quot;-noun-0]&#39;, &#39;location&#39;: &#39;TX&#39;, &#39;pos_info&#39;: &#39;228/14&#39;, &#39;tree_codes&#39;: &#39;A11.284.149&#39;, &#39;MeSHID&#39;: &#39;D002462&#39;}</span>
+<span class="go">{&#39;index&#39;: &#39;00000000&#39;, &#39;mm&#39;: &#39;MMI&#39;, &#39;score&#39;: &#39;9.69&#39;, &#39;preferred_name&#39;: &#39;Genetic Selection&#39;, &#39;cui&#39;: &#39;C0036576&#39;, &#39;semtypes&#39;: &#39;[genf]&#39;, &#39;trigger&#39;: &#39;[&quot;Genetic Selection&quot;-tx-7-&quot;selective&quot;-adj-0]&#39;, &#39;location&#39;: &#39;TX&#39;, &#39;pos_info&#39;: &#39;683/9&#39;, &#39;tree_codes&#39;: &#39;G05.355.800&#39;, &#39;MeSHID&#39;: &#39;D012641&#39;}</span>
+<span class="go">{&#39;index&#39;: &#39;00000000&#39;, &#39;mm&#39;: &#39;MMI&#39;, &#39;score&#39;: &#39;7.17&#39;, &#39;preferred_name&#39;: &#39;Malignant neoplasm of brain&#39;, &#39;cui&#39;: &#39;C0153633&#39;, &#39;semtypes&#39;: &#39;[neop]&#39;, &#39;trigger&#39;: &#39;[&quot;Brain Neoplasm, Malignant&quot;-tx-6-&quot;the of brain cancer&quot;-noun-0,&quot;Brain Neoplasm, Malignant&quot;-tx-1-&quot;brain cancer&quot;-noun-0]&#39;, &#39;location&#39;: &#39;TX&#39;, &#39;pos_info&#39;: &#39;648/3,662/15;61/12&#39;, &#39;tree_codes&#39;: [&#39;C10.551.240.250&#39;, &#39;C10.228.140.211&#39;, &#39;C04.588.614.250.195&#39;], &#39;MeSHID&#39;: &#39;D001932&#39;}</span>
+<span class="go">{&#39;index&#39;: &#39;00000000&#39;, &#39;mm&#39;: &#39;MMI&#39;, &#39;score&#39;: &#39;6.58&#39;, &#39;preferred_name&#39;: &#39;Radiation&#39;, &#39;cui&#39;: &#39;C0851346&#39;, &#39;semtypes&#39;: &#39;[npop]&#39;, &#39;trigger&#39;: &#39;[&quot;Radiation&quot;-tx-6-&quot;radiation&quot;-noun-0]&#39;, &#39;location&#39;: &#39;TX&#39;, &#39;pos_info&#39;: &#39;620/9&#39;, &#39;tree_codes&#39;: &#39;G01.750&#39;, &#39;MeSHID&#39;: &#39;D011827&#39;}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="term-library">
+<h2>Term library<a class="headerlink" href="#term-library" title="Permalink to this headline">¶</a></h2>
+<p>Apart from metamapWrap, class termComp inherits all the class in pyMeSHSim, and thus many functions can be invoked by termComp.</p>
+<div class="section" id="obtaining-mesh-terms-from-umls-concepts">
+<h3>Obtaining MeSH terms from UMLS concepts<a class="headerlink" href="#obtaining-mesh-terms-from-umls-concepts" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyMeSHSim.Sim.similarity</span> <span class="k">import</span> <span class="n">termComp</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">simCom</span> <span class="o">=</span> <span class="n">termComp</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">concept</span> <span class="o">=</span> <span class="n">simCom</span><span class="o">.</span><span class="n">getMeSHConcept</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="s2">&quot;C0024116&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">concept</span><span class="p">)</span>
+<span class="go">{&#39;cui&#39;: &#39;C0024116&#39;, &#39;MeSHID&#39;: &#39;D008172&#39;, &#39;semtypes&#39;: &#39;dsyn&#39;, &#39;tree_code&#39;: [&#39;C08.730.435&#39;, &#39;C01.703.534&#39;, &#39;C08.381.472&#39;], &#39;preferred_name&#39;: &#39;Fungal Lung Disease&#39;}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="obtaining-mesh-term-detail-from-mesh-id">
+<h3>Obtaining MeSH term detail from MeSH ID<a class="headerlink" href="#obtaining-mesh-term-detail-from-mesh-id" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">This method will be helpful.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyMeSHSim.Sim.similarity</span> <span class="k">import</span> <span class="n">termComp</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">simCom</span> <span class="o">=</span> <span class="n">termComp</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">concept</span> <span class="o">=</span> <span class="n">simCom</span><span class="o">.</span><span class="n">getMeSHConcept</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="s2">&quot;D008674&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">concept</span><span class="p">)</span>
+<span class="go">{&#39;cui&#39;: &#39;C0025556&#39;, &#39;MeSHID&#39;: &#39;D008674&#39;, &#39;semtypes&#39;: &#39;elii&#39;, &#39;tree_code&#39;: [&#39;D01.268.558&#39;, &#39;D01.552.550&#39;], &#39;preferred_name&#39;: &#39;Earth Metals, Rare&#39;}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="obtaining-umls-concept-from-mesh-id">
+<h3>Obtaining UMLS concept from MeSH ID<a class="headerlink" href="#obtaining-umls-concept-from-mesh-id" title="Permalink to this headline">¶</a></h3>
+<p>If one MeSH record corresponds to more than one UMLS concepts, pyMeSHSim only provides the recommended one.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyMeSHSim.Sim.similarity</span> <span class="k">import</span> <span class="n">termComp</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">simCom</span> <span class="o">=</span> <span class="n">termComp</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">con</span> <span class="o">=</span> <span class="n">simCom</span><span class="o">.</span><span class="n">getUMLSIDbyMeSHID</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="s2">&quot;D008674&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="p">(</span><span class="n">con</span><span class="p">)</span>
+<span class="go">C0025556</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="obtaining-the-category-of-mesh-terms">
+<h3>Obtaining the category of MeSH terms<a class="headerlink" href="#obtaining-the-category-of-mesh-terms" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">A lot of processing should denote the category of terms, it is necessary to get it in the begining.</div>
+<div class="line">getCategory will return the category of a term.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyMeSHSim.Sim.similarity</span> <span class="k">import</span> <span class="n">termComp</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">simCom</span> <span class="o">=</span> <span class="n">termComp</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ty</span> <span class="o">=</span> <span class="n">simCom</span><span class="o">.</span><span class="n">getCategory</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="s2">&quot;D008674&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="p">(</span><span class="n">ty</span><span class="p">)</span>
+<span class="go">[&#39;D&#39;]</span>
+<span class="go">&gt;&gt;&gt;ty = simCom.getCategory(dui=&quot;D008674&quot;)</span>
+<span class="go">&gt;&gt;&gt;print (ty)</span>
+<span class="go">[&#39;F&#39;]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="obtaining-narrow-or-broad-terms-of-a-mesh-term">
+<h3>Obtaining narrow or broad terms of a mesh term<a class="headerlink" href="#obtaining-narrow-or-broad-terms-of-a-mesh-term" title="Permalink to this headline">¶</a></h3>
+<p>We can obtain the narrow terms of main headings by convertToNarrow and obtain the broad terms of SCRs by convertToBroad.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyMeSHSim.Sim.similarity</span> <span class="k">import</span> <span class="n">termComp</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">simCom</span> <span class="o">=</span> <span class="n">termComp</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">NRs</span> <span class="o">=</span> <span class="n">simCom</span><span class="o">.</span><span class="n">convertToNarrow</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="s2">&quot;D000544&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="p">(</span><span class="n">Nrs</span><span class="p">)</span>
+<span class="go">[&#39;C564330&#39;, &#39;C565078&#39;, &#39;C565228&#39;, &#39;C563834&#39;, &#39;C565251&#39;, &#39;C565325&#39;, &#39;C567463&#39;, &#39;C566465&#39;, &#39;C567022&#39;, &#39;C566999&#39;, &#39;C536595&#39;, &#39;C566998&#39;, &#39;C566578&#39;, &#39;C563254&#39;, &#39;C536596&#39;, &#39;C564622&#39;, &#39;C536594&#39;, &#39;C566298&#39;, &#39;C567000&#39;, &#39;C564329&#39;, &#39;C566299&#39;, &#39;C565728&#39;, &#39;C536598&#39;, &#39;C536599&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">BRs</span> <span class="o">=</span> <span class="n">simCom</span><span class="o">.</span><span class="n">convertToBroad</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="s2">&quot;C565078&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="p">(</span><span class="n">BRs</span><span class="p">)</span>
+<span class="go">[&#39;D000544&#39;]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="obtaining-parent-or-child-terms-of-a-mesh-term">
+<h3>Obtaining parent or child terms of a MeSH term<a class="headerlink" href="#obtaining-parent-or-child-terms-of-a-mesh-term" title="Permalink to this headline">¶</a></h3>
+<p>We can obtain child and parent terms of main headings by getParentsConceptID and getChildrenConceptID, respectively.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyMeSHSim.Sim.similarity</span> <span class="k">import</span> <span class="n">termComp</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">simCom</span> <span class="o">=</span> <span class="n">termComp</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parents</span> <span class="o">=</span> <span class="n">simCom</span><span class="o">.</span><span class="n">getParentsConceptID</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="s2">&quot;D000544&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="s2">&quot;C&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="p">(</span><span class="n">parents</span><span class="p">)</span>
+<span class="go">[&#39;D024801&#39;, &#39;D003704&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">children</span> <span class="o">=</span> <span class="n">simCom</span><span class="o">.</span><span class="n">getChildrenConceptID</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="s2">&quot;D012559&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="s2">&quot;F&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="p">(</span><span class="n">children</span><span class="p">)</span>
+<span class="go">[&#39;D012753&#39;, &#39;D012562&#39;, &#39;D012563&#39;, &#39;D012560&#39;]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="obtaining-the-top-term-of-a-mesh-term">
+<h3>Obtaining the top term of a MeSH term<a class="headerlink" href="#obtaining-the-top-term-of-a-mesh-term" title="Permalink to this headline">¶</a></h3>
+<p>We can obtain the top term of a MeSH term by getTopConceptID.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyMeSHSim.Sim.similarity</span> <span class="k">import</span> <span class="n">termComp</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">simCom</span> <span class="o">=</span> <span class="n">termComp</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">topTerm</span> <span class="o">=</span> <span class="n">simCom</span><span class="o">.</span><span class="n">getTopConceptID</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="s2">&quot;D000544&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="p">(</span><span class="n">topTerm</span><span class="p">)</span>
+<span class="go">{&#39;D001523&#39;: &#39;Disorders, Mental&#39;, &#39;D009422&#39;: &#39;Diseases, Nervous System&#39;}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="obtaining-the-ancestors-or-offsprings">
+<h3>Obtaining the ancestors or offsprings<a class="headerlink" href="#obtaining-the-ancestors-or-offsprings" title="Permalink to this headline">¶</a></h3>
+<p>We can obtain ancestors or offsprings of main headings by getAncestors or getDescendant, respectively.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyMeSHSim.Sim.similarity</span> <span class="k">import</span> <span class="n">termComp</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">simCom</span> <span class="o">=</span> <span class="n">termComp</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ancestors</span> <span class="o">=</span> <span class="n">simCom</span><span class="o">.</span><span class="n">getAncestors</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="s2">&quot;D000544&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="s2">&quot;C&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="p">(</span><span class="n">ancestors</span><span class="p">)</span>
+<span class="go">[&#39;D000544&#39;, &#39;D024801&#39;, &#39;D003704&#39;, &#39;D019636&#39;, &#39;D001927&#39;, &#39;D009422&#39;, &#39;D002493&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">descendant</span> <span class="o">=</span> <span class="n">simCom</span><span class="o">.</span><span class="n">getDescendant</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="s2">&quot;D012559&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="s2">&quot;F&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="p">(</span><span class="n">descendant</span><span class="p">)</span>
+<span class="go">[&#39;D012559&#39;, &#39;D012563&#39;, &#39;D012753&#39;, &#39;D012562&#39;, &#39;D012560&#39;]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="retrieving-mesh-id-by-mesh-tree-code">
+<h3>Retrieving MeSH ID by MeSH tree code<a class="headerlink" href="#retrieving-mesh-id-by-mesh-tree-code" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyMeSHSim.Sim.similarity</span> <span class="k">import</span> <span class="n">termComp</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">simCom</span> <span class="o">=</span> <span class="n">termComp</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dui</span> <span class="o">=</span> <span class="n">simCom</span><span class="o">.</span><span class="n">getDuiFromTreeCode</span><span class="p">(</span><span class="n">treeCode</span><span class="o">=</span><span class="s2">&quot;D01.552.550&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">dui</span><span class="p">)</span>
+<span class="go">D008674</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="obtaining-the-preffered-name-by-mesh-id">
+<h3>Obtaining the preffered name by MeSH ID<a class="headerlink" href="#obtaining-the-preffered-name-by-mesh-id" title="Permalink to this headline">¶</a></h3>
+<p>We can obtain the preffered name of MeSH terms by getPrefferedName.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyMeSHSim.Sim.similarity</span> <span class="k">import</span> <span class="n">termComp</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">simCom</span> <span class="o">=</span> <span class="n">termComp</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">name</span> <span class="o">=</span> <span class="n">simCom</span><span class="o">.</span><span class="n">getPrefferedName</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="s2">&quot;D008674&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+<span class="go">Earth Metals, Rare</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="calculating-similarity">
+<h2>Calculating similarity<a class="headerlink" href="#calculating-similarity" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="calculating-similarity-between-mesh-terms">
+<h3>Calculating similarity between MeSH terms<a class="headerlink" href="#calculating-similarity-between-mesh-terms" title="Permalink to this headline">¶</a></h3>
+<p>We can calculate semantic similarity between MeSH terms with five algorithms [“lin”, “res”, “jiang”, “rel”, “wang”].</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyMeSHSim.Sim.similarity</span> <span class="k">import</span> <span class="n">termComp</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">simCom</span> <span class="o">=</span> <span class="n">termComp</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1">#in different category, the similarity will be different</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">simCom</span><span class="o">.</span><span class="n">termSim</span><span class="p">(</span><span class="n">dui1</span><span class="o">=</span><span class="s2">&quot;D000544&quot;</span><span class="p">,</span> <span class="n">dui2</span><span class="o">=</span><span class="s2">&quot;D006816&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;lin&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="s2">&quot;F&quot;</span><span class="p">)</span>
+<span class="go">D000544 D006816 0.6957847588446384</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">simCom</span><span class="o">.</span><span class="n">termSim</span><span class="p">(</span><span class="n">dui1</span><span class="o">=</span><span class="s2">&quot;D000544&quot;</span><span class="p">,</span> <span class="n">dui2</span><span class="o">=</span><span class="s2">&quot;D006816&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;lin&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="s2">&quot;C&quot;</span><span class="p">)</span>
+<span class="go">D000544 D006816 0.7500806317732097</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyMeSHSim.Sim.similarity</span> <span class="k">import</span> <span class="n">termComp</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">simCom</span> <span class="o">=</span> <span class="n">termComp</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1">#between mainheading and SCR, IC method</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">simCom</span><span class="o">.</span><span class="n">termSim</span><span class="p">(</span><span class="n">dui1</span><span class="o">=</span><span class="s2">&quot;C565251&quot;</span><span class="p">,</span> <span class="n">dui2</span><span class="o">=</span><span class="s2">&quot;D012559&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;rel&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="s2">&quot;F&quot;</span><span class="p">)</span>
+<span class="go">C565251 D012559 0.3314002496646189</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1">#based on path</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">simCom</span><span class="o">.</span><span class="n">termSim</span><span class="p">(</span><span class="n">dui1</span><span class="o">=</span><span class="s2">&quot;C565251&quot;</span><span class="p">,</span> <span class="n">dui2</span><span class="o">=</span><span class="s2">&quot;D012559&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;wang&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="s2">&quot;F&quot;</span><span class="p">)</span>
+<span class="go">C565251 D012559 0.17637095066694894</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="reference.html" class="btn btn-neutral float-right" title="Library reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="install.html" class="btn btn-neutral" title="Install" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Zhihui Luo.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

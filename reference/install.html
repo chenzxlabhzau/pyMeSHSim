@@ -1,0 +1,298 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Install &mdash; pyMeSHSim 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tutorial" href="tutorial.html" />
+    <link rel="prev" title="Introduction" href="intro.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> pyMeSHSim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Install</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#dependences">Dependences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#metamap-install">MetaMap install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#install-pandas-and-bcolz">Install pandas and bcolz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#install-pymeshsim">Install pyMeSHSim</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">Library reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pyMeSHSim</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Install</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/install.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="install">
+<h1>Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="dependences">
+<h2>Dependences<a class="headerlink" href="#dependences" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">software</p>
+<blockquote>
+<div><ul class="simple">
+<li>MetaMap 2016v2</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">python packages</p>
+<blockquote>
+<div><ul class="simple">
+<li>python 3.6</li>
+<li>pandas</li>
+<li>bcolz&gt;=1.2.1</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="metamap-install">
+<h2>MetaMap install<a class="headerlink" href="#metamap-install" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line">MetaMap is the base implement of the subpackage metamapWrap.</div>
+<div class="line">You need to activate a UMLS Terminology Services (UTS) account to fetch MetaMap. Please see <a class="reference external" href="https://metamap.nlm.nih.gov/">MetaMap</a> for more information.</div>
+<div class="line">The 2016 version has some important featrue, it will be helpful when parsing the text.</div>
+</div>
+<blockquote>
+<div><p>MetaMap depends on Java. To install openJDK:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo apt install default-jdk
+</pre></div>
+</div>
+<p>After downloading MetaMap and Extracting it, you can install it by:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd ./public_mm/
+$ bash ./bin/install.sh
+</pre></div>
+</div>
+</div></blockquote>
+<p>At this point, you have successfully installed MetaMap.</p>
+<blockquote>
+<div><p>Please add the bin directory to the environment variable PATH in bashrc for convenience:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ export PATH=$PATH:/home/luozhihui/Project/UMLS/public_mm/bin
+</pre></div>
+</div>
+<p>Then, launch MetaMap server before running pyMeSHSim:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ skrmedpostctl start
+$ wsdserverctl start
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="install-pandas-and-bcolz">
+<h2>Install pandas and bcolz<a class="headerlink" href="#install-pandas-and-bcolz" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>To install python package pandas and bcolz:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip3 install pandas
+$ pip3 install bcolz
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="install-pymeshsim">
+<h2>Install pyMeSHSim<a class="headerlink" href="#install-pymeshsim" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>To install pyMeSHSim from source code:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ tar -zxvf pyMeSHSim-0.0.1.tar.gz
+$ python3 ./setup.py install
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="tutorial.html" class="btn btn-neutral float-right" title="Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="intro.html" class="btn btn-neutral" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Zhihui Luo.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

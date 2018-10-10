@@ -1,0 +1,1132 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyMeSHSim.data.createData &mdash; pyMeSHSim 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> pyMeSHSim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference.html">Library reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">pyMeSHSim</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>pyMeSHSim.data.createData</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pyMeSHSim.data.createData</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">.. note::</span>
+<span class="sd">    This module is useful for developer, general user can skip this module</span>
+<span class="sd">    It provides methods creating the data set.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1"># Author: ZhiHui Luo</span>
+<span class="c1"># Organization: HuaZhong Agricultural University</span>
+
+<span class="c1">#!/usr/bin/python3</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">.dataDB</span> <span class="k">import</span> <span class="n">dataDB</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">bcolz</span> <span class="k">as</span> <span class="nn">bz</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+
+<div class="viewcode-block" id="getCuiFunc"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.createData.getCuiFunc">[docs]</a><span class="k">class</span> <span class="nc">getCuiFunc</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get data from umls database.</span>
+
+<span class="sd">    | This is the base class of createBcolzData.</span>
+<span class="sd">    | It provides interface to get MeSH information from UMLS Metathesaurus.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">DBclient</span> <span class="o">=</span> <span class="n">dataDB</span><span class="p">()</span>
+
+<div class="viewcode-block" id="getCuiFunc.getSemanticType"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.createData.getCuiFunc.getSemanticType">[docs]</a>    <span class="k">def</span> <span class="nf">getSemanticType</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cui</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the semantic type of a UMLS concept.</span>
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        cui: string</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sqlcmd</span> <span class="o">=</span> <span class="s2">&quot;select distinct(TUI) from MRSTY where CUI = &#39;</span><span class="si">%s</span><span class="s2">&#39;;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">cui</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DBclient</span><span class="o">.</span><span class="n">fetch_one</span><span class="p">(</span><span class="n">sql_cmd</span><span class="o">=</span><span class="n">sqlcmd</span><span class="p">)</span>
+        <span class="n">semanticTypeID</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">sqlcmd</span> <span class="o">=</span> <span class="s2">&quot;select ABR from SRDEF where UI=&#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">semanticTypeID</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DBclient</span><span class="o">.</span><span class="n">fetch_one</span><span class="p">(</span><span class="n">sql_cmd</span><span class="o">=</span><span class="n">sqlcmd</span><span class="p">)</span>
+        <span class="n">semanticType</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">semanticType</span></div>
+
+<div class="viewcode-block" id="getCuiFunc.getTreeCode"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.createData.getCuiFunc.getTreeCode">[docs]</a>    <span class="k">def</span> <span class="nf">getTreeCode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cui</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dui</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get MeSH tree code from a UMLS concept or a MeSH concept.</span>
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        cui: string</span>
+
+<span class="sd">        dui: string</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        list of string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">cui</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">sqlcmd</span> <span class="o">=</span> <span class="s2">&quot;select distinct(ATV) from MRSAT where ATN = &#39;MN&#39; and CUI = &#39;</span><span class="si">%s</span><span class="s2">&#39;;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">cui</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">cui</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getCUIfromMeshID</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui</span><span class="p">)</span>
+            <span class="n">sqlcmd</span> <span class="o">=</span> <span class="s2">&quot;select distinct(ATV) from MRSAT where ATN = &#39;MN&#39; and CUI = &#39;</span><span class="si">%s</span><span class="s2">&#39;;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">cui</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DBclient</span><span class="o">.</span><span class="n">fetch_all</span><span class="p">(</span><span class="n">sql_cmd</span><span class="o">=</span><span class="n">sqlcmd</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+                <span class="n">d</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="p">[</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">return</span> <span class="n">d</span></div>
+
+<div class="viewcode-block" id="getCuiFunc.getMeSHID"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.createData.getCuiFunc.getMeSHID">[docs]</a>    <span class="k">def</span> <span class="nf">getMeSHID</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cui</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the MeSH concept from an UMLS concept.</span>
+
+<span class="sd">        This function can only get the mesh ID from the preferred concept CUI.</span>
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        cui: string</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sqlcmd</span> <span class="o">=</span> <span class="s2">&quot;select distinct(CODE) from MRSAT where ATN = &#39;MN&#39; and CUI = &#39;</span><span class="si">%s</span><span class="s2">&#39;;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">cui</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DBclient</span><span class="o">.</span><span class="n">fetch_one</span><span class="p">(</span><span class="n">sql_cmd</span><span class="o">=</span><span class="n">sqlcmd</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">MeSHID</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">MeSHID</span></div>
+
+
+
+<div class="viewcode-block" id="getCuiFunc.getMeSHIDFromTH"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.createData.getCuiFunc.getMeSHIDFromTH">[docs]</a>    <span class="k">def</span> <span class="nf">getMeSHIDFromTH</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cui</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the MeSH descriptor ID or SCR ID.</span>
+
+<span class="sd">        This function will be used only when getMeSHID has no result.</span>
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        cui: string</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sqlcmd</span> <span class="o">=</span> <span class="s2">&quot;select distinct(CODE) from MRSAT where ATN = &#39;TH&#39; and CUI = &#39;</span><span class="si">%s</span><span class="s2">&#39;;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">cui</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DBclient</span><span class="o">.</span><span class="n">fetch_one</span><span class="p">(</span><span class="n">sql_cmd</span><span class="o">=</span><span class="n">sqlcmd</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">MeSHID</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">MeSHID</span></div>
+
+
+<div class="viewcode-block" id="getCuiFunc.getCUIfromMeshID"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.createData.getCuiFunc.getCUIfromMeshID">[docs]</a>    <span class="k">def</span> <span class="nf">getCUIfromMeshID</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dui</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the UMLS concept from a MeSH concept.</span>
+
+<span class="sd">        This function will not return all the CUI of a MeSH descriptor. it will only</span>
+<span class="sd">        return the preffered concept&#39;s CUI.</span>
+
+<span class="sd">        *parameter*</span>
+
+<span class="sd">        dui: string</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sqlcmd</span> <span class="o">=</span> <span class="s2">&quot;select distinct(CUI) from MRSAT where ATN = &#39;MN&#39; and CODE = &#39;</span><span class="si">%s</span><span class="s2">&#39;;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">dui</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DBclient</span><span class="o">.</span><span class="n">fetch_one</span><span class="p">(</span><span class="n">sql_cmd</span><span class="o">=</span><span class="n">sqlcmd</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">cui</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">cui</span></div>
+
+<div class="viewcode-block" id="getCuiFunc.getAllCUIsFromMeshID"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.createData.getCuiFunc.getAllCUIsFromMeshID">[docs]</a>    <span class="k">def</span> <span class="nf">getAllCUIsFromMeshID</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dui</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This function will return all the CUI of a MeSH descriptor.</span>
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        dui: string</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sqlcmd</span> <span class="o">=</span> <span class="s2">&quot;select distinct(CUI) from MRSAT where ATN = &#39;TH&#39; and CODE = &#39;</span><span class="si">%s</span><span class="s2">&#39;;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">dui</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DBclient</span><span class="o">.</span><span class="n">fetch_one</span><span class="p">(</span><span class="n">sql_cmd</span><span class="o">=</span><span class="n">sqlcmd</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="getCuiFunc.getPreferredName"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.createData.getCuiFunc.getPreferredName">[docs]</a>    <span class="k">def</span> <span class="nf">getPreferredName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cui</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the preferred name of an UMLS concept.</span>
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        cui : string</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sqlcmd</span> <span class="o">=</span> <span class="s2">&quot;select distinct STR from MRCONSO where CUI=&#39;</span><span class="si">%s</span><span class="s2">&#39; and TS=&#39;P&#39;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">cui</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DBclient</span><span class="o">.</span><span class="n">fetch_one</span><span class="p">(</span><span class="n">sql_cmd</span><span class="o">=</span><span class="n">sqlcmd</span><span class="p">)</span>
+        <span class="n">preferred_name</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">preferred_name</span></div>
+
+<div class="viewcode-block" id="getCuiFunc.getCodeForNoneTreeConcept"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.createData.getCuiFunc.getCodeForNoneTreeConcept">[docs]</a>    <span class="k">def</span> <span class="nf">getCodeForNoneTreeConcept</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cui</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This function used to fetch the UMLSID for relation narrow concept.</span>
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        cui: string</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">MeSHID</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getMeSHID</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">cui</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">MeSHID</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Note: </span><span class="si">%s</span><span class="s2"> has a main header Dui</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">MeSHID</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">sql_cmd</span> <span class="o">=</span> <span class="s2">&quot;select distinct CODE from MRSAT where ATN = &#39;TH&#39; and CUI=&#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">cui</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DBclient</span><span class="o">.</span><span class="n">fetch_one</span><span class="p">(</span><span class="n">sql_cmd</span><span class="o">=</span><span class="n">sql_cmd</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+            <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="getCuiFunc.getQualifierID"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.createData.getCuiFunc.getQualifierID">[docs]</a>    <span class="k">def</span> <span class="nf">getQualifierID</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cui</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; This function used to get the qualifier id of a umls concept.</span>
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        cui: string</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sql_cmd</span> <span class="o">=</span> <span class="s2">&quot;select distinct CODE from MRSAT where ATN = &#39;TERMUI&#39; and CUI=&#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">cui</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DBclient</span><span class="o">.</span><span class="n">fetch_one</span><span class="p">(</span><span class="n">sql_cmd</span><span class="o">=</span><span class="n">sql_cmd</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div></div>
+
+
+<div class="viewcode-block" id="createBcolzData"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.createData.createBcolzData">[docs]</a><span class="k">class</span> <span class="nc">createBcolzData</span><span class="p">(</span><span class="n">getCuiFunc</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A class to construct the base data.</span>
+
+<span class="sd">    This class include several functions, which used to create different tables.</span>
+
+<span class="sd">    | mainly 6 tables:</span>
+<span class="sd">    | 1. parent child relation table</span>
+<span class="sd">    | 2. RN and RB relation table</span>
+<span class="sd">    | 3. main heading detail data table</span>
+<span class="sd">    | 4. RN detail data table</span>
+<span class="sd">    | 6. supplement main heading table</span>
+<span class="sd">    | 7. offspring and ancestor table</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># {&#39;cui&#39;: &#39;C1256745&#39;, &#39;semtypes&#39;: &#39;inpr&#39;, &#39;tree_code&#39;: [], &#39;MeSHID&#39;: None, &#39;preferred_name&#39;: &#39;Check Tag&#39;,</span>
+    <span class="c1"># &#39;isNarrowConcept&#39;: None, &#39;relations&#39;: None}</span>
+    <span class="c1"># {&#39;cui&#39;: &#39;C1256741&#39;, &#39;semtypes&#39;: &#39;inpr&#39;, &#39;tree_code&#39;: [], &#39;MeSHID&#39;: None,</span>
+    <span class="c1"># &#39;preferred_name&#39;: &#39;Topical Descriptor&#39;, &#39;isNarrowConcept&#39;: None, &#39;relations&#39;: None}</span>
+    <span class="c1"># {&#39;cui&#39;: &#39;C1256739&#39;, &#39;semtypes&#39;: &#39;inpr&#39;, &#39;tree_code&#39;: [], &#39;MeSHID&#39;: None,</span>
+    <span class="c1"># &#39;preferred_name&#39;: &#39;MeSH Descriptors&#39;, &#39;isNarrowConcept&#39;: None, &#39;relations&#39;: None}</span>
+    <span class="c1"># {&#39;cui&#39;: &#39;C1256743&#39;, &#39;semtypes&#39;: &#39;inpr&#39;, &#39;tree_code&#39;: [], &#39;MeSHID&#39;: None,</span>
+    <span class="c1"># &#39;preferred_name&#39;: &#39;Publication Type&#39;, &#39;isNarrowConcept&#39;: None, &#39;relations&#39;: None}</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log_file_name</span><span class="o">=</span><span class="s2">&quot;createData.log&quot;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">DBclient</span> <span class="o">=</span> <span class="n">dataDB</span><span class="p">()</span>
+        <span class="n">getCuiFunc</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">categoryDict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;C0002784&quot;</span><span class="p">:</span> <span class="s2">&quot;E&quot;</span><span class="p">,</span>
+                             <span class="s2">&quot;C0002807&quot;</span><span class="p">:</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span>
+                             <span class="s2">&quot;C0003186&quot;</span><span class="p">:</span> <span class="s2">&quot;I&quot;</span><span class="p">,</span>
+                             <span class="s2">&quot;C2930671&quot;</span><span class="p">:</span> <span class="s2">&quot;G&quot;</span><span class="p">,</span>
+                             <span class="s2">&quot;C0007995&quot;</span><span class="p">:</span> <span class="s2">&quot;D&quot;</span><span class="p">,</span>
+                             <span class="s2">&quot;C0012674&quot;</span><span class="p">:</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span>
+                             <span class="s2">&quot;C0018689&quot;</span><span class="p">:</span> <span class="s2">&quot;N&quot;</span><span class="p">,</span>
+                             <span class="s2">&quot;C0020158&quot;</span><span class="p">:</span> <span class="s2">&quot;K&quot;</span><span class="p">,</span>
+                             <span class="s2">&quot;C0021424&quot;</span><span class="p">:</span> <span class="s2">&quot;L&quot;</span><span class="p">,</span>
+                             <span class="s2">&quot;C1256748&quot;</span><span class="p">:</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span>
+                             <span class="s2">&quot;C2930672&quot;</span><span class="p">:</span> <span class="s2">&quot;H&quot;</span><span class="p">,</span>
+                             <span class="s2">&quot;C1256749&quot;</span><span class="p">:</span> <span class="s2">&quot;F&quot;</span><span class="p">,</span>
+                             <span class="s2">&quot;C1256750&quot;</span><span class="p">:</span> <span class="s2">&quot;J&quot;</span><span class="p">,</span>
+                             <span class="s2">&quot;C1256743&quot;</span><span class="p">:</span> <span class="s2">&quot;V&quot;</span><span class="p">,</span>
+                             <span class="s2">&quot;C2720181&quot;</span><span class="p">:</span> <span class="s2">&quot;Z&quot;</span>
+                             <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="createBcolzData.initLog"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.createData.createBcolzData.initLog">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">initLog</span><span class="p">(</span><span class="n">log_file_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Static method used to initalize the logger.&quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">log_file_name</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;rm </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">log_file_name</span><span class="p">)</span>
+        <span class="n">instance_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">log_file_name</span><span class="p">)</span>
+        <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">instance_name</span><span class="p">)</span>
+        <span class="n">formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> </span><span class="si">%(filename)s</span><span class="s1"> : </span><span class="si">%(levelname)s</span><span class="s1"> </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">file_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">FileHandler</span><span class="p">(</span><span class="n">log_file_name</span><span class="p">)</span>
+        <span class="n">file_handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
+        <span class="n">console_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+        <span class="n">console_handler</span><span class="o">.</span><span class="n">formatter</span> <span class="o">=</span> <span class="n">formatter</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">file_handler</span><span class="p">)</span>
+        <span class="c1"># logger.addHandler(console_handler)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">logger</span></div>
+
+<div class="viewcode-block" id="createBcolzData.createParentChildRelTable"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.createData.createBcolzData.createParentChildRelTable">[docs]</a>    <span class="k">def</span> <span class="nf">createParentChildRelTable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;PAR&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Construct the parent-child relation table, and top concept description table.</span>
+
+<span class="sd">        | Parent-child relation table has three columns &quot;Child&quot;, &quot;Parent&quot;, &quot;Category&quot;.</span>
+<span class="sd">        | All MeSH concepts in this table is a subnode in the MeSH tree structure.</span>
+
+<span class="sd">        | Top description table contains the MeSH category infomation, and the top MeSH concept in each category</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initLog</span><span class="p">(</span><span class="n">log_file_name</span><span class="o">=</span><span class="s2">&quot;createParentChildRel.log&quot;</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Running the create parents function</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">sql_str</span> <span class="o">=</span> <span class="s2">&quot;select distinct CUI1,CUI2 from MRREL where REL=&#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">rel</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DBclient</span><span class="o">.</span><span class="n">fetch_all</span><span class="p">(</span><span class="n">sql_cmd</span><span class="o">=</span><span class="n">sql_str</span><span class="p">)</span>
+
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;We selected </span><span class="si">%s</span><span class="s2"> items from umls database</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
+        <span class="n">handle</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;ParentChildRel.tsv&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+        <span class="n">handle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Child</span><span class="se">\t</span><span class="s2">Parent</span><span class="se">\t</span><span class="s2">Category</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">handle_top</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;topDescription.tsv&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+            <span class="n">cui1</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">cui2</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+            <span class="c1"># Log the cuis which has no dui, most of them are &quot;MeSH Category&quot; concept</span>
+            <span class="n">Dui1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getMeSHID</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">cui1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">Dui1</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">pName1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPreferredName</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">cui1</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;The child cui </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2"> has no MeSH id</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">cui1</span><span class="p">,</span> <span class="n">pName1</span><span class="p">))</span>
+
+            <span class="n">Dui2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getMeSHID</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">cui2</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">Dui2</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">pName2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPreferredName</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">cui2</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">Dui1</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">catAbbr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getCategoryOfTreecode</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">cui1</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">catAbbr</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                        <span class="n">cateString</span> <span class="o">=</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">catAbbr</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">cateString</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">catAbbr</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;The parent cui </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2"> has no MeSH id, its child dui is </span><span class="si">%s</span><span class="s2">, category abbrevation is </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">cui2</span><span class="p">,</span> <span class="n">pName2</span><span class="p">,</span> <span class="n">Dui1</span><span class="p">,</span> <span class="n">cateString</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">continue</span>
+
+            <span class="c1"># These are some supplymentals items, we do not save them, so pass</span>
+            <span class="k">if</span> <span class="n">Dui1</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">Dui2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">pName1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPreferredName</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">cui1</span><span class="p">)</span>
+                <span class="n">pName2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPreferredName</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">cui2</span><span class="p">)</span>
+                <span class="c1"># sys.stderr.write(</span>
+                <span class="c1">#     &quot;cui1 %s, %s has no dui, but cui2 %s, %s has dui %s\n&quot; % (cui1, pName1, cui2, pName2, Dui2))</span>
+                <span class="k">continue</span>
+
+            <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            # these are mainly root concept, most of cui1 is MeSH category</span>
+<span class="sd">            if Dui1 is None and Dui2 is None:</span>
+<span class="sd">                sys.stderr.write(&quot;these %s and %s two cuis have no Dui.\n&quot; % (cui1, cui2))</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+
+            <span class="c1"># Pass the Dui1 is None, Detail see the log file</span>
+            <span class="k">if</span> <span class="n">Dui1</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># Pass all MeSH Qualifiers data</span>
+            <span class="k">if</span> <span class="n">Dui1</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;Q&quot;</span><span class="p">):</span>
+                <span class="c1">#sys.stderr.write(&quot;Dui1 %s start with Q\n&quot; % Dui1)</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">Dui2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">Dui2</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;Q&quot;</span><span class="p">):</span>
+                <span class="c1">#sys.stderr.write(&quot;Dui2 %s start with Q\n&quot; % Dui2)</span>
+                <span class="k">continue</span>
+
+            <span class="n">treeCode1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getTreeCode</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">cui1</span><span class="p">)</span>
+            <span class="n">treeCode2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getTreeCode</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">cui2</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">treeCode1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="c1"># this msg will not print out, it means all dui1 has tree code</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Child concept dui1 </span><span class="si">%s</span><span class="s2"> has no tree code</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">Dui1</span><span class="p">)</span>
+
+            <span class="c1"># The category should mainly take both treecode1 and treecode2 into account</span>
+            <span class="c1"># Because the same concept in different category, its children will be diffirent, vice versa</span>
+            <span class="c1"># When we get children or parents of a concept, we need denote the category</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">treeCode1</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">firstLetter1</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">code1</span> <span class="ow">in</span> <span class="n">treeCode1</span><span class="p">:</span>
+                    <span class="n">letter1</span> <span class="o">=</span> <span class="n">code1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="n">firstLetter1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">letter1</span><span class="p">)</span>
+                <span class="n">category1</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">firstLetter1</span><span class="p">))</span>
+
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">treeCode2</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">firstLetter2</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">code2</span> <span class="ow">in</span> <span class="n">treeCode2</span><span class="p">:</span>
+                    <span class="n">letter2</span> <span class="o">=</span> <span class="n">code2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="n">firstLetter2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">letter2</span><span class="p">)</span>
+                <span class="n">category2</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">firstLetter2</span><span class="p">))</span>
+
+            <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            # Save the top concept</span>
+<span class="sd">            if cui2 == &quot;C1256741&quot; or cui2 == &quot;C1256739&quot;:</span>
+<span class="sd">                # this C1256741 has 13 category,</span>
+<span class="sd">                name = self.getPreferredName(cui=cui1)</span>
+<span class="sd">                handle_t.write(cui1 + &quot;\t&quot; + name + &quot;\n&quot;)</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+
+            <span class="c1"># While Dui2 is None, means Dui1 is a top concept, we need save this data in top MeSH table</span>
+            <span class="k">if</span> <span class="n">Dui2</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">category1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">cat</span> <span class="o">=</span> <span class="n">category1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="n">tree_code</span> <span class="o">=</span> <span class="n">treeCode1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="n">handle_top</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">Dui1</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">tree_code</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">cui2</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">cat</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">pName2</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">category1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="c1">#in fact no concetp is top level in two category</span>
+                    <span class="k">for</span> <span class="n">code2</span> <span class="ow">in</span> <span class="n">treeCode2</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">code2</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                            <span class="k">pass</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">letter2</span> <span class="o">=</span> <span class="n">code2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                            <span class="n">handle_top</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">Dui1</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">code2</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">cui2</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">letter2</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">pName2</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># Main part of these table</span>
+            <span class="k">if</span> <span class="n">Dui1</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">Dui2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">category1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;category1 is None, something wrong!!!</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">category2</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;category2 is None, something wrong!!!</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">cat</span> <span class="ow">in</span> <span class="n">category1</span><span class="p">:</span>
+                        <span class="k">for</span> <span class="n">cat2</span> <span class="ow">in</span> <span class="n">category2</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="n">cat</span> <span class="o">==</span> <span class="n">cat2</span><span class="p">:</span>
+                                <span class="n">handle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">Dui1</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">Dui2</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">cat</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">handle</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">handle_top</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Done the create parents function</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="createBcolzData.parseParentChildLog"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.createData.createBcolzData.parseParentChildLog">[docs]</a>    <span class="k">def</span> <span class="nf">parseParentChildLog</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get all category and its abbreviation.</span>
+
+<span class="sd">        This data will be store as attributes in MainHeadingDetailData table.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">logFile</span> <span class="o">=</span> <span class="s2">&quot;createParentChildRel.log&quot;</span>
+        <span class="n">handle</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">logFile</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+        <span class="n">allCategory</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">handle</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;cui C(\d+), (.*) \(MeSH Category\) .* category abbrevation is (.*)&quot;</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">cat</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">abbr</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">abbr</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">cat</span> <span class="ow">in</span> <span class="n">allCategory</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">allCategory</span><span class="p">[</span><span class="n">abbr</span><span class="p">]</span> <span class="o">=</span> <span class="n">cat</span>
+        <span class="k">for</span> <span class="n">ab</span> <span class="ow">in</span> <span class="n">allCategory</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">ab</span> <span class="o">+</span> <span class="s2">&quot; : &quot;</span> <span class="o">+</span> <span class="n">allCategory</span><span class="p">[</span><span class="n">ab</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">allCategory</span></div>
+
+<div class="viewcode-block" id="createBcolzData.getDiseaseTopDescriptors"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.createData.createBcolzData.getDiseaseTopDescriptors">[docs]</a>    <span class="k">def</span> <span class="nf">getDiseaseTopDescriptors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get top descriptors in disease category.</span>
+
+<span class="sd">        This data will be store as attributes in MainHeadingDetailData table.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Running get the disease top descriptors</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">inputFile</span> <span class="o">=</span> <span class="s2">&quot;MainHeadingDetailData.tsv&quot;</span>
+        <span class="n">handle</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">inputFile</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+        <span class="n">diseaseTopDescriptors</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">handle</span><span class="p">:</span>
+            <span class="n">array</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">category</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">category</span> <span class="o">!=</span> <span class="s2">&quot;C&quot;</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">topCode</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">topCode</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">prefferName</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">topCode</span> <span class="ow">in</span> <span class="n">diseaseTopDescriptors</span><span class="p">:</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;something is wrong!!!</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">diseaseTopDescriptors</span><span class="p">[</span><span class="n">topCode</span><span class="p">]</span> <span class="o">=</span> <span class="n">prefferName</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> : </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">topCode</span><span class="p">,</span> <span class="n">prefferName</span><span class="p">))</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Done get the disease top descriptors</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">diseaseTopDescriptors</span></div>
+
+
+<div class="viewcode-block" id="createBcolzData.checkParentData"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.createData.createBcolzData.checkParentData">[docs]</a>    <span class="k">def</span> <span class="nf">checkParentData</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This method used to compare the data with &quot;MeSH.Hsa.eg.db&quot;</span>
+
+<span class="sd">        We get the data in R packages &quot;meshes&quot;, store all its mesh concept in uniqueconcept.tsv</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">df1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_table</span><span class="p">(</span><span class="s2">&quot;ParentChildRel.tsv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="s1">&#39;infer&#39;</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Child&quot;</span><span class="p">,</span> <span class="s2">&quot;Parent&quot;</span><span class="p">,</span> <span class="s2">&quot;Category&quot;</span><span class="p">])</span>
+        <span class="n">li1</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">df1</span><span class="p">[</span><span class="s2">&quot;Child&quot;</span><span class="p">])</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">df1</span><span class="p">[</span><span class="s2">&quot;Parent&quot;</span><span class="p">]))</span>
+        <span class="c1"># this data from meshes</span>
+        <span class="n">df2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_table</span><span class="p">(</span><span class="s2">&quot;uniqueConcept.tsv&quot;</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;concept&#39;</span><span class="p">])</span>
+        <span class="n">li2</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">df2</span><span class="p">[</span><span class="s2">&quot;concept&quot;</span><span class="p">])</span>
+        <span class="n">conjunc</span> <span class="o">=</span> <span class="n">li1</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">li2</span><span class="p">)</span>
+        <span class="c1"># concept in li1, but not in li2</span>
+        <span class="n">diff_li1</span> <span class="o">=</span> <span class="n">li1</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">li2</span><span class="p">)</span>
+        <span class="c1"># concept in li2, but not in li1</span>
+        <span class="n">diff_li2</span> <span class="o">=</span> <span class="n">li2</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">li1</span><span class="p">)</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        diffSort = sorted(diff_li1)</span>
+<span class="sd">        treeCodeList = []</span>
+<span class="sd">        # handle = open(&quot;dataInMeshtblNotInUMLS.tsv&quot;, &quot;w&quot;)</span>
+<span class="sd">        for line in diffSort:</span>
+<span class="sd">            # filter long Dui, which added recently, filter out Q, which is qualify concept</span>
+<span class="sd">            if len(line) != 7 or line.startswith(&quot;Q&quot;):</span>
+<span class="sd">                sys.stderr.write(&quot;some data is wrong!&quot;)</span>
+<span class="sd">                continue</span>
+<span class="sd">            else:</span>
+<span class="sd">                treeCode = self.getTreeCode(dui=line)</span>
+<span class="sd">                treeCodeList.append(treeCode)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># mainly diffirence</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;our total data len: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">li1</span><span class="p">))</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;meshes total data len: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">li2</span><span class="p">))</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;items shared: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">conjunc</span><span class="p">))</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;items only in our data: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">diff_li1</span><span class="p">))</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;items only in meshes: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">diff_li2</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">diff_li2</span><span class="p">)</span>
+        <span class="k">return</span></div>
+
+<div class="viewcode-block" id="createBcolzData.createRNandRBRelTable"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.createData.createBcolzData.createRNandRBRelTable">[docs]</a>    <span class="k">def</span> <span class="nf">createRNandRBRelTable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This method used to create the RNandRBRel table.</span>
+
+<span class="sd">        In fact, we mainly focus on the disease category.</span>
+
+<span class="sd">        | There are several situation for RN and RB concept.</span>
+<span class="sd">        | In UMLS, we can select out:</span>
+<span class="sd">        | 1. Dxxxxxx None</span>
+<span class="sd">        | 2. None    Dxxxxxx</span>
+<span class="sd">        | 3. Dxxxxxx Dxxxxxx</span>
+<span class="sd">        | 4. None    None</span>
+<span class="sd">        | these four combination</span>
+<span class="sd">        | for situation 1, this data should be obtained, left is RB, right is RN</span>
+<span class="sd">        | for situation 2, this data should also be obtained</span>
+<span class="sd">        | for situation 3, this data should be exclude</span>
+<span class="sd">        | for situation 4, this data should be exclude</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initLog</span><span class="p">(</span><span class="n">log_file_name</span><span class="o">=</span><span class="s2">&quot;createRNandRBRelTable.log&quot;</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;running the createRNandRBRelTable function</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">sql_str</span> <span class="o">=</span> <span class="s2">&quot;select distinct CUI1, CUI2 from MRREL where REL=&#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s2">&quot;RN&quot;</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DBclient</span><span class="o">.</span><span class="n">fetch_all</span><span class="p">(</span><span class="n">sql_cmd</span><span class="o">=</span><span class="n">sql_str</span><span class="p">)</span>
+        <span class="c1"># RNtoRB is majority file</span>
+        <span class="n">handle</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;RNandRBRel.tsv&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+        <span class="n">handle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;RNconcept</span><span class="se">\t</span><span class="s2">RBconcept</span><span class="se">\t</span><span class="s2">Category</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="c1"># this file has only one item</span>
+        <span class="n">handle_2</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;RBtoRN.tsv&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+        <span class="n">handle_2</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;RNconcept</span><span class="se">\t</span><span class="s2">RBconcept</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+            <span class="n">cui1</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">cui2</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">dui1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getMeSHID</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">cui1</span><span class="p">)</span>
+            <span class="n">dui2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getMeSHID</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">cui2</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">dui1</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">dui2</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">srcDui1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getCodeForNoneTreeConcept</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">cui1</span><span class="p">)</span>
+                <span class="n">srcDui2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getCodeForNoneTreeConcept</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">cui2</span><span class="p">)</span>
+                <span class="c1"># if cui1 and cui2 has no MN attribute, interesting all srcDui start with &quot;C&quot;</span>
+                <span class="c1"># and in this situation, almost all srcDui1 == srcDui2, only 7 exceptions</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;cui1 </span><span class="si">%s</span><span class="s2"> and cui2 </span><span class="si">%s</span><span class="s2"> both has no dui, (</span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">)</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">cui1</span><span class="p">,</span> <span class="n">cui2</span><span class="p">,</span> <span class="n">srcDui1</span><span class="p">,</span> <span class="n">srcDui2</span><span class="p">))</span>
+                <span class="k">continue</span>
+
+            <span class="k">if</span> <span class="n">dui1</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">dui2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="c1">#these descriptor will not save in data set</span>
+                <span class="c1">#self.logger.warning(&quot;both cui1 and cui2 have dui: %s, %s\n&quot; % (dui1, dui2))</span>
+                <span class="k">continue</span>
+
+            <span class="k">if</span> <span class="n">dui1</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">dui2</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="c1">#in this situation, we can get many cui2 concept start with &quot;D&quot;</span>
+                <span class="n">code2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getCodeForNoneTreeConcept</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">cui2</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">code2</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="c1">#qualifierID = self.getQualifierID(cui=cui2)</span>
+                    <span class="c1">#sys.stderr.write(&quot;the narrow concept cui2 %s has no MeSH id, qualifier: %s\n&quot; % (cui2, qualifierID))</span>
+                    <span class="c1">#if cui has no TH attribute,then it is a qualifier</span>
+                    <span class="k">continue</span>
+
+                <span class="k">if</span> <span class="n">code2</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;D&quot;</span><span class="p">):</span>
+                    <span class="c1">#some mesh qualifier has no MN attribute, but has TH attribute</span>
+                    <span class="k">continue</span>
+
+                <span class="n">category</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getCategoryOfTreecode</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">cui1</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">category</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;dui1 </span><span class="si">%s</span><span class="s2"> has no tree code</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">dui1</span><span class="p">)</span>
+                    <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+                <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">category</span><span class="p">:</span>
+                    <span class="n">handle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="se">\t</span><span class="si">%s</span><span class="se">\t</span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">code2</span><span class="p">,</span> <span class="n">dui1</span><span class="p">,</span> <span class="n">c</span><span class="p">))</span>
+
+            <span class="c1">#thi is a very small case, mainly dui1 == dui2, and we do not need this pair</span>
+            <span class="k">if</span> <span class="n">dui1</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">dui2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">code1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getCodeForNoneTreeConcept</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">cui1</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">code1</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="n">handle_2</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="se">\t</span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">dui2</span><span class="p">,</span> <span class="n">code1</span><span class="p">))</span>
+
+        <span class="n">handle</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">handle_2</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;We selected </span><span class="si">%s</span><span class="s2"> items from mysql database&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Done the create RNtoRB function</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span></div>
+
+<div class="viewcode-block" id="createBcolzData.checkRNData"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.createData.createBcolzData.checkRNData">[docs]</a>    <span class="k">def</span> <span class="nf">checkRNData</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check the RN data.&quot;&quot;&quot;</span>
+
+        <span class="n">logFile</span> <span class="o">=</span> <span class="s2">&quot;createRNandRBRelTable.log&quot;</span>
+        <span class="kn">import</span> <span class="nn">re</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="n">logFile</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">):</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;\((.*), (.*)\)$&quot;</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">src1</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">src2</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">src1</span> <span class="o">!=</span> <span class="n">src2</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> and </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">src1</span><span class="p">,</span> <span class="n">src2</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">n</span> <span class="o">=</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="createBcolzData.createSupMainHeadingDetailData"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.createData.createBcolzData.createSupMainHeadingDetailData">[docs]</a>    <span class="k">def</span> <span class="nf">createSupMainHeadingDetailData</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create the supplement detail information for main heading descriptors.</span>
+
+<span class="sd">        | As the UMLS ID to MeSH ID is not &quot;one to one&quot;, but &quot;more to one&quot;</span>
+<span class="sd">        | In main heading detail table, we include only preffered umls id</span>
+<span class="sd">        | In this table, we fill in the remainder</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;running the create supplement Main Heading detail data function</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="c1"># create detail information for parents table</span>
+
+        <span class="n">fileOne</span> <span class="o">=</span> <span class="s2">&quot;ParentChildRel.tsv&quot;</span>
+        <span class="n">df1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_table</span><span class="p">(</span><span class="n">fileOne</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="s2">&quot;infer&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">meshID</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">df1</span><span class="p">[</span><span class="s2">&quot;Child&quot;</span><span class="p">])</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">df1</span><span class="p">[</span><span class="s2">&quot;Parent&quot;</span><span class="p">])</span>
+        <span class="c1"># unique mesh id</span>
+        <span class="n">meshID</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">meshID</span><span class="p">))</span>
+        <span class="n">supHandle</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;supplementMainHeading.tsv&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+        <span class="n">supHandle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;MeSHID</span><span class="se">\t</span><span class="s2">UMLSID</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">sql_cmd</span> <span class="o">=</span> <span class="s2">&quot;select distinct CUI,CODE from MRSAT where ATN=&#39;TH&#39;;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DBclient</span><span class="o">.</span><span class="n">fetch_all</span><span class="p">(</span><span class="n">sql_cmd</span><span class="o">=</span><span class="n">sql_cmd</span><span class="p">)</span>
+        <span class="n">duiDict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+            <span class="n">cui</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">dui</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">dui</span> <span class="ow">in</span> <span class="n">duiDict</span><span class="p">:</span>
+                <span class="n">duiDict</span><span class="p">[</span><span class="n">dui</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cui</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">duiDict</span><span class="p">[</span><span class="n">dui</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">cui</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">mesh</span> <span class="ow">in</span> <span class="n">meshID</span><span class="p">:</span>
+            <span class="n">dui</span> <span class="o">=</span> <span class="n">mesh</span>
+            <span class="n">cuis</span> <span class="o">=</span> <span class="n">duiDict</span><span class="p">[</span><span class="n">dui</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">cuis</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;something wrong!!!!</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">cui</span> <span class="ow">in</span> <span class="n">cuis</span><span class="p">:</span>
+                <span class="n">supHandle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="se">\t</span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">cui</span><span class="p">))</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Done the create supplement Main Heading detail data function</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span></div>
+
+
+<div class="viewcode-block" id="createBcolzData.getCategoryOfTreecode"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.createData.createBcolzData.getCategoryOfTreecode">[docs]</a>    <span class="k">def</span> <span class="nf">getCategoryOfTreecode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cui</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the MeSH concept category from its tree code.</span>
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        cui: string</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        None if no tree code, otherwise a list of string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">treeCode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getTreeCode</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">cui</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">treeCode</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">treeCode</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">letterList</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">code</span> <span class="ow">in</span> <span class="n">treeCode</span><span class="p">:</span>
+                <span class="n">letterList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">code</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">letterList</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">letterList</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">letterList</span></div>
+
+<div class="viewcode-block" id="createBcolzData.createMainHeadingDetailData"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.createData.createBcolzData.createMainHeadingDetailData">[docs]</a>    <span class="k">def</span> <span class="nf">createMainHeadingDetailData</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create the detail information for main heading descriptors.</span>
+
+<span class="sd">        This table include the mesh id, correspondent umls id, but only include the UMLS id which has MN attribute.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;running the create Main Heading detail data function</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="c1"># parse the ic frequence from file icfrequency.default.dat</span>
+        <span class="c1"># this file is obtained from perl module UMLS::Similarity</span>
+        <span class="c1">#ICfile = &quot;icfrequency.default.dat&quot;</span>
+        <span class="n">ICfile</span> <span class="o">=</span> <span class="s2">&quot;MeSH_IC.tsv&quot;</span>
+        <span class="n">freqDandle</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">ICfile</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+        <span class="n">ICdict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">freqDandle</span><span class="p">:</span>
+            <span class="p">[</span><span class="n">icdui</span><span class="p">,</span> <span class="n">freq</span><span class="p">]</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;&lt;&gt;&quot;</span><span class="p">)</span>
+            <span class="n">ICdict</span><span class="p">[</span><span class="n">icdui</span><span class="p">]</span> <span class="o">=</span> <span class="n">freq</span>
+
+        <span class="c1"># create detail information for parents table</span>
+        <span class="n">fileOne</span> <span class="o">=</span> <span class="s2">&quot;ParentChildRel.tsv&quot;</span>
+        <span class="n">df1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_table</span><span class="p">(</span><span class="n">fileOne</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="s2">&quot;infer&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">meshID</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">df1</span><span class="p">[</span><span class="s2">&quot;Child&quot;</span><span class="p">])</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">df1</span><span class="p">[</span><span class="s2">&quot;Parent&quot;</span><span class="p">])</span>
+        <span class="c1"># unique mesh id</span>
+        <span class="n">meshID</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">meshID</span><span class="p">))</span>
+
+        <span class="n">handle_Total</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;MainHeadingDetailData.tsv&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+        <span class="n">handle_Total</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;MeSHID</span><span class="se">\t</span><span class="s2">UMLSID</span><span class="se">\t</span><span class="s2">Tree_Code</span><span class="se">\t</span><span class="s2">Preferred_Name</span><span class="se">\t</span><span class="s2">Category</span><span class="se">\t</span><span class="s2">Frequence</span><span class="se">\t</span><span class="s2">Semantic_Type</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">mesh</span> <span class="ow">in</span> <span class="n">meshID</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">mesh</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;D&quot;</span><span class="p">:</span>
+                <span class="n">dui</span> <span class="o">=</span> <span class="n">mesh</span>
+                <span class="n">cui</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getCUIfromMeshID</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">mesh</span><span class="p">)</span>
+                <span class="n">treeCode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getTreeCode</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">cui</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">treeCode</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="nb">print</span> <span class="p">(</span><span class="n">mesh</span><span class="p">)</span>
+                    <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;treeCode is err&quot;</span><span class="p">)</span>
+                    <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">preferredName</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPreferredName</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">cui</span><span class="p">)</span>
+                <span class="n">category</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getCategoryOfTreecode</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">cui</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">category</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;category is wrong!&quot;</span><span class="p">)</span>
+                    <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">dui</span> <span class="ow">in</span> <span class="n">ICdict</span><span class="p">:</span>
+                    <span class="n">Frequence</span> <span class="o">=</span> <span class="n">ICdict</span><span class="p">[</span><span class="n">dui</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">Frequence</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">semtypes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getSemanticType</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">cui</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1">#now no cui in parentAndChildRel table</span>
+                <span class="n">dui</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+                <span class="n">cui</span> <span class="o">=</span> <span class="n">mesh</span>
+                <span class="n">treeCode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getTreeCode</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">cui</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">treeCode</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">treeCode</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+                    <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;the cui </span><span class="si">%s</span><span class="s2"> tree code is None&quot;</span> <span class="o">%</span> <span class="n">cui</span><span class="p">)</span>
+                    <span class="k">continue</span>
+                <span class="n">preferredName</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPreferredName</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">cui</span><span class="p">)</span>
+                <span class="n">category</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getCategoryOfTreecode</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">cui</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">category</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">cui</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">categoryDict</span><span class="p">:</span>
+                        <span class="n">category</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">categoryDict</span><span class="p">[</span><span class="n">cui</span><span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;somthing is wrong in cui </span><span class="si">%s</span><span class="s2"> category&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">cui</span><span class="p">))</span>
+                        <span class="k">continue</span>
+                <span class="k">if</span> <span class="n">cui</span> <span class="ow">in</span> <span class="n">ICdict</span><span class="p">:</span>
+                    <span class="n">Frequence</span> <span class="o">=</span> <span class="n">ICdict</span><span class="p">[</span><span class="n">cui</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">Frequence</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">semtypes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getSemanticType</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">cui</span><span class="p">)</span>
+            <span class="c1"># write data</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">treeCode</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">tc</span> <span class="ow">in</span> <span class="n">treeCode</span><span class="p">:</span>
+                    <span class="n">handle_Total</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                        <span class="s2">&quot;</span><span class="si">%s</span><span class="se">\t</span><span class="si">%s</span><span class="se">\t</span><span class="si">%s</span><span class="se">\t</span><span class="si">%s</span><span class="se">\t</span><span class="si">%s</span><span class="se">\t</span><span class="si">%s</span><span class="se">\t</span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">dui</span><span class="p">,</span> <span class="n">cui</span><span class="p">,</span> <span class="n">tc</span><span class="p">,</span> <span class="n">preferredName</span><span class="p">,</span> <span class="n">tc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Frequence</span><span class="p">,</span> <span class="n">semtypes</span><span class="p">))</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">treeCode</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">tc</span> <span class="o">=</span> <span class="n">treeCode</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">handle_Total</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                    <span class="s2">&quot;</span><span class="si">%s</span><span class="se">\t</span><span class="si">%s</span><span class="se">\t</span><span class="si">%s</span><span class="se">\t</span><span class="si">%s</span><span class="se">\t</span><span class="si">%s</span><span class="se">\t</span><span class="si">%s</span><span class="se">\t</span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">dui</span><span class="p">,</span> <span class="n">cui</span><span class="p">,</span> <span class="n">tc</span><span class="p">,</span> <span class="n">preferredName</span><span class="p">,</span> <span class="n">tc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Frequence</span><span class="p">,</span> <span class="n">semtypes</span><span class="p">))</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">treeCode</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="nb">print</span> <span class="p">(</span><span class="n">mesh</span><span class="p">)</span>
+                <span class="k">continue</span>
+                <span class="c1"># handle_Total.write(&quot;%s\t%s\t%s\t%s\t%s\t%s\t%s\n&quot; % (dui, cui, tc, preferredName, tc[0], Frequence, semtypes))</span>
+        <span class="n">handle_Total</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Done the create main heading detail data function</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="createBcolzData.createRNDetailData"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.createData.createBcolzData.createRNDetailData">[docs]</a>    <span class="k">def</span> <span class="nf">createRNDetailData</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create RN concept detail information table.</span>
+
+<span class="sd">        | This function will only create detail information of the RNconcept included in RNandRBRel table.</span>
+<span class="sd">        | All RNConcept start with &quot;C&quot;.</span>
+<span class="sd">        | A RNconcept usually corresponding to several UMLS concept</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;running the create RN detail data function</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">fileTwo</span> <span class="o">=</span> <span class="s2">&quot;RNandRBRel.tsv&quot;</span>
+        <span class="n">df2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_table</span><span class="p">(</span><span class="n">fileTwo</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="s2">&quot;infer&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">SDUIList</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">df2</span><span class="p">[</span><span class="s2">&quot;RNconcept&quot;</span><span class="p">])</span>
+        <span class="n">SDUIList</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">SDUIList</span><span class="p">))</span>
+
+        <span class="n">handle_RN</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;RNDetailData.tsv&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+        <span class="n">handle_RN</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;MeSHID</span><span class="se">\t</span><span class="s2">UMLSID</span><span class="se">\t</span><span class="s2">Preferred_Name</span><span class="se">\t</span><span class="s2">Semantic_Type</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="c1">#sql_cmd = &quot;select distinct CUI,CODE from MRSAT where STYPE=&#39;SDUI&#39;;&quot;</span>
+
+        <span class="n">sql_cmd</span> <span class="o">=</span> <span class="s2">&quot;select distinct CUI,CODE from MRSAT where ATN=&#39;TH&#39;;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DBclient</span><span class="o">.</span><span class="n">fetch_all</span><span class="p">(</span><span class="n">sql_cmd</span><span class="o">=</span><span class="n">sql_cmd</span><span class="p">)</span>
+        <span class="n">duiDict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+            <span class="n">cui</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">dui</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">dui</span> <span class="ow">in</span> <span class="n">duiDict</span><span class="p">:</span>
+                <span class="n">duiDict</span><span class="p">[</span><span class="n">dui</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cui</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">duiDict</span><span class="p">[</span><span class="n">dui</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">cui</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">SDUI</span> <span class="ow">in</span> <span class="n">SDUIList</span><span class="p">:</span>
+            <span class="n">cuis</span> <span class="o">=</span> <span class="n">duiDict</span><span class="p">[</span><span class="n">SDUI</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">cuis</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;something wrong!!!!</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">Cui</span> <span class="ow">in</span> <span class="n">cuis</span><span class="p">:</span>
+                <span class="n">preferredName</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPreferredName</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">Cui</span><span class="p">)</span>
+                <span class="n">semtypes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getSemanticType</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">Cui</span><span class="p">)</span>
+                <span class="n">handle_RN</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="se">\t</span><span class="si">%s</span><span class="se">\t</span><span class="si">%s</span><span class="se">\t</span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">SDUI</span><span class="p">,</span> <span class="n">Cui</span><span class="p">,</span> <span class="n">preferredName</span><span class="p">,</span> <span class="n">semtypes</span><span class="p">))</span>
+        <span class="c1"># handle_Total.close()</span>
+        <span class="n">handle_RN</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Done the create RN detail data function</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span></div>
+
+<div class="viewcode-block" id="createBcolzData.createOffspringAndAncestorRel"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.createData.createBcolzData.createOffspringAndAncestorRel">[docs]</a>    <span class="k">def</span> <span class="nf">createOffspringAndAncestorRel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This function used to create the offspring and ancestor relation of main heading descriptors.</span>
+
+<span class="sd">        It is based on tne ParentChildRel.tsv</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Running create offspring and ancestor rel table</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">inputFile</span> <span class="o">=</span> <span class="s2">&quot;ParentChildRel.tsv&quot;</span>
+        <span class="n">df1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_table</span><span class="p">(</span><span class="n">inputFile</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="s2">&quot;infer&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1">#construct parents dict</span>
+        <span class="n">parentsDict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df1</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;Category&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">parentsDict</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;Child&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">parentsDict</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;Category&quot;</span><span class="p">]]:</span>
+                    <span class="n">parentsDict</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;Category&quot;</span><span class="p">]][</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;Child&quot;</span><span class="p">]]</span> <span class="o">+=</span> <span class="p">[(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;Parent&quot;</span><span class="p">])]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">parentsDict</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;Category&quot;</span><span class="p">]][</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;Child&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;Parent&quot;</span><span class="p">])]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">parentsDict</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;Category&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="n">parentsDict</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;Category&quot;</span><span class="p">]][</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;Child&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;Parent&quot;</span><span class="p">])]</span>
+
+
+        <span class="n">outputFile</span> <span class="o">=</span> <span class="s2">&quot;offspringAndAncestorRel.tsv&quot;</span>
+        <span class="n">handle</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">outputFile</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+        <span class="n">handle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Offspring</span><span class="se">\t</span><span class="s2">Ancestor</span><span class="se">\t</span><span class="s2">Category</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df1</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+            <span class="n">category</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;Category&quot;</span><span class="p">]</span>
+            <span class="n">child</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;Child&quot;</span><span class="p">]</span>
+            <span class="n">parents</span> <span class="o">=</span> <span class="n">parentsDict</span><span class="p">[</span><span class="n">category</span><span class="p">][</span><span class="n">child</span><span class="p">]</span>
+            <span class="n">contmp</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">parents</span><span class="p">))</span>
+            <span class="n">searchedcon</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">while</span> <span class="n">contmp</span><span class="p">:</span>
+                <span class="n">interCon</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">con</span> <span class="ow">in</span> <span class="n">contmp</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">con</span> <span class="ow">in</span> <span class="n">searchedcon</span><span class="p">:</span>
+                        <span class="k">continue</span>
+                    <span class="n">searchedcon</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">con</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">con</span> <span class="ow">in</span> <span class="n">parentsDict</span><span class="p">[</span><span class="n">category</span><span class="p">]:</span>
+                        <span class="n">parent</span> <span class="o">=</span> <span class="n">parentsDict</span><span class="p">[</span><span class="n">category</span><span class="p">][</span><span class="n">con</span><span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">parent</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="k">if</span> <span class="n">parent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">interCon</span> <span class="o">=</span> <span class="n">interCon</span> <span class="o">+</span> <span class="n">parent</span>
+                <span class="n">contmp</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">interCon</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">ances</span> <span class="ow">in</span> <span class="n">searchedcon</span><span class="p">:</span>
+                <span class="n">handle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="se">\t</span><span class="si">%s</span><span class="se">\t</span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">ances</span><span class="p">,</span> <span class="n">category</span><span class="p">))</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Done create offspring and ancestor rel table</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span></div>
+
+<div class="viewcode-block" id="createBcolzData.constructBcolz"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.createData.createBcolzData.constructBcolz">[docs]</a>    <span class="k">def</span> <span class="nf">constructBcolz</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This funtion will convert above tables in bcolz format.&quot;&quot;&quot;</span>
+
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Running the construct Bcolz function</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">file1</span> <span class="o">=</span> <span class="s2">&quot;ParentChildRel.tsv&quot;</span>
+        <span class="n">file2</span> <span class="o">=</span> <span class="s2">&quot;RNandRBRel.tsv&quot;</span>
+        <span class="n">file3</span> <span class="o">=</span> <span class="s2">&quot;MainHeadingDetailData.tsv&quot;</span>
+        <span class="n">file4</span> <span class="o">=</span> <span class="s2">&quot;RNDetailData.tsv&quot;</span>
+        <span class="n">file5</span> <span class="o">=</span> <span class="s2">&quot;supplementMainHeading.tsv&quot;</span>
+        <span class="n">file6</span> <span class="o">=</span> <span class="s2">&quot;offspringAndAncestorRel.tsv&quot;</span>
+        <span class="n">dataPath</span> <span class="o">=</span> <span class="s2">&quot;/home/luozhihui/PycharmProjects/pyMeSHSim/pyMeSHSim/data/testData&quot;</span>
+
+        <span class="c1"># file 1 process ParentChildRel.tsv</span>
+        <span class="n">df1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_table</span><span class="p">(</span><span class="n">file1</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="s2">&quot;infer&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">df1</span><span class="o">.</span><span class="n">sort_values</span><span class="p">([</span><span class="s2">&quot;Category&quot;</span><span class="p">,</span> <span class="s2">&quot;Child&quot;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">df1</span> <span class="o">=</span> <span class="n">df1</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">categotyDict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">C</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">df1</span><span class="p">[</span><span class="s2">&quot;Category&quot;</span><span class="p">]):</span>
+            <span class="n">dftmp</span> <span class="o">=</span> <span class="n">df1</span><span class="p">[</span><span class="n">df1</span><span class="p">[</span><span class="s2">&quot;Category&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">C</span><span class="p">]</span>
+            <span class="n">start</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">dftmp</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">dftmp</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+            <span class="n">categotyDict</span><span class="p">[</span><span class="n">C</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+        <span class="n">bz1</span> <span class="o">=</span> <span class="n">bz</span><span class="o">.</span><span class="n">ctable</span><span class="o">.</span><span class="n">fromdataframe</span><span class="p">(</span><span class="n">df1</span><span class="p">,</span> <span class="n">rootdir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dataPath</span><span class="p">,</span> <span class="s2">&quot;ParentChildRel&quot;</span><span class="p">),</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
+        <span class="n">bz1</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;myattr&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">categotyDict</span>
+        <span class="n">bz1</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+        <span class="c1"># file 2 process RNandRBRel.tsv</span>
+        <span class="n">df2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_table</span><span class="p">(</span><span class="n">file2</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="s2">&quot;infer&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">df2</span><span class="o">.</span><span class="n">sort_values</span><span class="p">([</span><span class="s2">&quot;Category&quot;</span><span class="p">,</span> <span class="s2">&quot;RNconcept&quot;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">df2</span> <span class="o">=</span> <span class="n">df2</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">categotyDict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">C</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">df2</span><span class="p">[</span><span class="s2">&quot;Category&quot;</span><span class="p">]):</span>
+            <span class="n">dftmp</span> <span class="o">=</span> <span class="n">df2</span><span class="p">[</span><span class="n">df2</span><span class="p">[</span><span class="s2">&quot;Category&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">C</span><span class="p">]</span>
+            <span class="n">start</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">dftmp</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">dftmp</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+            <span class="n">categotyDict</span><span class="p">[</span><span class="n">C</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+        <span class="n">bz2</span> <span class="o">=</span> <span class="n">bz</span><span class="o">.</span><span class="n">ctable</span><span class="o">.</span><span class="n">fromdataframe</span><span class="p">(</span><span class="n">df2</span><span class="p">,</span> <span class="n">rootdir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dataPath</span><span class="p">,</span> <span class="s2">&quot;RNandRBRel&quot;</span><span class="p">),</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
+        <span class="n">bz2</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;myattr&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">categotyDict</span>
+        <span class="n">bz2</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+        <span class="c1"># file 3 process MainHeadingDetailData.tsv</span>
+        <span class="n">df3</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_table</span><span class="p">(</span><span class="n">file3</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="s2">&quot;infer&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">df3</span><span class="o">.</span><span class="n">sort_values</span><span class="p">([</span><span class="s2">&quot;Category&quot;</span><span class="p">,</span> <span class="s2">&quot;MeSHID&quot;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">df3</span> <span class="o">=</span> <span class="n">df3</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">categotyDict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">C</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">df3</span><span class="p">[</span><span class="s2">&quot;Category&quot;</span><span class="p">]):</span>
+            <span class="n">dftmp</span> <span class="o">=</span> <span class="n">df3</span><span class="p">[</span><span class="n">df3</span><span class="p">[</span><span class="s2">&quot;Category&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">C</span><span class="p">]</span>
+            <span class="n">start</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">dftmp</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">dftmp</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+            <span class="n">categotyDict</span><span class="p">[</span><span class="n">C</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+
+            <span class="c1"># set disease category semantic type</span>
+            <span class="k">if</span> <span class="n">C</span> <span class="o">==</span> <span class="s2">&quot;C&quot;</span><span class="p">:</span>
+                <span class="n">semanticTypes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">dftmp</span><span class="p">[</span><span class="s2">&quot;Semantic_Type&quot;</span><span class="p">]))</span>
+
+        <span class="n">bz3</span> <span class="o">=</span> <span class="n">bz</span><span class="o">.</span><span class="n">ctable</span><span class="o">.</span><span class="n">fromdataframe</span><span class="p">(</span><span class="n">df3</span><span class="p">,</span> <span class="n">rootdir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dataPath</span><span class="p">,</span> <span class="s2">&quot;MainHeadingDetailData&quot;</span><span class="p">),</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
+        <span class="n">bz3</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;myattr&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">categotyDict</span>
+        <span class="n">bz3</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;DiseaseCategoryST&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">semanticTypes</span>
+        <span class="c1"># print (semanticTypes)</span>
+        <span class="n">bz3</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;allCategory&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parseParentChildLog</span><span class="p">()</span>
+        <span class="n">bz3</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+        <span class="c1"># file 4 process RNDetailData.tsv</span>
+        <span class="c1"># it has no Category columns, so we don&#39;t give myattr</span>
+        <span class="n">df4</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_table</span><span class="p">(</span><span class="n">file4</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="s2">&quot;infer&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">bz4</span> <span class="o">=</span> <span class="n">bz</span><span class="o">.</span><span class="n">ctable</span><span class="o">.</span><span class="n">fromdataframe</span><span class="p">(</span><span class="n">df4</span><span class="p">,</span> <span class="n">rootdir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dataPath</span><span class="p">,</span> <span class="s2">&quot;RNDetailData&quot;</span><span class="p">),</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
+        <span class="n">bz4</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+        <span class="c1">#file 5 process supplementMainHeading.tsv</span>
+        <span class="n">df5</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_table</span><span class="p">(</span><span class="n">file5</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="s2">&quot;infer&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">bz5</span> <span class="o">=</span> <span class="n">bz</span><span class="o">.</span><span class="n">ctable</span><span class="o">.</span><span class="n">fromdataframe</span><span class="p">(</span><span class="n">df5</span><span class="p">,</span> <span class="n">rootdir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dataPath</span><span class="p">,</span> <span class="s2">&quot;supplementMainHeading&quot;</span><span class="p">),</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
+        <span class="n">bz5</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+        <span class="c1">#file 6 process the offspring and ancestor relation file</span>
+        <span class="n">df6</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_table</span><span class="p">(</span><span class="n">file6</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="s2">&quot;infer&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">df6</span><span class="o">.</span><span class="n">sort_values</span><span class="p">([</span><span class="s2">&quot;Category&quot;</span><span class="p">,</span> <span class="s2">&quot;Offspring&quot;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">df6</span> <span class="o">=</span> <span class="n">df6</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1">#define myattr</span>
+        <span class="n">categotyDict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">C</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">df6</span><span class="p">[</span><span class="s2">&quot;Category&quot;</span><span class="p">]):</span>
+            <span class="n">dftmp</span> <span class="o">=</span> <span class="n">df6</span><span class="p">[</span><span class="n">df6</span><span class="p">[</span><span class="s2">&quot;Category&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">C</span><span class="p">]</span>
+            <span class="n">start</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">dftmp</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">dftmp</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+            <span class="n">categotyDict</span><span class="p">[</span><span class="n">C</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+        <span class="n">bz6</span> <span class="o">=</span> <span class="n">bz</span><span class="o">.</span><span class="n">ctable</span><span class="o">.</span><span class="n">fromdataframe</span><span class="p">(</span><span class="n">df6</span><span class="p">,</span> <span class="n">rootdir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dataPath</span><span class="p">,</span> <span class="s2">&quot;offspringAndAncestorRel&quot;</span><span class="p">),</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
+        <span class="n">bz6</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;myattr&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">categotyDict</span>
+        <span class="n">bz6</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Done the construct bcolz function</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Zhihui Luo.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

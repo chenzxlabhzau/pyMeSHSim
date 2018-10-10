@@ -1,0 +1,381 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyMeSHSim.Sim.similarity &mdash; pyMeSHSim 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> pyMeSHSim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference.html">Library reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">pyMeSHSim</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>pyMeSHSim.Sim.similarity</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pyMeSHSim.Sim.similarity</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Author: ZhiHui Luo</span>
+<span class="c1"># Organization: HuaZhong Agricultural University</span>
+
+
+<span class="c1">#!/usr/bin/python3</span>
+<span class="kn">from</span> <span class="nn">.PathScore</span> <span class="k">import</span> <span class="n">pathMethod</span>
+<span class="kn">from</span> <span class="nn">..metamapWrap.MetamapInterface</span> <span class="k">import</span> <span class="n">MetaMap</span>
+<span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">copy</span>
+
+<div class="viewcode-block" id="termComp"><a class="viewcode-back" href="../../../Sim.html#pyMeSHSim.Sim.similarity.termComp">[docs]</a><span class="k">class</span> <span class="nc">termComp</span><span class="p">(</span><span class="n">pathMethod</span><span class="p">):</span>
+
+<div class="viewcode-block" id="termComp.__init__"><a class="viewcode-back" href="../../../_autosummary/pyMeSHSim.Sim.similarity.termComp.html#pyMeSHSim.Sim.similarity.termComp.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">pathMethod</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="termComp.termSim"><a class="viewcode-back" href="../../../Sim.html#pyMeSHSim.Sim.similarity.termComp.termSim">[docs]</a>    <span class="k">def</span> <span class="nf">termSim</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dui1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dui2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This function used to measure the distance between two MeSH terms. including MHs and SCRs.</span>
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        dui1: String</span>
+<span class="sd">            MeSH ID.</span>
+
+<span class="sd">        dui1: String</span>
+<span class="sd">            MeSH ID.</span>
+
+<span class="sd">        category: String</span>
+<span class="sd">            A MeSH category.</span>
+<span class="sd">            One of the value in (&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;D&#39;, &#39;E&#39;, &#39;F&#39;, &#39;G&#39;, &#39;H&#39;, &#39;I&#39;, &#39;J&#39;, &#39;K&#39;, &#39;L&#39;, &#39;M&#39;, &#39;N&#39;, &#39;V&#39;, &#39;Z&#39;).</span>
+<span class="sd">            It can&#39;t be None.</span>
+
+<span class="sd">        method: String</span>
+<span class="sd">            One value in [&quot;lin&quot;, &quot;res&quot;, &quot;jiang&quot;, &quot;rel&quot;, &quot;wang&quot;].</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        list of float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkDui</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui1</span><span class="p">):</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;invalid MeSH ID in dui1</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkDui</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui2</span><span class="p">):</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;invalid MeSH ID in dui2</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">term_list_1</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">dui1</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;C&quot;</span><span class="p">):</span>
+            <span class="n">BRs1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convertToBroad</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">BRs1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;MeSH concept </span><span class="si">%s</span><span class="s2"> has no broad terms</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">dui1</span><span class="p">)</span>
+                <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">term_list_1</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">BRs1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">term_list_1</span> <span class="o">=</span> <span class="p">[</span><span class="n">dui1</span><span class="p">]</span>
+
+        <span class="n">term_list_2</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">dui2</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;C&quot;</span><span class="p">):</span>
+            <span class="n">BRs2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convertToBroad</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui2</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">BRs2</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;MeSH concept </span><span class="si">%s</span><span class="s2"> has no broad terms</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">dui2</span><span class="p">)</span>
+                <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">term_list_2</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">BRs2</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">term_list_2</span> <span class="o">=</span> <span class="p">[</span><span class="n">dui2</span><span class="p">]</span>
+
+
+        <span class="n">score_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">con1</span> <span class="ow">in</span> <span class="n">term_list_1</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">con2</span> <span class="ow">in</span> <span class="n">term_list_2</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">method</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;lin&quot;</span><span class="p">,</span> <span class="s2">&quot;res&quot;</span><span class="p">,</span> <span class="s2">&quot;jiang&quot;</span><span class="p">,</span> <span class="s2">&quot;rel&quot;</span><span class="p">]:</span>
+                    <span class="n">score</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calICSimilarity</span><span class="p">(</span><span class="n">dui1</span><span class="o">=</span><span class="n">con1</span><span class="p">,</span> <span class="n">dui2</span><span class="o">=</span><span class="n">con2</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;wang&quot;</span><span class="p">:</span>
+                    <span class="n">score</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calPathSimilarity</span><span class="p">(</span><span class="n">dui1</span><span class="o">=</span><span class="n">con1</span><span class="p">,</span> <span class="n">dui2</span><span class="o">=</span><span class="n">con2</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">)</span>
+                <span class="n">score_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="se">\t</span><span class="si">%s</span><span class="se">\t</span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">dui1</span><span class="p">,</span> <span class="n">dui2</span><span class="p">,</span> <span class="n">score</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">score_list</span></div></div>
+
+<div class="viewcode-block" id="metamapFilter"><a class="viewcode-back" href="../../../Sim.html#pyMeSHSim.Sim.similarity.metamapFilter">[docs]</a><span class="k">class</span> <span class="nc">metamapFilter</span><span class="p">(</span><span class="n">MetaMap</span><span class="p">,</span> <span class="n">pathMethod</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This class inherits from MetaMap and pathMethod.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="metamapFilter.__init__"><a class="viewcode-back" href="../../../_autosummary/pyMeSHSim.Sim.similarity.metamapFilter.html#pyMeSHSim.Sim.similarity.metamapFilter.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">MetaMap</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">pathMethod</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="metamapFilter.discardAncestor"><a class="viewcode-back" href="../../../Sim.html#pyMeSHSim.Sim.similarity.metamapFilter.discardAncestor">[docs]</a>    <span class="k">def</span> <span class="nf">discardAncestor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">concepts</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Discard the ancestor concept in one parse result.</span>
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        concepts: list</span>
+<span class="sd">            A list of dict, result of runmetamap.</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        a list of concept</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">concepts</span><span class="p">)</span> <span class="o">&lt;=</span><span class="mi">0</span> <span class="ow">or</span> <span class="n">concepts</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;no items in concepts</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">mesh_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">con</span> <span class="ow">in</span> <span class="n">concepts</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">con</span><span class="p">[</span><span class="s2">&quot;MeSHID&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">dui</span> <span class="o">=</span> <span class="n">con</span><span class="p">[</span><span class="s2">&quot;MeSHID&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">dui</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">mesh_dict</span><span class="p">:</span>
+                <span class="n">mesh_dict</span><span class="p">[</span><span class="n">dui</span><span class="p">]</span> <span class="o">=</span> <span class="n">con</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">mesh_dict</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">concepts</span>
+
+        <span class="n">all_meshid</span> <span class="o">=</span> <span class="n">mesh_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">all_meshid</span><span class="p">:</span>
+            <span class="n">cates</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getCategory</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">key</span><span class="p">)</span>
+            <span class="n">ances_list</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">cate</span> <span class="ow">in</span> <span class="n">cates</span><span class="p">:</span>
+                <span class="n">ancestors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAncestors</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="s2">&quot;D000544&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">cate</span><span class="p">)</span>
+                <span class="n">ances_list</span> <span class="o">=</span> <span class="n">ances_list</span> <span class="o">+</span> <span class="n">ancestors</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">ances_list</span><span class="p">:</span>
+                <span class="n">ances_list</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+            <span class="c1">#tmp = [val for val in ances_list if val in all_meshid]</span>
+            <span class="n">all_meshid</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">all_meshid</span><span class="p">)</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">ances_list</span><span class="p">)))</span>
+
+        <span class="n">new_concept</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="nb">id</span> <span class="ow">in</span> <span class="n">all_meshid</span><span class="p">:</span>
+            <span class="n">new_concept</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mesh_dict</span><span class="p">[</span><span class="nb">id</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">new_concept</span></div>
+
+
+<div class="viewcode-block" id="metamapFilter.discardNodeHigh"><a class="viewcode-back" href="../../../Sim.html#pyMeSHSim.Sim.similarity.metamapFilter.discardNodeHigh">[docs]</a>    <span class="k">def</span> <span class="nf">discardNodeHigh</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">concepts</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This method will discard the concept which is in a high leve, has many offsprings.</span>
+
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        number: int</span>
+<span class="sd">            Threshold value, above this value will be discarded.</span>
+
+<span class="sd">        concepts: list</span>
+<span class="sd">            A list of dict, result of runmetamap.</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        list of concept</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">concepts</span><span class="p">)</span> <span class="o">&lt;=</span><span class="mi">0</span> <span class="ow">or</span> <span class="n">concepts</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;no items in concepts</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">new_concept</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">con</span> <span class="ow">in</span> <span class="n">concepts</span><span class="p">:</span>
+
+            <span class="k">if</span> <span class="n">con</span><span class="p">[</span><span class="s2">&quot;MeSHID&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">dui</span> <span class="o">=</span> <span class="n">con</span><span class="p">[</span><span class="s2">&quot;MeSHID&quot;</span><span class="p">]</span>
+            <span class="n">cates</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getCategory</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui</span><span class="p">)</span>
+            <span class="n">descen_list</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">cate</span> <span class="ow">in</span> <span class="n">cates</span><span class="p">:</span>
+                <span class="n">offsp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDescendant</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">cate</span><span class="p">)</span>
+                <span class="n">descen_list</span> <span class="o">=</span> <span class="n">descen_list</span> <span class="o">+</span> <span class="n">offsp</span>
+            <span class="k">if</span> <span class="n">dui</span> <span class="ow">in</span> <span class="n">descen_list</span><span class="p">:</span>
+                <span class="n">descen_list</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">dui</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">descen_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">number</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">new_concept</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">con</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">new_concept</span></div></div>
+
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Zhihui Luo.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

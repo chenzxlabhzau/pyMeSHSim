@@ -1,0 +1,504 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>metamapWrap &mdash; pyMeSHSim 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="pyMeSHSim.metamapWrap.Concept" href="_autosummary/pyMeSHSim.metamapWrap.Concept.html" />
+    <link rel="prev" title="pyMeSHSim.data.duiFunc" href="_autosummary/pyMeSHSim.data.duiFunc.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> pyMeSHSim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="reference.html">Library reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="data.html">data</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">metamapWrap</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/pyMeSHSim.metamapWrap.Concept.html">pyMeSHSim.metamapWrap.Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/pyMeSHSim.metamapWrap.MetamapInterface.html">pyMeSHSim.metamapWrap.MetamapInterface</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Sim.html">Sim</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pyMeSHSim</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="reference.html">Library reference</a> &raquo;</li>
+        
+      <li>metamapWrap</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/metamapWrap.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="metamapwrap">
+<h1>metamapWrap<a class="headerlink" href="#metamapwrap" title="Permalink to this headline">¶</a></h1>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#module-pyMeSHSim.metamapWrap.Concept" title="pyMeSHSim.metamapWrap.Concept"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pyMeSHSim.metamapWrap.Concept</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#module-pyMeSHSim.metamapWrap.MetamapInterface" title="pyMeSHSim.metamapWrap.MetamapInterface"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pyMeSHSim.metamapWrap.MetamapInterface</span></code></a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<span class="target" id="module-pyMeSHSim.metamapWrap.Concept"></span><dl class="class">
+<dt id="pyMeSHSim.metamapWrap.Concept.Concept">
+<em class="property">class </em><code class="descclassname">pyMeSHSim.metamapWrap.Concept.</code><code class="descname">Concept</code><span class="sig-paren">(</span><em>**entries</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/metamapWrap/Concept.html#Concept"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.metamapWrap.Concept.Concept" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This is base class of MetaMap in metamapWrap.</p>
+<dl class="classmethod">
+<dt id="pyMeSHSim.metamapWrap.Concept.Concept.MMIConcept">
+<em class="property">classmethod </em><code class="descname">MMIConcept</code><span class="sig-paren">(</span><em>mmi_array=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/metamapWrap/Concept.html#Concept.MMIConcept"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.metamapWrap.Concept.Concept.MMIConcept" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method used to create a concept object</p>
+<div class="line-block">
+<div class="line">mmi output format still will create AA and UA result, but abbreviation recognition always mistake.</div>
+<div class="line">We drop these result.</div>
+</div>
+<p><strong>Attribute of mmi concept</strong></p>
+<div class="line-block">
+<div class="line">“index” : text serial number</div>
+<div class="line">“mm”: result type</div>
+<div class="line">score: result score, higher means more accurate</div>
+<div class="line">preffered_name: freferred name</div>
+<div class="line">cui: UMLS ID</div>
+<div class="line">semtypes: semantic type</div>
+<div class="line">trigger: Comma separated sextuple showing what triggered MMI to identify this UMLS concept</div>
+<div class="line">location: Summarizes where UMLS concept was found</div>
+<div class="line">pos_info: Semicolon-separated list of positional-information terns</div>
+<div class="line">tree_codes: Semicolon-separated list of any MeSH treecode</div>
+</div>
+<p><strong>parameter</strong></p>
+<dl class="docutils">
+<dt>mmi_array: list</dt>
+<dd>The MetaMap result with option -N.</dd>
+</dl>
+<p><strong>return</strong></p>
+<p>Concept object.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="pyMeSHSim.metamapWrap.Concept.Concept.MeSHConcept">
+<em class="property">classmethod </em><code class="descname">MeSHConcept</code><span class="sig-paren">(</span><em>cui=None</em>, <em>dui=None</em>, <em>tree_code=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/metamapWrap/Concept.html#Concept.MeSHConcept"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.metamapWrap.Concept.Concept.MeSHConcept" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method create a concept object.</p>
+<p>Only can select one paremeter.</p>
+<p><strong>parameter</strong></p>
+<dl class="docutils">
+<dt>cui: String</dt>
+<dd>UMLS ID.</dd>
+<dt>dui: String</dt>
+<dd>MeSH ID.</dd>
+<dt>tree_code: String</dt>
+<dd>MeSH tree number.</dd>
+</dl>
+<p><strong>return</strong></p>
+<p>Concept object</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-pyMeSHSim.metamapWrap.MetamapInterface"></span><dl class="class">
+<dt id="pyMeSHSim.metamapWrap.MetamapInterface.Basic">
+<em class="property">class </em><code class="descclassname">pyMeSHSim.metamapWrap.MetamapInterface.</code><code class="descname">Basic</code><a class="reference internal" href="_modules/pyMeSHSim/metamapWrap/MetamapInterface.html#Basic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.metamapWrap.MetamapInterface.Basic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="staticmethod">
+<dt id="pyMeSHSim.metamapWrap.MetamapInterface.Basic.run">
+<em class="property">static </em><code class="descname">run</code><span class="sig-paren">(</span><em>cmd=None</em>, <em>wkdir=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/metamapWrap/MetamapInterface.html#Basic.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.metamapWrap.MetamapInterface.Basic.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyMeSHSim.metamapWrap.MetamapInterface.MetaMap">
+<em class="property">class </em><code class="descclassname">pyMeSHSim.metamapWrap.MetamapInterface.</code><code class="descname">MetaMap</code><span class="sig-paren">(</span><em>path=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/metamapWrap/MetamapInterface.html#MetaMap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.metamapWrap.MetamapInterface.MetaMap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class wraps the natural-language processing software “MetaMap”.</p>
+<div class="line-block">
+<div class="line">Which can map biomedical text to the UMLS Metathesaurus.</div>
+<div class="line">As base of this work, MetaMap should has been installed.</div>
+</div>
+<p><strong>parameter</strong></p>
+<dl class="docutils">
+<dt>path <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><div class="first last line-block">
+<div class="line">metamap path.</div>
+<div class="line">eg. path=”/home/Project/UMLS/public_mm/bin/metamap16”.</div>
+<div class="line">please avoid to use this “/home/Project/UMLS/public_mm/bin/metamap” execute file path.</div>
+<div class="line">this module will select the parameters according your metamap version.</div>
+</div>
+</dd>
+</dl>
+<p><strong>attributes</strong></p>
+<dl class="docutils">
+<dt>metamap: String</dt>
+<dd><div class="first last line-block">
+<div class="line">metamap path.</div>
+</div>
+</dd>
+<dt>metamapBinDir: String</dt>
+<dd><div class="first last line-block">
+<div class="line">metamap bin directory.</div>
+</div>
+</dd>
+<dt>skrmedpostctl: String</dt>
+<dd><div class="first last line-block">
+<div class="line">skrmedpostctl path, it is component of metamap.</div>
+<div class="line">start skrmedpostctl to start metamap.</div>
+</div>
+</dd>
+<dt>wsdserverctl: String</dt>
+<dd><div class="first last line-block">
+<div class="line">wsdserverctl path, it is component of metamap.</div>
+<div class="line">strat wsdserverctl to start metamap.</div>
+</div>
+</dd>
+<dt>semanticTypes: List</dt>
+<dd><div class="first last line-block">
+<div class="line">it contains the semantic type abbreviation in UMLS Metathesaurus.</div>
+<div class="line">like [“dsyn”, “anab”, “inpo”, ….].</div>
+<div class="line">this value comes from table “parent”.</div>
+</div>
+</dd>
+<dt>mmiName: Tuple</dt>
+<dd><div class="first last line-block">
+<div class="line">The SKR program is an extension of MetaMap, it formats the metamap’s output.</div>
+<div class="line">such as</div>
+<div class="line">‘00000000 | MM | 4 | Complication | C0009566 | [patf] | [“Complications”-tx-1-“complications”] |AB’</div>
+<div class="line">columns seperated by “|”, this attribute store the corresponding column’s name.</div>
+</div>
+</dd>
+</dl>
+<p>this class will create metamap object.</p>
+<p><strong>see also</strong></p>
+<p>pyMeSHSim.metamapWrap.Concept</p>
+<dl class="method">
+<dt id="pyMeSHSim.metamapWrap.MetamapInterface.MetaMap.runMetaMap">
+<code class="descname">runMetaMap</code><span class="sig-paren">(</span><em>text=None, source=['MSH'], semantic_types=None, ignore_word_order=True, conjunction=True, composite_phrases=4, silent=True, sldi=True, sldiID=False, term_processing=True, input_file_path=None, text_convert=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/metamapWrap/MetamapInterface.html#MetaMap.runMetaMap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.metamapWrap.MetamapInterface.MetaMap.runMetaMap" title="Permalink to this definition">¶</a></dt>
+<dd><p>The main method run the MetaMap.</p>
+<p><strong>parameters</strong></p>
+<dl class="docutils">
+<dt>text <span class="classifier-delimiter">:</span> <span class="classifier">String</span></dt>
+<dd>The free text will  be processed.</dd>
+<dt>source <span class="classifier-delimiter">:</span> <span class="classifier">List</span></dt>
+<dd><div class="first last line-block">
+<div class="line">A list of string, the source of UMLS Metathesaurus.</div>
+<div class="line">MSH (MeSH).</div>
+<div class="line">MTH (Metathesaurus Names).</div>
+<div class="line">SNOMEDCT_US (US Edition of SNOMED CT).</div>
+<div class="line">OMIM (Online Mendelian Inheritance in Man).</div>
+<div class="line">ICD10CM (International Classification of Diseases, Tenth Revision, Clinical Modification).</div>
+<div class="line">…</div>
+<div class="line">eg. [“MSH”, “MTH”].</div>
+<div class="line">default: [“MSH”].</div>
+</div>
+</dd>
+<dt>semantic_types: List</dt>
+<dd><div class="first last line-block">
+<div class="line">A list of string, containing the abbr. of different semantic type.</div>
+<div class="line">default: None.</div>
+<div class="line">It is all semantic types occur in MeSH “Disease” category, get from table “parents”.</div>
+</div>
+</dd>
+<dt>ignore_word_order: True or False</dt>
+<dd><div class="first last line-block">
+<div class="line">Allows MetaMap to ignore the order of words in the input text.</div>
+<div class="line">default: True.</div>
+</div>
+</dd>
+<dt>conjunction: True or False</dt>
+<dd><div class="first last line-block">
+<div class="line">Causes MetaMap’s phrase chunker to recombine smaller phrases separated by a conjunction.</div>
+<div class="line">This argument exists only in version 2016.</div>
+<div class="line">default: False.</div>
+</div>
+</dd>
+<dt>composite_phrases: int</dt>
+<dd><div class="first last line-block">
+<div class="line">Causes MetaMap to construct longer, composite phrases from the smaller phrases produced by the parser.</div>
+<div class="line">default: 4.</div>
+</div>
+</dd>
+<dt>silent: True or False</dt>
+<dd><div class="first last line-block">
+<div class="line">Suppresses the display of header information.</div>
+<div class="line">default: True.</div>
+</div>
+</dd>
+<dt>sldi: True or False</dt>
+<dd><div class="first last line-block">
+<div class="line">MetaMap by default expects input records to be separated by a blank line.</div>
+<div class="line">To process such a list of terms without inserting a blank line between each term, call MetaMap with the</div>
+<div class="line">–sldi (Single-Line Delimited Input) option.</div>
+<div class="line">the input File example:</div>
+<div class="line">———————————</div>
+<div class="line">Written informed consent.</div>
+<div class="line">Age 18 years or older.</div>
+<div class="line">informed consent.</div>
+<div class="line">Male or female.</div>
+<div class="line">At least 18 years of age.</div>
+<div class="line">Able to give informed consent.</div>
+<div class="line">Signed informed consent.</div>
+<div class="line">Healthy.</div>
+<div class="line">Male.</div>
+<div class="line">———————————</div>
+<div class="line">default: True.</div>
+</div>
+</dd>
+<dt>slidID: True or False</dt>
+<dd><div class="first line-block">
+<div class="line">This parameter can be use only in the situation that input_file_path is not None, and text is None.</div>
+<div class="line">The input file format should be like below.</div>
+<div class="line">This input format is very similar to that described in List of Terms. To associate a specific term ID (similar to a MEDLINE PMID) with each term in a list, simply prefix each term with an ID followed by a pipe symbol |”.</div>
+<div class="line">eg.</div>
+</div>
+<div class="last line-block">
+<div class="line">Txt001|Written informed consent.</div>
+<div class="line">Txt002|Age 18 years or older.</div>
+<div class="line">Txt003|informed consent.</div>
+<div class="line">Txt004|Male or female.</div>
+<div class="line">Txt005|At least 18 years of age.</div>
+<div class="line">Txt006|Able to give informed consent.</div>
+<div class="line">Txt007|Signed informed consent.</div>
+<div class="line">Txt008|Healthy.</div>
+<div class="line">Txt009|Male.</div>
+</div>
+</dd>
+<dt>term_processing: True or False</dt>
+<dd><div class="first last line-block">
+<div class="line">Each term will be analyzed as a single phrase, and not chunked into separate components.</div>
+<div class="line">default: True</div>
+</div>
+</dd>
+<dt>input_file_path: String or None</dt>
+<dd><div class="first last line-block">
+<div class="line">MetaMap input file.</div>
+<div class="line">default: None</div>
+</div>
+</dd>
+<dt>text_convert: True or False</dt>
+<dd><div class="first last line-block">
+<div class="line">this parameter will be set only when set the “sldiID” option.</div>
+<div class="line">“|” is the seperate character in sldiID format, if its in you free text.</div>
+<div class="line">The software will mistake.</div>
+<div class="line">default False.</div>
+</div>
+</dd>
+</dl>
+<p><strong>return</strong></p>
+<p>list of concept object or None.</p>
+<p><strong>see also</strong></p>
+<div class="line-block">
+<div class="line">pyMeSHSim.data.dataInterface</div>
+<div class="line">pyMeSHSim.metamapWrap.Concept</div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.metamapWrap.MetamapInterface.MetaMap.startMetaMap">
+<code class="descname">startMetaMap</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/metamapWrap/MetamapInterface.html#MetaMap.startMetaMap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.metamapWrap.MetamapInterface.MetaMap.startMetaMap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start metamap service</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="_autosummary/pyMeSHSim.metamapWrap.Concept.html" class="btn btn-neutral float-right" title="pyMeSHSim.metamapWrap.Concept" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="_autosummary/pyMeSHSim.data.duiFunc.html" class="btn btn-neutral" title="pyMeSHSim.data.duiFunc" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Zhihui Luo.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

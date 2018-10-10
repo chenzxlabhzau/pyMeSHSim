@@ -1,0 +1,592 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyMeSHSim.Sim.ICScore &mdash; pyMeSHSim 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> pyMeSHSim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference.html">Library reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">pyMeSHSim</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>pyMeSHSim.Sim.ICScore</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pyMeSHSim.Sim.ICScore</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Author: ZhiHui Luo</span>
+<span class="c1"># Organization: HuaZhong Agricultural University</span>
+
+<span class="c1">#!/usr/bin/python3</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="k">import</span> <span class="n">deepcopy</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="k">import</span> <span class="n">log</span>
+<span class="kn">from</span> <span class="nn">..data</span> <span class="k">import</span> <span class="n">dataDB</span>
+<span class="kn">from</span> <span class="nn">.MeSHProcess</span> <span class="k">import</span> <span class="n">MeSHProcess</span>
+<span class="kn">import</span> <span class="nn">bcolz</span> <span class="k">as</span> <span class="nn">bz</span>
+
+<div class="viewcode-block" id="InformationContent"><a class="viewcode-back" href="../../../Sim.html#pyMeSHSim.Sim.ICScore.InformationContent">[docs]</a><span class="k">class</span> <span class="nc">InformationContent</span><span class="p">(</span><span class="n">MeSHProcess</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This class implement the IC based similarity.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="InformationContent.__init__"><a class="viewcode-back" href="../../../_autosummary/pyMeSHSim.Sim.ICScore.InformationContent.html#pyMeSHSim.Sim.ICScore.InformationContent.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">MeSHProcess</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">propagationDict</span> <span class="o">=</span> <span class="p">{}</span></div>
+
+    <span class="k">def</span> <span class="nf">_allMaxFreqDict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This method is used to construct the MainHeadingDetailData.</span>
+
+<span class="sd">        | This is not a frequently used method.</span>
+<span class="sd">        | Before release, we have runned this method. so usrs can skip this one</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">maxIDInCategory</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">allCategory</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">category</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">MainHeadingDetailDataInCategory</span><span class="p">:</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getMainHeadingDetailData</span><span class="p">(</span><span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">MainHeadingDetailDataInCategory</span><span class="p">[</span><span class="n">category</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">MainHeadingDetailDataInCategory</span><span class="p">[</span><span class="n">category</span><span class="p">]</span>
+
+            <span class="nb">id</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;MeSHID&quot;</span><span class="p">]</span>
+            <span class="n">value_tmp</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Frequence&quot;</span><span class="p">][</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Frequence&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
+
+            <span class="n">maxIndex</span> <span class="o">=</span> <span class="n">value_tmp</span><span class="o">.</span><span class="n">idxmin</span><span class="p">()</span>
+            <span class="n">maxIDInCategory</span><span class="p">[</span><span class="n">category</span><span class="p">]</span> <span class="o">=</span> <span class="nb">id</span><span class="p">[</span><span class="n">maxIndex</span><span class="p">]</span>
+        <span class="n">bz1</span> <span class="o">=</span> <span class="n">bz</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">rootdir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_MainHeadingDetailDataFilePath</span><span class="p">)</span>
+        <span class="n">bz1</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;maxIDInCategory&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">maxIDInCategory</span>
+        <span class="n">bz1</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+<div class="viewcode-block" id="InformationContent.getFreqDict"><a class="viewcode-back" href="../../../Sim.html#pyMeSHSim.Sim.ICScore.InformationContent.getFreqDict">[docs]</a>    <span class="k">def</span> <span class="nf">getFreqDict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="s2">&quot;C&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the IC frequence from MainHeadingDetailData.</span>
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        category: String</span>
+<span class="sd">            one of the value in (&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;D&#39;, &#39;E&#39;, &#39;F&#39;, &#39;G&#39;, &#39;H&#39;, &#39;I&#39;, &#39;J&#39;, &#39;K&#39;, &#39;L&#39;, &#39;M&#39;, &#39;N&#39;, &#39;V&#39;, &#39;Z&#39;, &#39;all&#39;).</span>
+<span class="sd">            It can&#39;t be None.</span>
+
+<span class="sd">            default: &quot;C&quot;.</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        defaultdict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">category</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;invalid category value</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+
+        <span class="k">if</span> <span class="n">category</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">MainHeadingDetailDataInCategory</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getMainHeadingDetailData</span><span class="p">(</span><span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">MainHeadingDetailDataInCategory</span><span class="p">[</span><span class="n">category</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">MainHeadingDetailDataInCategory</span><span class="p">[</span><span class="n">category</span><span class="p">]</span>
+
+        <span class="nb">id</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;MeSHID&quot;</span><span class="p">]</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Frequence&quot;</span><span class="p">]</span>
+        <span class="n">sumOfFreq</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">freqValue</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">/</span><span class="n">sumOfFreq</span><span class="p">)</span>
+        <span class="n">FreqDict</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="s2">&quot;N/A&quot;</span><span class="p">,</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">freqValue</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">FreqDict</span></div>
+
+<div class="viewcode-block" id="InformationContent.getICDict"><a class="viewcode-back" href="../../../Sim.html#pyMeSHSim.Sim.ICScore.InformationContent.getICDict">[docs]</a>    <span class="k">def</span> <span class="nf">getICDict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="s2">&quot;C&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This method used to check whole IC value.</span>
+
+<span class="sd">        It takes long time.</span>
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        category: String</span>
+<span class="sd">            one of the value in (&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;D&#39;, &#39;E&#39;, &#39;F&#39;, &#39;G&#39;, &#39;H&#39;, &#39;I&#39;, &#39;J&#39;, &#39;K&#39;, &#39;L&#39;, &#39;M&#39;, &#39;N&#39;, &#39;V&#39;, &#39;Z&#39;, &#39;all&#39;).</span>
+<span class="sd">            It can&#39;t be None.</span>
+
+<span class="sd">            default: &quot;C&quot;.</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">freqDict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getFreqDict</span><span class="p">(</span><span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">)</span>
+        <span class="n">dd</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">freqDict</span><span class="p">)</span>
+        <span class="n">ICDict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">dui</span> <span class="ow">in</span> <span class="n">dd</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="c1">#children = self.getDescendant(dui=dui, category=category)</span>
+            <span class="n">children</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getOffspringConceptID</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">children</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">children</span> <span class="o">=</span> <span class="p">[</span><span class="n">dui</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">children</span> <span class="o">=</span> <span class="n">children</span> <span class="o">+</span> <span class="p">[</span><span class="n">dui</span><span class="p">]</span>
+            <span class="n">freqTotal</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">children</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">freqDict</span><span class="p">[</span><span class="n">child</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;N/A&quot;</span><span class="p">:</span>
+                    <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> has no freq value</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">child</span><span class="p">)</span>
+                <span class="n">freqTotal</span> <span class="o">=</span> <span class="n">freqTotal</span> <span class="o">+</span> <span class="n">freqDict</span><span class="p">[</span><span class="n">child</span><span class="p">]</span>
+            <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">freqTotal</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">ICDict</span><span class="p">[</span><span class="n">dui</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">log</span><span class="p">(</span><span class="n">freqTotal</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;dui </span><span class="si">%s</span><span class="s2"> IC value </span><span class="si">%s</span><span class="s2"> is wrong</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">dui</span><span class="p">,</span> <span class="n">freqTotal</span><span class="p">))</span>
+                <span class="n">ICDict</span><span class="p">[</span><span class="n">dui</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="n">ICDict</span></div>
+
+<div class="viewcode-block" id="InformationContent.getMeSHIC"><a class="viewcode-back" href="../../../Sim.html#pyMeSHSim.Sim.ICScore.InformationContent.getMeSHIC">[docs]</a>    <span class="k">def</span> <span class="nf">getMeSHIC</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dui</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="s2">&quot;C&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This method used to get IC value from a MeSH ID.</span>
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        dui: String</span>
+<span class="sd">            MeSH ID.</span>
+<span class="sd">            start with &quot;D&quot;.</span>
+
+<span class="sd">        category: String</span>
+<span class="sd">            one of the value in (&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;D&#39;, &#39;E&#39;, &#39;F&#39;, &#39;G&#39;, &#39;H&#39;, &#39;I&#39;, &#39;J&#39;, &#39;K&#39;, &#39;L&#39;, &#39;M&#39;, &#39;N&#39;, &#39;V&#39;, &#39;Z&#39;, &#39;all&#39;).</span>
+<span class="sd">            It can&#39;t be None.</span>
+
+<span class="sd">            default: &quot;C&quot;.</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">dui</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;C&quot;</span><span class="p">):</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;narrow MeSH concept has no IC value</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">freqDict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getFreqDict</span><span class="p">(</span><span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">)</span>
+        <span class="n">children</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDescendant</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">)</span>
+        <span class="n">freqTotal</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">children</span><span class="p">:</span>
+            <span class="n">freqTotal</span> <span class="o">=</span> <span class="n">freqTotal</span> <span class="o">+</span> <span class="n">freqDict</span><span class="p">[</span><span class="n">child</span><span class="p">]</span>
+        <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">freqTotal</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">IC</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">log</span><span class="p">(</span><span class="n">freqTotal</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;dui </span><span class="si">%s</span><span class="s2"> IC value </span><span class="si">%s</span><span class="s2"> is wrong</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">dui</span><span class="p">,</span> <span class="n">freqTotal</span><span class="p">))</span>
+            <span class="n">IC</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="n">IC</span></div>
+
+    <span class="k">def</span> <span class="nf">_getMaxICInCategory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the max ic concept in one category.</span>
+
+<span class="sd">        This is a normalization value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">category</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxIDInCategory</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;can&#39;t get max IC in category: </span><span class="si">%s</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">category</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">maxIC</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getMeSHIC</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">maxIDInCategory</span><span class="p">[</span><span class="n">category</span><span class="p">],</span> <span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">maxIC</span>
+
+
+<div class="viewcode-block" id="InformationContent.findLeastCommonSubsumerbyTreeCode"><a class="viewcode-back" href="../../../Sim.html#pyMeSHSim.Sim.ICScore.InformationContent.findLeastCommonSubsumerbyTreeCode">[docs]</a>    <span class="k">def</span> <span class="nf">findLeastCommonSubsumerbyTreeCode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dui1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dui2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This method used to find the least common subsumer by treeCode.</span>
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        dui1: string</span>
+<span class="sd">            mesh ID.</span>
+
+<span class="sd">        dui2: String</span>
+<span class="sd">            mesh ID.</span>
+
+<span class="sd">        category: String</span>
+<span class="sd">            mesh category.</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        list of string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">category</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;category can&#39;t be None</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkDui</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui1</span><span class="p">):</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;invalid MeSH ID in dui1</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkDui</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui2</span><span class="p">):</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;invalid MeSH ID in dui2</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">dui1</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;C&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">dui2</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;C&quot;</span><span class="p">):</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;narrow concept can&#39;t as inpput</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">treeCode1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getMeSHTreecode</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui1</span><span class="p">)</span>
+        <span class="n">treeCode2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getMeSHTreecode</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui2</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">treeCode1</span> <span class="o">==</span> <span class="p">[]:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;the concept </span><span class="si">%s</span><span class="s2"> has no tree code</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">%</span> <span class="n">dui1</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">treeCode2</span> <span class="o">==</span> <span class="p">[]:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;the concept </span><span class="si">%s</span><span class="s2"> has no tree code</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">%</span> <span class="n">dui2</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">subsumerDuis</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">code1</span> <span class="ow">in</span> <span class="n">treeCode1</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">code1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">category</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">for</span> <span class="n">code2</span> <span class="ow">in</span> <span class="n">treeCode2</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">code2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">category</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="n">dui</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compareTreecode</span><span class="p">(</span><span class="n">code1</span><span class="o">=</span><span class="n">code1</span><span class="p">,</span> <span class="n">code2</span><span class="o">=</span><span class="n">code2</span><span class="p">)</span>
+                <span class="n">subsumerDuis</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dui</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">subsumerDuis</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="InformationContent.compareTreecode"><a class="viewcode-back" href="../../../Sim.html#pyMeSHSim.Sim.ICScore.InformationContent.compareTreecode">[docs]</a>    <span class="k">def</span> <span class="nf">compareTreecode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">code1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">code2</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get shared part of two tree code.</span>
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        code1: String</span>
+<span class="sd">            MeSH tree code.</span>
+
+<span class="sd">        code2: String</span>
+<span class="sd">            MeSH tree code.</span>
+
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        list of dui</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">array1</span> <span class="o">=</span> <span class="n">code1</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+        <span class="n">array2</span> <span class="o">=</span> <span class="n">code2</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">array1</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">array2</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">array1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">array2</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                    <span class="n">commom</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="k">break</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">commom</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">array1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">array2</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                    <span class="n">commom</span> <span class="o">=</span> <span class="n">commom</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">break</span>
+
+        <span class="k">if</span> <span class="n">commom</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1">#return the disease catagory, this can be improved</span>
+            <span class="k">return</span> <span class="s2">&quot;topConcept&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">commom</span> <span class="o">=</span> <span class="n">commom</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="n">treeCode</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">array1</span><span class="p">[</span><span class="mi">0</span> <span class="p">:</span> <span class="n">commom</span><span class="p">])</span>
+            <span class="n">dui</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDuiFromTreeCode</span><span class="p">(</span><span class="n">treeCode</span><span class="o">=</span><span class="n">treeCode</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">dui</span></div>
+
+<div class="viewcode-block" id="InformationContent.findLeastCommonSubsumerbyAncestor"><a class="viewcode-back" href="../../../Sim.html#pyMeSHSim.Sim.ICScore.InformationContent.findLeastCommonSubsumerbyAncestor">[docs]</a>    <span class="k">def</span> <span class="nf">findLeastCommonSubsumerbyAncestor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dui1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dui2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">category</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This method used to find the least common subsumer by ancestor.</span>
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        dui1: string</span>
+<span class="sd">            mesh ID.</span>
+
+<span class="sd">        dui2: String</span>
+<span class="sd">            mesh ID.</span>
+
+<span class="sd">        category: String</span>
+<span class="sd">            mesh category.</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        list of string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">category</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;category can&#39;t be None</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkDui</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui1</span><span class="p">):</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;invalid MeSH ID in dui1</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkDui</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui2</span><span class="p">):</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;invalid MeSH ID in dui2</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">dui1</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;C&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">dui2</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;C&quot;</span><span class="p">):</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;narrow concept can&#39;t as inpput</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">ancestor1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAncestors</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui1</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">)</span>
+        <span class="n">ancestor2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAncestors</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui2</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">)</span>
+        <span class="n">common</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">ancestor1</span><span class="p">)</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">ancestor2</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">common</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;topConcept&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">common</span></div>
+
+<div class="viewcode-block" id="InformationContent.simil"><a class="viewcode-back" href="../../../Sim.html#pyMeSHSim.Sim.ICScore.InformationContent.simil">[docs]</a>    <span class="k">def</span> <span class="nf">simil</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dui1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dui2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The ic algorithm.&quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">category</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;category can&#39;t be None</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkDui</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui1</span><span class="p">):</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;invalid MeSH ID in dui1</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkDui</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui2</span><span class="p">):</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;invalid MeSH ID in dui2</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">dui1</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;C&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">dui2</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;C&quot;</span><span class="p">):</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;narrow concept can&#39;t as inpput</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">dui1</span> <span class="o">==</span> <span class="n">dui2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">1</span>
+
+        <span class="n">maxic</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getMaxICInCategory</span><span class="p">(</span><span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">)</span>
+        <span class="n">ic1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getMeSHIC</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui1</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">maxic</span><span class="p">)</span>
+        <span class="n">ic2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getMeSHIC</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui2</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">maxic</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ic1</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">ic2</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="c1"># get the LeastCommonSubsumer</span>
+
+        <span class="n">subsumerDuis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">findLeastCommonSubsumerbyTreeCode</span><span class="p">(</span><span class="n">dui1</span><span class="o">=</span><span class="n">dui1</span><span class="p">,</span> <span class="n">dui2</span><span class="o">=</span><span class="n">dui2</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">)</span>
+        <span class="c1"># get the lowest ic, because ic has been converted with - log 10,so the bigger value has lower ic</span>
+        <span class="n">ictmp</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1"># duitmp = None</span>
+
+        <span class="k">for</span> <span class="n">dui</span> <span class="ow">in</span> <span class="n">subsumerDuis</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">dui</span> <span class="o">==</span> <span class="s2">&quot;topConcept&quot;</span><span class="p">:</span>
+                <span class="n">icValue</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">icValue</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getMeSHIC</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">icValue</span> <span class="o">&gt;</span> <span class="n">ictmp</span><span class="p">:</span>
+                <span class="n">ictmp</span> <span class="o">=</span> <span class="n">icValue</span>
+                <span class="c1"># duitmp = dui</span>
+        <span class="n">ictmp</span> <span class="o">=</span> <span class="n">ictmp</span><span class="o">/</span> <span class="n">maxic</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">ictmp</span>
+        <span class="n">lin</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">ictmp</span> <span class="o">/</span> <span class="p">(</span><span class="n">ic1</span> <span class="o">+</span> <span class="n">ic2</span><span class="p">)</span>
+        <span class="n">jiang</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="nb">min</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">ic1</span> <span class="o">+</span> <span class="n">ic2</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">ictmp</span><span class="p">)</span>
+        <span class="n">rel</span> <span class="o">=</span> <span class="n">lin</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="mi">10</span><span class="o">**</span><span class="p">(</span><span class="o">-</span> <span class="n">ictmp</span> <span class="o">*</span> <span class="n">maxic</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">lin</span><span class="p">,</span> <span class="n">jiang</span><span class="p">,</span> <span class="n">rel</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="InformationContent.calICSimilarity"><a class="viewcode-back" href="../../../Sim.html#pyMeSHSim.Sim.ICScore.InformationContent.calICSimilarity">[docs]</a>    <span class="k">def</span> <span class="nf">calICSimilarity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dui1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dui2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Calculating the term similarity based on information content.</span>
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        dui1: String</span>
+<span class="sd">            MeSH ID, limit to main headings.</span>
+
+<span class="sd">        dui1: String</span>
+<span class="sd">            MeSH ID, limit to main headings.</span>
+
+<span class="sd">        category: String</span>
+<span class="sd">            A MeSH category.</span>
+<span class="sd">            One of the value in (&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;D&#39;, &#39;E&#39;, &#39;F&#39;, &#39;G&#39;, &#39;H&#39;, &#39;I&#39;, &#39;J&#39;, &#39;K&#39;, &#39;L&#39;, &#39;M&#39;, &#39;N&#39;, &#39;V&#39;, &#39;Z&#39;).</span>
+<span class="sd">            It can&#39;t be None.</span>
+
+<span class="sd">        method: String</span>
+<span class="sd">            one value in [&quot;lin&quot;, &quot;res&quot;, &quot;jiang&quot;, &quot;rel&quot;].</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">lin</span><span class="p">,</span> <span class="n">jiang</span><span class="p">,</span> <span class="n">rel</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">simil</span><span class="p">(</span><span class="n">dui1</span><span class="o">=</span><span class="n">dui1</span><span class="p">,</span> <span class="n">dui2</span><span class="o">=</span><span class="n">dui2</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">method</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;lin&quot;</span><span class="p">,</span> <span class="s2">&quot;res&quot;</span><span class="p">,</span> <span class="s2">&quot;jiang&quot;</span><span class="p">,</span> <span class="s2">&quot;rel&quot;</span><span class="p">]:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;program has no method </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">method</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;lin&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">lin</span>
+        <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;res&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">res</span>
+        <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;jiang&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">jiang</span>
+        <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;rel&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">rel</span></div></div>
+
+
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Zhihui Luo.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

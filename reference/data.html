@@ -1,0 +1,860 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>data &mdash; pyMeSHSim 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="pyMeSHSim.data.createData" href="_autosummary/pyMeSHSim.data.createData.html" />
+    <link rel="prev" title="Library reference" href="reference.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> pyMeSHSim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="reference.html">Library reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/pyMeSHSim.data.createData.html">pyMeSHSim.data.createData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/pyMeSHSim.data.dataInterface.html">pyMeSHSim.data.dataInterface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/pyMeSHSim.data.duiFunc.html">pyMeSHSim.data.duiFunc</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="metamapWrap.html">metamapWrap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Sim.html">Sim</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pyMeSHSim</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="reference.html">Library reference</a> &raquo;</li>
+        
+      <li>data</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/data.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="data">
+<h1>data<a class="headerlink" href="#data" title="Permalink to this headline">¶</a></h1>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#module-pyMeSHSim.data.createData" title="pyMeSHSim.data.createData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pyMeSHSim.data.createData</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#module-pyMeSHSim.data.dataInterface" title="pyMeSHSim.data.dataInterface"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pyMeSHSim.data.dataInterface</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#module-pyMeSHSim.data.duiFunc" title="pyMeSHSim.data.duiFunc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pyMeSHSim.data.duiFunc</span></code></a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<span class="target" id="module-pyMeSHSim.data.createData"></span><div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This module is useful for developer, general user can skip this module
+It provides methods creating the data set.</p>
+</div>
+<dl class="class">
+<dt id="pyMeSHSim.data.createData.createBcolzData">
+<em class="property">class </em><code class="descclassname">pyMeSHSim.data.createData.</code><code class="descname">createBcolzData</code><span class="sig-paren">(</span><em>log_file_name='createData.log'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/createData.html#createBcolzData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.createData.createBcolzData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyMeSHSim.data.createData.getCuiFunc" title="pyMeSHSim.data.createData.getCuiFunc"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyMeSHSim.data.createData.getCuiFunc</span></code></a></p>
+<p>A class to construct the base data.</p>
+<p>This class include several functions, which used to create different tables.</p>
+<div class="line-block">
+<div class="line">mainly 6 tables:</div>
+<div class="line">1. parent child relation table</div>
+<div class="line">2. RN and RB relation table</div>
+<div class="line">3. main heading detail data table</div>
+<div class="line">4. RN detail data table</div>
+<div class="line">6. supplement main heading table</div>
+<div class="line">7. offspring and ancestor table</div>
+</div>
+<dl class="method">
+<dt id="pyMeSHSim.data.createData.createBcolzData.checkParentData">
+<code class="descname">checkParentData</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/createData.html#createBcolzData.checkParentData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.createData.createBcolzData.checkParentData" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method used to compare the data with “MeSH.Hsa.eg.db”</p>
+<p>We get the data in R packages “meshes”, store all its mesh concept in uniqueconcept.tsv</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.data.createData.createBcolzData.checkRNData">
+<code class="descname">checkRNData</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/createData.html#createBcolzData.checkRNData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.createData.createBcolzData.checkRNData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check the RN data.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.data.createData.createBcolzData.constructBcolz">
+<code class="descname">constructBcolz</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/createData.html#createBcolzData.constructBcolz"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.createData.createBcolzData.constructBcolz" title="Permalink to this definition">¶</a></dt>
+<dd><p>This funtion will convert above tables in bcolz format.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.data.createData.createBcolzData.createMainHeadingDetailData">
+<code class="descname">createMainHeadingDetailData</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/createData.html#createBcolzData.createMainHeadingDetailData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.createData.createBcolzData.createMainHeadingDetailData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create the detail information for main heading descriptors.</p>
+<p>This table include the mesh id, correspondent umls id, but only include the UMLS id which has MN attribute.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.data.createData.createBcolzData.createOffspringAndAncestorRel">
+<code class="descname">createOffspringAndAncestorRel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/createData.html#createBcolzData.createOffspringAndAncestorRel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.createData.createBcolzData.createOffspringAndAncestorRel" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function used to create the offspring and ancestor relation of main heading descriptors.</p>
+<p>It is based on tne ParentChildRel.tsv</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.data.createData.createBcolzData.createParentChildRelTable">
+<code class="descname">createParentChildRelTable</code><span class="sig-paren">(</span><em>rel='PAR'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/createData.html#createBcolzData.createParentChildRelTable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.createData.createBcolzData.createParentChildRelTable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct the parent-child relation table, and top concept description table.</p>
+<div class="line-block">
+<div class="line">Parent-child relation table has three columns “Child”, “Parent”, “Category”.</div>
+<div class="line">All MeSH concepts in this table is a subnode in the MeSH tree structure.</div>
+</div>
+<div class="line-block">
+<div class="line">Top description table contains the MeSH category infomation, and the top MeSH concept in each category</div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.data.createData.createBcolzData.createRNDetailData">
+<code class="descname">createRNDetailData</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/createData.html#createBcolzData.createRNDetailData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.createData.createBcolzData.createRNDetailData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create RN concept detail information table.</p>
+<div class="line-block">
+<div class="line">This function will only create detail information of the RNconcept included in RNandRBRel table.</div>
+<div class="line">All RNConcept start with “C”.</div>
+<div class="line">A RNconcept usually corresponding to several UMLS concept</div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.data.createData.createBcolzData.createRNandRBRelTable">
+<code class="descname">createRNandRBRelTable</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/createData.html#createBcolzData.createRNandRBRelTable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.createData.createBcolzData.createRNandRBRelTable" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method used to create the RNandRBRel table.</p>
+<p>In fact, we mainly focus on the disease category.</p>
+<div class="line-block">
+<div class="line">There are several situation for RN and RB concept.</div>
+<div class="line">In UMLS, we can select out:</div>
+<div class="line">1. Dxxxxxx None</div>
+<div class="line">2. None    Dxxxxxx</div>
+<div class="line">3. Dxxxxxx Dxxxxxx</div>
+<div class="line">4. None    None</div>
+<div class="line">these four combination</div>
+<div class="line">for situation 1, this data should be obtained, left is RB, right is RN</div>
+<div class="line">for situation 2, this data should also be obtained</div>
+<div class="line">for situation 3, this data should be exclude</div>
+<div class="line">for situation 4, this data should be exclude</div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.data.createData.createBcolzData.createSupMainHeadingDetailData">
+<code class="descname">createSupMainHeadingDetailData</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/createData.html#createBcolzData.createSupMainHeadingDetailData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.createData.createBcolzData.createSupMainHeadingDetailData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create the supplement detail information for main heading descriptors.</p>
+<div class="line-block">
+<div class="line">As the UMLS ID to MeSH ID is not “one to one”, but “more to one”</div>
+<div class="line">In main heading detail table, we include only preffered umls id</div>
+<div class="line">In this table, we fill in the remainder</div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.data.createData.createBcolzData.getCategoryOfTreecode">
+<code class="descname">getCategoryOfTreecode</code><span class="sig-paren">(</span><em>cui=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/createData.html#createBcolzData.getCategoryOfTreecode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.createData.createBcolzData.getCategoryOfTreecode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the MeSH concept category from its tree code.</p>
+<p><strong>parameter</strong></p>
+<p>cui: string</p>
+<p><strong>return</strong></p>
+<p>None if no tree code, otherwise a list of string</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.data.createData.createBcolzData.getDiseaseTopDescriptors">
+<code class="descname">getDiseaseTopDescriptors</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/createData.html#createBcolzData.getDiseaseTopDescriptors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.createData.createBcolzData.getDiseaseTopDescriptors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get top descriptors in disease category.</p>
+<p>This data will be store as attributes in MainHeadingDetailData table.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="pyMeSHSim.data.createData.createBcolzData.initLog">
+<em class="property">static </em><code class="descname">initLog</code><span class="sig-paren">(</span><em>log_file_name=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/createData.html#createBcolzData.initLog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.createData.createBcolzData.initLog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Static method used to initalize the logger.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.data.createData.createBcolzData.parseParentChildLog">
+<code class="descname">parseParentChildLog</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/createData.html#createBcolzData.parseParentChildLog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.createData.createBcolzData.parseParentChildLog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all category and its abbreviation.</p>
+<p>This data will be store as attributes in MainHeadingDetailData table.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyMeSHSim.data.createData.getCuiFunc">
+<em class="property">class </em><code class="descclassname">pyMeSHSim.data.createData.</code><code class="descname">getCuiFunc</code><a class="reference internal" href="_modules/pyMeSHSim/data/createData.html#getCuiFunc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.createData.getCuiFunc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Get data from umls database.</p>
+<div class="line-block">
+<div class="line">This is the base class of createBcolzData.</div>
+<div class="line">It provides interface to get MeSH information from UMLS Metathesaurus.</div>
+</div>
+<dl class="method">
+<dt id="pyMeSHSim.data.createData.getCuiFunc.getAllCUIsFromMeshID">
+<code class="descname">getAllCUIsFromMeshID</code><span class="sig-paren">(</span><em>dui=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/createData.html#getCuiFunc.getAllCUIsFromMeshID"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.createData.getCuiFunc.getAllCUIsFromMeshID" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function will return all the CUI of a MeSH descriptor.</p>
+<p><strong>parameter</strong></p>
+<p>dui: string</p>
+<p><strong>return</strong></p>
+<p>string</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.data.createData.getCuiFunc.getCUIfromMeshID">
+<code class="descname">getCUIfromMeshID</code><span class="sig-paren">(</span><em>dui=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/createData.html#getCuiFunc.getCUIfromMeshID"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.createData.getCuiFunc.getCUIfromMeshID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the UMLS concept from a MeSH concept.</p>
+<p>This function will not return all the CUI of a MeSH descriptor. it will only
+return the preffered concept’s CUI.</p>
+<p><em>parameter</em></p>
+<p>dui: string</p>
+<p><strong>return</strong></p>
+<p>string</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.data.createData.getCuiFunc.getCodeForNoneTreeConcept">
+<code class="descname">getCodeForNoneTreeConcept</code><span class="sig-paren">(</span><em>cui=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/createData.html#getCuiFunc.getCodeForNoneTreeConcept"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.createData.getCuiFunc.getCodeForNoneTreeConcept" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function used to fetch the UMLSID for relation narrow concept.</p>
+<p><strong>parameter</strong></p>
+<p>cui: string</p>
+<p><strong>return</strong></p>
+<p>string</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.data.createData.getCuiFunc.getMeSHID">
+<code class="descname">getMeSHID</code><span class="sig-paren">(</span><em>cui=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/createData.html#getCuiFunc.getMeSHID"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.createData.getCuiFunc.getMeSHID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the MeSH concept from an UMLS concept.</p>
+<p>This function can only get the mesh ID from the preferred concept CUI.</p>
+<p><strong>parameter</strong></p>
+<p>cui: string</p>
+<p><strong>return</strong></p>
+<p>string</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.data.createData.getCuiFunc.getMeSHIDFromTH">
+<code class="descname">getMeSHIDFromTH</code><span class="sig-paren">(</span><em>cui=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/createData.html#getCuiFunc.getMeSHIDFromTH"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.createData.getCuiFunc.getMeSHIDFromTH" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the MeSH descriptor ID or SCR ID.</p>
+<p>This function will be used only when getMeSHID has no result.</p>
+<p><strong>parameter</strong></p>
+<p>cui: string</p>
+<p><strong>return</strong></p>
+<p>string</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.data.createData.getCuiFunc.getPreferredName">
+<code class="descname">getPreferredName</code><span class="sig-paren">(</span><em>cui=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/createData.html#getCuiFunc.getPreferredName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.createData.getCuiFunc.getPreferredName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the preferred name of an UMLS concept.</p>
+<p><strong>parameter</strong></p>
+<p>cui : string</p>
+<p><strong>return</strong></p>
+<p>string</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.data.createData.getCuiFunc.getQualifierID">
+<code class="descname">getQualifierID</code><span class="sig-paren">(</span><em>cui=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/createData.html#getCuiFunc.getQualifierID"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.createData.getCuiFunc.getQualifierID" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function used to get the qualifier id of a umls concept.</p>
+<p><strong>parameter</strong></p>
+<p>cui: string</p>
+<p><strong>return</strong></p>
+<p>string</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.data.createData.getCuiFunc.getSemanticType">
+<code class="descname">getSemanticType</code><span class="sig-paren">(</span><em>cui=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/createData.html#getCuiFunc.getSemanticType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.createData.getCuiFunc.getSemanticType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the semantic type of a UMLS concept.</p>
+<p><strong>parameter</strong></p>
+<p>cui: string</p>
+<p><strong>return</strong></p>
+<p>string</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.data.createData.getCuiFunc.getTreeCode">
+<code class="descname">getTreeCode</code><span class="sig-paren">(</span><em>cui=None</em>, <em>dui=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/createData.html#getCuiFunc.getTreeCode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.createData.getCuiFunc.getTreeCode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get MeSH tree code from a UMLS concept or a MeSH concept.</p>
+<p><strong>parameter</strong></p>
+<p>cui: string</p>
+<p>dui: string</p>
+<p><strong>return</strong></p>
+<p>list of string</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-pyMeSHSim.data.dataInterface"></span><dl class="class">
+<dt id="pyMeSHSim.data.dataInterface.dataHandle">
+<em class="property">class </em><code class="descclassname">pyMeSHSim.data.dataInterface.</code><code class="descname">dataHandle</code><a class="reference internal" href="_modules/pyMeSHSim/data/dataInterface.html#dataHandle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.dataInterface.dataHandle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class is used to parse MeSH data, which stored in bcolz.</p>
+<div class="line-block">
+<div class="line">It contains 6 tables: parent child relation table, RN and RB relation table, main heading detail data table, and RN detail data table,</div>
+<div class="line">supplement main heading table, offspring and ancestor table.</div>
+</div>
+<p><strong>parameters</strong></p>
+<dl class="docutils">
+<dt>path: string</dt>
+<dd>The directory path, which contain all the bcolz file.</dd>
+</dl>
+<p><strong>attribute</strong></p>
+<dl class="docutils">
+<dt>dataPath: String</dt>
+<dd>The directory path, which contain all the bcolz file.</dd>
+<dt>_parentFilePath: String</dt>
+<dd>The path to table parents.</dd>
+<dt>_RNtoRBFilePath: String</dt>
+<dd>The path to table RNtoRB.</dd>
+<dt>_RNDataFilePath: String</dt>
+<dd>the path to table RNData.</dd>
+<dt>_totalDataFilePath: String</dt>
+<dd>the path to table totalData.</dd>
+<dt>allCategory: list</dt>
+<dd>contain all category in MeSH</dd>
+</dl>
+<p><strong>see also</strong></p>
+<p>pyMeSHSim.data.createData</p>
+<dl class="method">
+<dt id="pyMeSHSim.data.dataInterface.dataHandle.getAllCategory">
+<code class="descname">getAllCategory</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/dataInterface.html#dataHandle.getAllCategory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.dataInterface.dataHandle.getAllCategory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all category.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.data.dataInterface.dataHandle.getMainHeadingDetailData">
+<code class="descname">getMainHeadingDetailData</code><span class="sig-paren">(</span><em>category='all'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/dataInterface.html#dataHandle.getMainHeadingDetailData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.dataInterface.dataHandle.getMainHeadingDetailData" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method used to select data from table totalData.</p>
+<div class="line-block">
+<div class="line">MainHeadingDetailData table contains all information about descriptors in ParentChildRel table.</div>
+<div class="line">columns in this table is:</div>
+<div class="line">MeSHID, UMLSID, Tree_Code, Preferred_Name, Category, Frequence, Semantic_Type</div>
+</div>
+<p><strong>parameter</strong></p>
+<dl class="docutils">
+<dt>category: string</dt>
+<dd><div class="first last line-block">
+<div class="line">one of the value in (‘A’, ‘B’, ‘C’, ‘D’, ‘E’, ‘F’, ‘G’, ‘H’, ‘I’, ‘J’, ‘K’, ‘L’, ‘M’, ‘N’, ‘V’, ‘Z’, ‘all’)</div>
+<div class="line">“all” means select all data</div>
+<div class="line">default: “all”</div>
+</div>
+</dd>
+</dl>
+<p><strong>return</strong></p>
+<p>DataFrame object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.data.dataInterface.dataHandle.getOffspringAncestorData">
+<code class="descname">getOffspringAncestorData</code><span class="sig-paren">(</span><em>category='all'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/dataInterface.html#dataHandle.getOffspringAncestorData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.dataInterface.dataHandle.getOffspringAncestorData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get offsping and ancestor data.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.data.dataInterface.dataHandle.getParentTableSemantiTypes">
+<code class="descname">getParentTableSemantiTypes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/dataInterface.html#dataHandle.getParentTableSemantiTypes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.dataInterface.dataHandle.getParentTableSemantiTypes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all semantic types from main heading concepts in disease category.</p>
+<p><strong>return</strong></p>
+<p>list</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.data.dataInterface.dataHandle.getRNDetailData">
+<code class="descname">getRNDetailData</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/dataInterface.html#dataHandle.getRNDetailData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.dataInterface.dataHandle.getRNDetailData" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method used to select data from table RNdetailData.</p>
+<div class="line-block">
+<div class="line">RNdetailData contains full information about the narrow concept in MeSH.</div>
+</div>
+<div class="line-block">
+<div class="line">RNdetailData table has 4 columns:</div>
+<div class="line">MeSHID, UMLSID, Prefered_Name, Semantic_Type</div>
+</div>
+<p><strong>return</strong></p>
+<p>dataframe object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.data.dataInterface.dataHandle.getRelData">
+<code class="descname">getRelData</code><span class="sig-paren">(</span><em>data=None</em>, <em>category='all'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/dataInterface.html#dataHandle.getRelData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.dataInterface.dataHandle.getRelData" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method used to select data from table ParentChildRel or RNandRBRel.</p>
+<p><strong>parameter</strong></p>
+<dl class="docutils">
+<dt>data: String</dt>
+<dd><p class="first">One of the value in (“ParentChildRel”, “RNandRBRel”).</p>
+<div class="last line-block">
+<div class="line">ParentChildRel data is the tree structure core data, it cantains  all main heading descriptors</div>
+<div class="line">RNandRBRel data is the relation data, contians all Narrow concept and its Broarder concept</div>
+<div class="line">ParentChildRel table has three columns “Child”, “Parent”, “Category”</div>
+<div class="line">RNandRBRel table has three columns “RNconcept”, “RBconcept”, “Category”</div>
+<div class="line">default: None</div>
+</div>
+</dd>
+<dt>category: string</dt>
+<dd><div class="first line-block">
+<div class="line">one of the value in (‘A’, ‘B’, ‘C’, ‘D’, ‘E’, ‘F’, ‘G’, ‘H’, ‘I’, ‘J’, ‘K’, ‘L’, ‘M’, ‘N’, ‘V’, ‘Z’, ‘all’)</div>
+<div class="line">“all” means select all data</div>
+</div>
+<div class="last line-block">
+<div class="line">default: “all”</div>
+</div>
+</dd>
+</dl>
+<p><strong>return</strong></p>
+<p>DataFrame object</p>
+<p><strong>see also</strong></p>
+<p>pandas.dataframe</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.data.dataInterface.dataHandle.getSupplementMainHeadingData">
+<code class="descname">getSupplementMainHeadingData</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/dataInterface.html#dataHandle.getSupplementMainHeadingData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.dataInterface.dataHandle.getSupplementMainHeadingData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get supplementary main heading data.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-pyMeSHSim.data.duiFunc"></span><dl class="class">
+<dt id="pyMeSHSim.data.duiFunc.duiFunc">
+<em class="property">class </em><code class="descclassname">pyMeSHSim.data.duiFunc.</code><code class="descname">duiFunc</code><a class="reference internal" href="_modules/pyMeSHSim/data/duiFunc.html#duiFunc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.duiFunc.duiFunc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyMeSHSim.data.dataInterface.dataHandle" title="pyMeSHSim.data.dataInterface.dataHandle"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyMeSHSim.data.dataInterface.dataHandle</span></code></a></p>
+<p>This is an base class for MeSH concept retrive its diffirent attribute.</p>
+<div class="line-block">
+<div class="line">It contains MeSH ID, UMLSID, Tree Code, Preffered Name, Category.</div>
+<div class="line">And allows the interconversion between them.</div>
+</div>
+<p><strong>attribute</strong></p>
+<dl class="docutils">
+<dt>parChdRelData: dataframe or None</dt>
+<dd>data cache for parentData.</dd>
+<dt>MainHeadingDetailData: dataframe or None</dt>
+<dd>data cache for totalData.</dd>
+<dt>RNdetailData <span class="classifier-delimiter">:</span> <span class="classifier">dataframe</span></dt>
+<dd>data cache for RNData or None.</dd>
+<dt>RNtoRBData: dataframe or None</dt>
+<dd>data cache for RNtoRBData.</dd>
+</dl>
+<dl class="method">
+<dt id="pyMeSHSim.data.duiFunc.duiFunc.checkCui">
+<code class="descname">checkCui</code><span class="sig-paren">(</span><em>cui=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/duiFunc.html#duiFunc.checkCui"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.duiFunc.duiFunc.checkCui" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check the UMLS ID, if it is legal.</p>
+<div class="line-block">
+<div class="line">The UMLS concept starts with a capital letter “C”,</div>
+<div class="line">Usually followed with 7 digital number.</div>
+</div>
+<p><strong>parameter</strong></p>
+<dl class="docutils">
+<dt>cui: String</dt>
+<dd>UMLS ID.</dd>
+</dl>
+<p><strong>return</strong></p>
+<p>True or False.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.data.duiFunc.duiFunc.checkDui">
+<code class="descname">checkDui</code><span class="sig-paren">(</span><em>dui=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/duiFunc.html#duiFunc.checkDui"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.duiFunc.duiFunc.checkDui" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check the MeSH ID, if it is legal.</p>
+<div class="line-block">
+<div class="line">The MeSH heading concept starts with a capital letter “D”,</div>
+<div class="line">SCR concepts start with “C”,</div>
+<div class="line">usually followed with 6 digital number, or 9 digital number.</div>
+</div>
+<p><strong>parameter</strong></p>
+<dl class="docutils">
+<dt>dui: string</dt>
+<dd>MeSH ID.</dd>
+</dl>
+<p><strong>return</strong></p>
+<p>True or False.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.data.duiFunc.duiFunc.getAllMHsConceptInOneCategory">
+<code class="descname">getAllMHsConceptInOneCategory</code><span class="sig-paren">(</span><em>category=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/duiFunc.html#duiFunc.getAllMHsConceptInOneCategory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.duiFunc.duiFunc.getAllMHsConceptInOneCategory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all MHs in one category.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.data.duiFunc.duiFunc.getAllSCRsConceptInOneCategory">
+<code class="descname">getAllSCRsConceptInOneCategory</code><span class="sig-paren">(</span><em>category=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/duiFunc.html#duiFunc.getAllSCRsConceptInOneCategory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.duiFunc.duiFunc.getAllSCRsConceptInOneCategory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all SCRs in one category.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.data.duiFunc.duiFunc.getCategory">
+<code class="descname">getCategory</code><span class="sig-paren">(</span><em>dui=None</em>, <em>cui=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/duiFunc.html#duiFunc.getCategory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.duiFunc.duiFunc.getCategory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the concept category by MeSH id or UMLS ID.</p>
+<div class="line-block">
+<div class="line">For main heading concept, the category is its tree code first letter.</div>
+<div class="line">In fact, for NB concept, it has no tree code, so it will has no category, but in this module.</div>
+<div class="line">We classfy the RN concept to its RB concept’s category.</div>
+</div>
+<p><strong>parameter</strong></p>
+<dl class="docutils">
+<dt>dui: string</dt>
+<dd>MeSH ID.</dd>
+<dt>cui: string</dt>
+<dd>UMLS ID.</dd>
+</dl>
+<p><strong>return</strong></p>
+<p>None or list of string.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.data.duiFunc.duiFunc.getDuiFromTreeCode">
+<code class="descname">getDuiFromTreeCode</code><span class="sig-paren">(</span><em>treeCode=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/duiFunc.html#duiFunc.getDuiFromTreeCode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.duiFunc.duiFunc.getDuiFromTreeCode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Only the main heading concept has tree code.</p>
+<p><strong>parameter</strong></p>
+<dl class="docutils">
+<dt>treeCode: string</dt>
+<dd>MeSH tree code.</dd>
+</dl>
+<p><strong>return</strong></p>
+<p>string or None.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.data.duiFunc.duiFunc.getFrequenceByDui">
+<code class="descname">getFrequenceByDui</code><span class="sig-paren">(</span><em>dui=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/duiFunc.html#duiFunc.getFrequenceByDui"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.duiFunc.duiFunc.getFrequenceByDui" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function will return the counts of the concept which retrived in a specific text(pubmed article) set</p>
+<div class="line-block">
+<div class="line">Only the main heading concept has this attribute.</div>
+<div class="line">It is used to calculate the IC(Information Content) Value.</div>
+</div>
+<p><strong>parameter</strong></p>
+<dl class="docutils">
+<dt>dui: string</dt>
+<dd>MeSH ID.</dd>
+</dl>
+<p><strong>return</strong></p>
+<p>int</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.data.duiFunc.duiFunc.getMeSHIDbyUMLSID">
+<code class="descname">getMeSHIDbyUMLSID</code><span class="sig-paren">(</span><em>cui=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/duiFunc.html#duiFunc.getMeSHIDbyUMLSID"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.duiFunc.duiFunc.getMeSHIDbyUMLSID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get MeSH ID from UMLS ID.</p>
+<div class="line-block">
+<div class="line">This function will query three tables:</div>
+<div class="line">MainHeadingDetailData</div>
+<div class="line">supplementMainHeadingDetailData</div>
+<div class="line">RNDetailData</div>
+</div>
+<p><strong>parameter</strong></p>
+<dl class="docutils">
+<dt>cui: string</dt>
+<dd>UMLS ID.</dd>
+</dl>
+<p><strong>return</strong></p>
+<p>None or string.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.data.duiFunc.duiFunc.getMeSHTreecode">
+<code class="descname">getMeSHTreecode</code><span class="sig-paren">(</span><em>dui=None</em>, <em>cui=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/duiFunc.html#duiFunc.getMeSHTreecode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.duiFunc.duiFunc.getMeSHTreecode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use mesh ID or UMLS ID to get the concept tree code.</p>
+<p><strong>parameter</strong></p>
+<dl class="docutils">
+<dt>dui: string</dt>
+<dd>MeSH ID.</dd>
+<dt>cui: string</dt>
+<dd>UMLS ID.</dd>
+</dl>
+<p><strong>return</strong></p>
+<p>None or list of string.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.data.duiFunc.duiFunc.getPrefferedName">
+<code class="descname">getPrefferedName</code><span class="sig-paren">(</span><em>dui=None</em>, <em>cui=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/duiFunc.html#duiFunc.getPrefferedName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.duiFunc.duiFunc.getPrefferedName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use mesh ID or UMLS ID to get the concept prefferd name.</p>
+<p>We suggest to use dui get preffered name.</p>
+<p><strong>parameter</strong></p>
+<dl class="docutils">
+<dt>dui: string</dt>
+<dd>MeSH ID.</dd>
+<dt>cui: string</dt>
+<dd>UMLS ID.</dd>
+</dl>
+<p><strong>return</strong></p>
+<p>None or string.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.data.duiFunc.duiFunc.getSemanticType">
+<code class="descname">getSemanticType</code><span class="sig-paren">(</span><em>dui=None</em>, <em>cui=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/duiFunc.html#duiFunc.getSemanticType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.duiFunc.duiFunc.getSemanticType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Useing mesh ID or UMLS ID to get the concept semantic type.</p>
+<p>We suggest to use dui retrive the semantic type.</p>
+<p><strong>parameter</strong></p>
+<dl class="docutils">
+<dt>dui: string</dt>
+<dd>MeSH ID.</dd>
+<dt>cui: string</dt>
+<dd>UMLS ID.</dd>
+</dl>
+<p><strong>return</strong></p>
+<p>None or string.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.data.duiFunc.duiFunc.getUMLSIDbyMeSHID">
+<code class="descname">getUMLSIDbyMeSHID</code><span class="sig-paren">(</span><em>dui=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/duiFunc.html#duiFunc.getUMLSIDbyMeSHID"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.duiFunc.duiFunc.getUMLSIDbyMeSHID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get UMLS ID from MeSH ID.</p>
+<div class="line-block">
+<div class="line">This function only return the preferred UMLS concept.</div>
+<div class="line">Not the whole UMLS ID corresponding to the mesh descriptor.</div>
+</div>
+<p><strong>parameter</strong></p>
+<dl class="docutils">
+<dt>dui: string</dt>
+<dd>MeSH ID.</dd>
+</dl>
+<p><strong>return</strong></p>
+<p>None or string.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.data.duiFunc.duiFunc.selectDataByCui">
+<code class="descname">selectDataByCui</code><span class="sig-paren">(</span><em>cui=None</em>, <em>selectCol=None</em>, <em>queryCol=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/duiFunc.html#duiFunc.selectDataByCui"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.duiFunc.duiFunc.selectDataByCui" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select value in diffirent pandas dataframe, not suggestion.</p>
+<p><strong>parameter</strong></p>
+<dl class="docutils">
+<dt>cui: String</dt>
+<dd>UMLS ID.</dd>
+<dt>selectCol: String</dt>
+<dd>column names in TreeSubnodeDetailData and RNdetailData.</dd>
+<dt>queryCol: string</dt>
+<dd>column name in TreeSubnodeDetailData and RNdetailData.</dd>
+</dl>
+<p><strong>return</strong></p>
+<p>None or list</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.data.duiFunc.duiFunc.selectDataByDui">
+<code class="descname">selectDataByDui</code><span class="sig-paren">(</span><em>dui=None</em>, <em>selectCol=None</em>, <em>queryCol=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/data/duiFunc.html#duiFunc.selectDataByDui"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.data.duiFunc.duiFunc.selectDataByDui" title="Permalink to this definition">¶</a></dt>
+<dd><p>Selecting value in diffirent table.</p>
+<p><strong>parameter</strong></p>
+<dl class="docutils">
+<dt>dui: String</dt>
+<dd>MeSH ID.</dd>
+<dt>selectCol: String</dt>
+<dd>column names in MainHeadingDetailData and RNdetailData.</dd>
+<dt>queryCol: string</dt>
+<dd>column name in MainHeadingDetailData and RNdetailData.</dd>
+</dl>
+<p><strong>return</strong></p>
+<p>None or list</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="_autosummary/pyMeSHSim.data.createData.html" class="btn btn-neutral float-right" title="pyMeSHSim.data.createData" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="reference.html" class="btn btn-neutral" title="Library reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Zhihui Luo.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

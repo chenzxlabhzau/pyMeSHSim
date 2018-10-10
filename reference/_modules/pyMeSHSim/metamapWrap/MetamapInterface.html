@@ -1,0 +1,525 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyMeSHSim.metamapWrap.MetamapInterface &mdash; pyMeSHSim 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> pyMeSHSim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference.html">Library reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">pyMeSHSim</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>pyMeSHSim.metamapWrap.MetamapInterface</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pyMeSHSim.metamapWrap.MetamapInterface</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Author: ZhiHui Luo</span>
+<span class="c1"># Organization: HuaZhong Agricultural University</span>
+
+<span class="c1">#!/usr/bin/python3</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">subprocess</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+
+<span class="kn">from</span> <span class="nn">.Concept</span> <span class="k">import</span> <span class="n">Concept</span>
+<span class="kn">from</span> <span class="nn">..data.dataInterface</span> <span class="k">import</span> <span class="n">dataHandle</span>
+
+
+<div class="viewcode-block" id="Basic"><a class="viewcode-back" href="../../../metamapWrap.html#pyMeSHSim.metamapWrap.MetamapInterface.Basic">[docs]</a><span class="k">class</span> <span class="nc">Basic</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<div class="viewcode-block" id="Basic.run"><a class="viewcode-back" href="../../../metamapWrap.html#pyMeSHSim.metamapWrap.MetamapInterface.Basic.run">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">cmd</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">wkdir</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Running </span><span class="si">%s</span><span class="s2"> ...</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">cmd</span><span class="p">)</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">Popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">wkdir</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">PIPE</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">p</span></div></div>
+
+
+<div class="viewcode-block" id="MetaMap"><a class="viewcode-back" href="../../../metamapWrap.html#pyMeSHSim.metamapWrap.MetamapInterface.MetaMap">[docs]</a><span class="k">class</span> <span class="nc">MetaMap</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This class wraps the natural-language processing software &quot;MetaMap&quot;.</span>
+
+<span class="sd">    | Which can map biomedical text to the UMLS Metathesaurus.</span>
+<span class="sd">    | As base of this work, MetaMap should has been installed.</span>
+
+<span class="sd">    **parameter**</span>
+
+<span class="sd">    path : str</span>
+<span class="sd">        | metamap path.</span>
+<span class="sd">        | eg. path=&quot;/home/Project/UMLS/public_mm/bin/metamap16&quot;.</span>
+<span class="sd">        | please avoid to use this &quot;/home/Project/UMLS/public_mm/bin/metamap&quot; execute file path.</span>
+<span class="sd">        | this module will select the parameters according your metamap version.</span>
+
+<span class="sd">    **attributes**</span>
+
+<span class="sd">    metamap: String</span>
+<span class="sd">        | metamap path.</span>
+
+<span class="sd">    metamapBinDir: String</span>
+<span class="sd">        | metamap bin directory.</span>
+
+<span class="sd">    skrmedpostctl: String</span>
+<span class="sd">        | skrmedpostctl path, it is component of metamap.</span>
+<span class="sd">        | start skrmedpostctl to start metamap.</span>
+
+<span class="sd">    wsdserverctl: String</span>
+<span class="sd">        | wsdserverctl path, it is component of metamap.</span>
+<span class="sd">        | strat wsdserverctl to start metamap.</span>
+
+<span class="sd">    semanticTypes: List</span>
+<span class="sd">        | it contains the semantic type abbreviation in UMLS Metathesaurus.</span>
+<span class="sd">        | like [&quot;dsyn&quot;, &quot;anab&quot;, &quot;inpo&quot;, ....].</span>
+<span class="sd">        | this value comes from table &quot;parent&quot;.</span>
+
+<span class="sd">    mmiName: Tuple</span>
+<span class="sd">        | The SKR program is an extension of MetaMap, it formats the metamap&#39;s output.</span>
+<span class="sd">        | such as</span>
+<span class="sd">        | \&#39;00000000 | MM | 4 | Complication | C0009566 | [patf] | [&quot;Complications&quot;-tx-1-&quot;complications&quot;] \|AB\&#39;</span>
+<span class="sd">        | columns seperated by &quot;|&quot;, this attribute store the corresponding column&#39;s name.</span>
+
+
+<span class="sd">    this class will create metamap object.</span>
+
+<span class="sd">    **see also**</span>
+
+<span class="sd">    pyMeSHSim.metamapWrap.Concept</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="MetaMap.__init__"><a class="viewcode-back" href="../../../_autosummary/MetaMap/pyMeSHSim.metamapWrap.MetamapInterface.MetaMap.__init__.html#pyMeSHSim.metamapWrap.MetamapInterface.MetaMap.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="c1"># p = Basic.run(cmd=&quot;which metamap&quot;)</span>
+        <span class="c1"># self.metamap = p.stdout.read().decode().strip(&quot;\n&quot;)</span>
+        <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">path</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;metamap path can&#39;t be None</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metamap</span> <span class="o">=</span> <span class="n">path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metamapBinDir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metamap</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">skrmedpostctl</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metamapBinDir</span><span class="p">,</span> <span class="s2">&quot;skrmedpostctl&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wsdserverctl</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metamapBinDir</span><span class="p">,</span> <span class="s2">&quot;wsdserverctl&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">datahandle</span> <span class="o">=</span> <span class="n">dataHandle</span><span class="p">()</span>
+        <span class="c1"># self.semanticTypes = [&quot;acab&quot;, &quot;anab&quot;, &quot;comd&quot;, &quot;cgab&quot;, &quot;dsyn&quot;, &quot;emod&quot;, &quot;inpo&quot;, &quot;mobd&quot;, &quot;neop&quot;, &quot;patf&quot;]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">semanticTypes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">datahandle</span><span class="o">.</span><span class="n">getParentTableSemantiTypes</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mminName</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="s1">&#39;mm&#39;</span><span class="p">,</span> <span class="s1">&#39;score&#39;</span><span class="p">,</span> <span class="s1">&#39;preferred_name&#39;</span><span class="p">,</span> <span class="s1">&#39;cui&#39;</span><span class="p">,</span> <span class="s1">&#39;semtypes&#39;</span><span class="p">,</span>
+                         <span class="s1">&#39;trigger&#39;</span><span class="p">,</span> <span class="s1">&#39;location&#39;</span><span class="p">,</span> <span class="s1">&#39;pos_info&#39;</span><span class="p">,</span> <span class="s1">&#39;tree_codes&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MetaMap.startMetaMap"><a class="viewcode-back" href="../../../metamapWrap.html#pyMeSHSim.metamapWrap.MetamapInterface.MetaMap.startMetaMap">[docs]</a>    <span class="k">def</span> <span class="nf">startMetaMap</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Start metamap service&quot;&quot;&quot;</span>
+
+        <span class="n">cmd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">skrmedpostctl</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;start&quot;</span>
+        <span class="n">Basic</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wsdserverctl</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;start&quot;</span>
+        <span class="n">Basic</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MetaMap.runMetaMap"><a class="viewcode-back" href="../../../metamapWrap.html#pyMeSHSim.metamapWrap.MetamapInterface.MetaMap.runMetaMap">[docs]</a>    <span class="k">def</span> <span class="nf">runMetaMap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;MSH&quot;</span><span class="p">],</span> <span class="n">semantic_types</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ignore_word_order</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> \
+                   <span class="n">conjunction</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">composite_phrases</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">silent</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sldi</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sldiID</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> \
+                   <span class="n">term_processing</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">input_file_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">text_convert</span><span class="o">=</span><span class="kc">False</span>
+                   <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The main method run the MetaMap.</span>
+
+<span class="sd">        **parameters**</span>
+
+<span class="sd">        text : String</span>
+<span class="sd">            The free text will  be processed.</span>
+
+<span class="sd">        source : List</span>
+<span class="sd">            | A list of string, the source of UMLS Metathesaurus.</span>
+<span class="sd">            | MSH (MeSH).</span>
+<span class="sd">            | MTH (Metathesaurus Names).</span>
+<span class="sd">            | SNOMEDCT_US (US Edition of SNOMED CT).</span>
+<span class="sd">            | OMIM (Online Mendelian Inheritance in Man).</span>
+<span class="sd">            | ICD10CM (International Classification of Diseases, Tenth Revision, Clinical Modification).</span>
+<span class="sd">            | ...</span>
+<span class="sd">            | eg. [&quot;MSH&quot;, &quot;MTH&quot;].</span>
+<span class="sd">            | default: [&quot;MSH&quot;].</span>
+
+<span class="sd">        semantic_types: List</span>
+<span class="sd">            | A list of string, containing the abbr. of different semantic type.</span>
+<span class="sd">            | default: None.</span>
+<span class="sd">            | It is all semantic types occur in MeSH &quot;Disease&quot; category, get from table &quot;parents&quot;.</span>
+
+<span class="sd">        ignore_word_order: True or False</span>
+<span class="sd">            | Allows MetaMap to ignore the order of words in the input text.</span>
+<span class="sd">            | default: True.</span>
+
+<span class="sd">        conjunction: True or False</span>
+<span class="sd">            | Causes MetaMap&#39;s phrase chunker to recombine smaller phrases separated by a conjunction.</span>
+<span class="sd">            | This argument exists only in version 2016.</span>
+<span class="sd">            | default: False.</span>
+
+<span class="sd">        composite_phrases: int</span>
+<span class="sd">            | Causes MetaMap to construct longer, composite phrases from the smaller phrases produced by the parser.</span>
+<span class="sd">            | default: 4.</span>
+
+<span class="sd">        silent: True or False</span>
+<span class="sd">            | Suppresses the display of header information.</span>
+<span class="sd">            | default: True.</span>
+
+<span class="sd">        sldi: True or False</span>
+<span class="sd">            | MetaMap by default expects input records to be separated by a blank line.</span>
+<span class="sd">            | To process such a list of terms without inserting a blank line between each term, call MetaMap with the</span>
+<span class="sd">            | --sldi (Single-Line Delimited Input) option.</span>
+<span class="sd">            | the input File example:</span>
+<span class="sd">            | ---------------------------------</span>
+<span class="sd">            | Written informed consent.</span>
+<span class="sd">            | Age 18 years or older.</span>
+<span class="sd">            | informed consent.</span>
+<span class="sd">            | Male or female.</span>
+<span class="sd">            | At least 18 years of age.</span>
+<span class="sd">            | Able to give informed consent.</span>
+<span class="sd">            | Signed informed consent.</span>
+<span class="sd">            | Healthy.</span>
+<span class="sd">            | Male.</span>
+<span class="sd">            | ---------------------------------</span>
+<span class="sd">            | default: True.</span>
+
+<span class="sd">        slidID: True or False</span>
+<span class="sd">            | This parameter can be use only in the situation that input_file_path is not None, and text is None.</span>
+<span class="sd">            | The input file format should be like below.</span>
+<span class="sd">            | This input format is very similar to that described in List of Terms. To associate a specific term ID (similar to a MEDLINE PMID) with each term in a list, simply prefix each term with an ID followed by a pipe symbol \|&quot;.</span>
+<span class="sd">            | eg.</span>
+
+<span class="sd">            | Txt001|Written informed consent.</span>
+<span class="sd">            | Txt002|Age 18 years or older.</span>
+<span class="sd">            | Txt003|informed consent.</span>
+<span class="sd">            | Txt004|Male or female.</span>
+<span class="sd">            | Txt005|At least 18 years of age.</span>
+<span class="sd">            | Txt006|Able to give informed consent.</span>
+<span class="sd">            | Txt007|Signed informed consent.</span>
+<span class="sd">            | Txt008|Healthy.</span>
+<span class="sd">            | Txt009|Male.</span>
+
+
+<span class="sd">        term_processing: True or False</span>
+<span class="sd">            | Each term will be analyzed as a single phrase, and not chunked into separate components.</span>
+<span class="sd">            | default: True</span>
+
+<span class="sd">        input_file_path: String or None</span>
+<span class="sd">            | MetaMap input file.</span>
+<span class="sd">            | default: None</span>
+
+<span class="sd">        text_convert: True or False</span>
+<span class="sd">            | this parameter will be set only when set the &quot;sldiID&quot; option.</span>
+<span class="sd">            | &quot;|&quot; is the seperate character in sldiID format, if its in you free text.</span>
+<span class="sd">            | The software will mistake.</span>
+<span class="sd">            | default False.</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        list of concept object or None.</span>
+
+<span class="sd">        **see also**</span>
+
+<span class="sd">        | pyMeSHSim.data.dataInterface</span>
+<span class="sd">        | pyMeSHSim.metamapWrap.Concept</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">text</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">input_file_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;please only chose one parameter in text and input_file_Path</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">text</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;text must be string</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">input_file_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">input_file_path</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;input_file_path must be string</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">input_file_path</span><span class="p">):</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;file doesn&#39;t exits</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">initCMD</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">metamap</span><span class="p">,</span> <span class="s2">&quot;-N&quot;</span><span class="p">]</span>
+
+        <span class="c1">#set ST, if None skip this parameter</span>
+        <span class="k">if</span> <span class="n">semantic_types</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">semantic_types</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">semantic_types</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">restrictST</span> <span class="o">=</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">semantic_types</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;semantic_types is invalid type, need a list</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">initCMD</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;-J </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">restrictST</span><span class="p">)</span>
+
+        <span class="c1">#set source</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">source</span><span class="p">)</span> <span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+            <span class="n">sourceUMLS</span> <span class="o">=</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+            <span class="n">sourceUMLS</span> <span class="o">=</span> <span class="s2">&quot;-R &quot;</span> <span class="o">+</span> <span class="n">sourceUMLS</span>
+            <span class="n">initCMD</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sourceUMLS</span><span class="p">)</span>
+
+        <span class="c1">#set i</span>
+        <span class="k">if</span> <span class="n">ignore_word_order</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">initCMD</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;-i&quot;</span><span class="p">)</span>
+
+        <span class="c1">#set z</span>
+        <span class="k">if</span> <span class="n">term_processing</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">initCMD</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;-z&quot;</span><span class="p">)</span>
+
+        <span class="c1">#get metamap version, set conj</span>
+        <span class="n">exe</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metamap</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;metamap(\d*)&quot;</span><span class="p">,</span> <span class="n">exe</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+            <span class="n">version</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">version</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">conjunction</span> <span class="ow">is</span> <span class="kc">True</span> <span class="ow">and</span> <span class="n">version</span> <span class="o">&gt;=</span> <span class="mi">16</span><span class="p">:</span>
+            <span class="n">initCMD</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;--conj&quot;</span><span class="p">)</span>
+        <span class="c1">#set Q</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">composite_phrases</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="n">initCMD</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;-Q </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">composite_phrases</span><span class="p">)</span>
+        <span class="c1">#set silent</span>
+        <span class="k">if</span> <span class="n">silent</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">initCMD</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;--silent&quot;</span><span class="p">)</span>
+        <span class="c1">#set sldi and sldiID</span>
+        <span class="k">if</span> <span class="n">sldi</span> <span class="ow">is</span> <span class="kc">True</span> <span class="ow">and</span> <span class="n">sldiID</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;sldi and sldiID can&#39;t be simultaneously turned On&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">sldi</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">initCMD</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;--sldi&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">sldiID</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">initCMD</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;--sldiID&quot;</span><span class="p">)</span>
+        <span class="c1">#input file</span>
+        <span class="k">if</span> <span class="n">text</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">inputFile</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">delete</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">inputFile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">text</span><span class="p">)</span>
+            <span class="n">inputFile</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">inputFile</span> <span class="o">=</span> <span class="n">input_file_path</span>
+        <span class="c1">#output file</span>
+        <span class="n">outputFile</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">delete</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">initCMD</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">inputFile</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">initCMD</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">outputFile</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">cmdString</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">initCMD</span><span class="p">)</span>
+        <span class="c1">#run</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">Basic</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cmd</span><span class="o">=</span><span class="n">cmdString</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">concepts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parseMMI</span><span class="p">(</span><span class="n">outputFile</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">concepts</span></div>
+
+    <span class="k">def</span> <span class="nf">_parseMMI</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text_handle</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Parse the output of MetaMap.</span>
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        text_handle: file handle</span>
+<span class="sd">            Produced in runMetaMap method.</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        list of dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">concepts</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">text_handle</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">(</span><span class="s2">&quot;No MetaMap result&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">text_handle</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">line</span> <span class="ow">is</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="ow">or</span> <span class="n">line</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">mmi_array</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;|&quot;</span><span class="p">)</span>
+            <span class="c1">#select the only mmi output</span>
+            <span class="c1">#except from mmi, there are &quot;ua&quot; and &quot;aa&quot;, more</span>
+            <span class="k">if</span> <span class="n">mmi_array</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;MMI&quot;</span><span class="p">:</span>
+                <span class="n">concept</span> <span class="o">=</span> <span class="n">Concept</span><span class="o">.</span><span class="n">MMIConcept</span><span class="p">(</span><span class="n">mmi_array</span><span class="o">=</span><span class="n">mmi_array</span><span class="p">)</span>
+                <span class="n">concepts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">concept</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
+        <span class="n">text_handle</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">concepts</span></div>
+
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Zhihui Luo.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

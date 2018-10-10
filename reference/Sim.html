@@ -1,0 +1,654 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Sim &mdash; pyMeSHSim 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="pyMeSHSim.Sim.ICScore" href="_autosummary/pyMeSHSim.Sim.ICScore.html" />
+    <link rel="prev" title="pyMeSHSim.metamapWrap.MetamapInterface" href="_autosummary/pyMeSHSim.metamapWrap.MetamapInterface.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> pyMeSHSim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="reference.html">Library reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="data.html">data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metamapWrap.html">metamapWrap</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Sim</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/pyMeSHSim.Sim.ICScore.html">pyMeSHSim.Sim.ICScore</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/pyMeSHSim.Sim.PathScore.html">pyMeSHSim.Sim.PathScore</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/pyMeSHSim.Sim.MeSHProcess.html">pyMeSHSim.Sim.MeSHProcess</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/pyMeSHSim.Sim.similarity.html">pyMeSHSim.Sim.similarity</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pyMeSHSim</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="reference.html">Library reference</a> &raquo;</li>
+        
+      <li>Sim</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/Sim.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="sim">
+<h1>Sim<a class="headerlink" href="#sim" title="Permalink to this headline">¶</a></h1>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="_autosummary/pyMeSHSim.Sim.ICScore.html#module-pyMeSHSim.Sim.ICScore" title="pyMeSHSim.Sim.ICScore"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pyMeSHSim.Sim.ICScore</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="_autosummary/pyMeSHSim.Sim.PathScore.html#module-pyMeSHSim.Sim.PathScore" title="pyMeSHSim.Sim.PathScore"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pyMeSHSim.Sim.PathScore</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="_autosummary/pyMeSHSim.Sim.MeSHProcess.html#module-pyMeSHSim.Sim.MeSHProcess" title="pyMeSHSim.Sim.MeSHProcess"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pyMeSHSim.Sim.MeSHProcess</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="_autosummary/pyMeSHSim.Sim.similarity.html#module-pyMeSHSim.Sim.similarity" title="pyMeSHSim.Sim.similarity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pyMeSHSim.Sim.similarity</span></code></a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<span class="target" id="module-pyMeSHSim.Sim.ICScore"></span><dl class="class">
+<dt id="pyMeSHSim.Sim.ICScore.InformationContent">
+<em class="property">class </em><code class="descclassname">pyMeSHSim.Sim.ICScore.</code><code class="descname">InformationContent</code><a class="reference internal" href="_modules/pyMeSHSim/Sim/ICScore.html#InformationContent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.Sim.ICScore.InformationContent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyMeSHSim.Sim.MeSHProcess.MeSHProcess" title="pyMeSHSim.Sim.MeSHProcess.MeSHProcess"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyMeSHSim.Sim.MeSHProcess.MeSHProcess</span></code></a></p>
+<p>This class implement the IC based similarity.</p>
+<dl class="method">
+<dt id="pyMeSHSim.Sim.ICScore.InformationContent.calICSimilarity">
+<code class="descname">calICSimilarity</code><span class="sig-paren">(</span><em>dui1=None</em>, <em>dui2=None</em>, <em>category=None</em>, <em>method=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/Sim/ICScore.html#InformationContent.calICSimilarity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.Sim.ICScore.InformationContent.calICSimilarity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculating the term similarity based on information content.</p>
+<p><strong>parameter</strong></p>
+<dl class="docutils">
+<dt>dui1: String</dt>
+<dd>MeSH ID, limit to main headings.</dd>
+<dt>dui1: String</dt>
+<dd>MeSH ID, limit to main headings.</dd>
+<dt>category: String</dt>
+<dd>A MeSH category.
+One of the value in (‘A’, ‘B’, ‘C’, ‘D’, ‘E’, ‘F’, ‘G’, ‘H’, ‘I’, ‘J’, ‘K’, ‘L’, ‘M’, ‘N’, ‘V’, ‘Z’).
+It can’t be None.</dd>
+<dt>method: String</dt>
+<dd>one value in [“lin”, “res”, “jiang”, “rel”].</dd>
+</dl>
+<p><strong>return</strong></p>
+<p>float</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.Sim.ICScore.InformationContent.compareTreecode">
+<code class="descname">compareTreecode</code><span class="sig-paren">(</span><em>code1=None</em>, <em>code2=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/Sim/ICScore.html#InformationContent.compareTreecode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.Sim.ICScore.InformationContent.compareTreecode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get shared part of two tree code.</p>
+<p><strong>parameter</strong></p>
+<dl class="docutils">
+<dt>code1: String</dt>
+<dd>MeSH tree code.</dd>
+<dt>code2: String</dt>
+<dd>MeSH tree code.</dd>
+</dl>
+<p><strong>return</strong></p>
+<p>list of dui</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.Sim.ICScore.InformationContent.findLeastCommonSubsumerbyAncestor">
+<code class="descname">findLeastCommonSubsumerbyAncestor</code><span class="sig-paren">(</span><em>dui1=None</em>, <em>dui2=None</em>, <em>category=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/Sim/ICScore.html#InformationContent.findLeastCommonSubsumerbyAncestor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.Sim.ICScore.InformationContent.findLeastCommonSubsumerbyAncestor" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method used to find the least common subsumer by ancestor.</p>
+<p><strong>parameter</strong></p>
+<dl class="docutils">
+<dt>dui1: string</dt>
+<dd>mesh ID.</dd>
+<dt>dui2: String</dt>
+<dd>mesh ID.</dd>
+<dt>category: String</dt>
+<dd>mesh category.</dd>
+</dl>
+<p><strong>return</strong></p>
+<p>list of string</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.Sim.ICScore.InformationContent.findLeastCommonSubsumerbyTreeCode">
+<code class="descname">findLeastCommonSubsumerbyTreeCode</code><span class="sig-paren">(</span><em>dui1=None</em>, <em>dui2=None</em>, <em>category=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/Sim/ICScore.html#InformationContent.findLeastCommonSubsumerbyTreeCode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.Sim.ICScore.InformationContent.findLeastCommonSubsumerbyTreeCode" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method used to find the least common subsumer by treeCode.</p>
+<p><strong>parameter</strong></p>
+<dl class="docutils">
+<dt>dui1: string</dt>
+<dd>mesh ID.</dd>
+<dt>dui2: String</dt>
+<dd>mesh ID.</dd>
+<dt>category: String</dt>
+<dd>mesh category.</dd>
+</dl>
+<p><strong>return</strong></p>
+<p>list of string</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.Sim.ICScore.InformationContent.getFreqDict">
+<code class="descname">getFreqDict</code><span class="sig-paren">(</span><em>category='C'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/Sim/ICScore.html#InformationContent.getFreqDict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.Sim.ICScore.InformationContent.getFreqDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the IC frequence from MainHeadingDetailData.</p>
+<p><strong>parameter</strong></p>
+<dl class="docutils">
+<dt>category: String</dt>
+<dd><p class="first">one of the value in (‘A’, ‘B’, ‘C’, ‘D’, ‘E’, ‘F’, ‘G’, ‘H’, ‘I’, ‘J’, ‘K’, ‘L’, ‘M’, ‘N’, ‘V’, ‘Z’, ‘all’).
+It can’t be None.</p>
+<p class="last">default: “C”.</p>
+</dd>
+</dl>
+<p><strong>return</strong></p>
+<p>defaultdict</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.Sim.ICScore.InformationContent.getICDict">
+<code class="descname">getICDict</code><span class="sig-paren">(</span><em>category='C'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/Sim/ICScore.html#InformationContent.getICDict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.Sim.ICScore.InformationContent.getICDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method used to check whole IC value.</p>
+<p>It takes long time.</p>
+<p><strong>parameter</strong></p>
+<dl class="docutils">
+<dt>category: String</dt>
+<dd><p class="first">one of the value in (‘A’, ‘B’, ‘C’, ‘D’, ‘E’, ‘F’, ‘G’, ‘H’, ‘I’, ‘J’, ‘K’, ‘L’, ‘M’, ‘N’, ‘V’, ‘Z’, ‘all’).
+It can’t be None.</p>
+<p class="last">default: “C”.</p>
+</dd>
+</dl>
+<p><strong>return</strong></p>
+<p>dict</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.Sim.ICScore.InformationContent.getMeSHIC">
+<code class="descname">getMeSHIC</code><span class="sig-paren">(</span><em>dui=None</em>, <em>category='C'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/Sim/ICScore.html#InformationContent.getMeSHIC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.Sim.ICScore.InformationContent.getMeSHIC" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method used to get IC value from a MeSH ID.</p>
+<p><strong>parameter</strong></p>
+<dl class="docutils">
+<dt>dui: String</dt>
+<dd>MeSH ID.
+start with “D”.</dd>
+<dt>category: String</dt>
+<dd><p class="first">one of the value in (‘A’, ‘B’, ‘C’, ‘D’, ‘E’, ‘F’, ‘G’, ‘H’, ‘I’, ‘J’, ‘K’, ‘L’, ‘M’, ‘N’, ‘V’, ‘Z’, ‘all’).
+It can’t be None.</p>
+<p class="last">default: “C”.</p>
+</dd>
+</dl>
+<p><strong>return</strong></p>
+<p>float</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.Sim.ICScore.InformationContent.simil">
+<code class="descname">simil</code><span class="sig-paren">(</span><em>dui1=None</em>, <em>dui2=None</em>, <em>category=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/Sim/ICScore.html#InformationContent.simil"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.Sim.ICScore.InformationContent.simil" title="Permalink to this definition">¶</a></dt>
+<dd><p>The ic algorithm.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-pyMeSHSim.Sim.PathScore"></span><dl class="class">
+<dt id="pyMeSHSim.Sim.PathScore.pathMethod">
+<em class="property">class </em><code class="descclassname">pyMeSHSim.Sim.PathScore.</code><code class="descname">pathMethod</code><a class="reference internal" href="_modules/pyMeSHSim/Sim/PathScore.html#pathMethod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.Sim.PathScore.pathMethod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyMeSHSim.Sim.ICScore.InformationContent" title="pyMeSHSim.Sim.ICScore.InformationContent"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyMeSHSim.Sim.ICScore.InformationContent</span></code></a></p>
+<p>This class implement the path based similarity.</p>
+<dl class="method">
+<dt id="pyMeSHSim.Sim.PathScore.pathMethod.calPathSimilarity">
+<code class="descname">calPathSimilarity</code><span class="sig-paren">(</span><em>dui1=None</em>, <em>dui2=None</em>, <em>category=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/Sim/PathScore.html#pathMethod.calPathSimilarity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.Sim.PathScore.pathMethod.calPathSimilarity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculating the term similarity based on term path.</p>
+<p>This is the “wang” method.</p>
+<p><strong>parameter</strong></p>
+<dl class="docutils">
+<dt>dui1: str</dt>
+<dd>MeSH ID.</dd>
+<dt>dui2: str</dt>
+<dd>MeSH ID.</dd>
+<dt>category: String</dt>
+<dd>A MeSH category.
+One of the value in (‘A’, ‘B’, ‘C’, ‘D’, ‘E’, ‘F’, ‘G’, ‘H’, ‘I’, ‘J’, ‘K’, ‘L’, ‘M’, ‘N’, ‘V’, ‘Z’).
+It can’t be None.</dd>
+</dl>
+<p><strong>return</strong></p>
+<p>float</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.Sim.PathScore.pathMethod.findShortestPath">
+<code class="descname">findShortestPath</code><span class="sig-paren">(</span><em>cui1=None</em>, <em>cui2=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/Sim/PathScore.html#pathMethod.findShortestPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.Sim.PathScore.pathMethod.findShortestPath" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.Sim.PathScore.pathMethod.pathSim">
+<code class="descname">pathSim</code><span class="sig-paren">(</span><em>cui1=None</em>, <em>cui2=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/Sim/PathScore.html#pathMethod.pathSim"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.Sim.PathScore.pathMethod.pathSim" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shortest path measurement.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-pyMeSHSim.Sim.MeSHProcess"></span><dl class="class">
+<dt id="pyMeSHSim.Sim.MeSHProcess.MeSHProcess">
+<em class="property">class </em><code class="descclassname">pyMeSHSim.Sim.MeSHProcess.</code><code class="descname">MeSHProcess</code><a class="reference internal" href="_modules/pyMeSHSim/Sim/MeSHProcess.html#MeSHProcess"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.Sim.MeSHProcess.MeSHProcess" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="data.html#pyMeSHSim.data.duiFunc.duiFunc" title="pyMeSHSim.data.duiFunc.duiFunc"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyMeSHSim.data.duiFunc.duiFunc</span></code></a></p>
+<p>This calss contains methods that can search MeSH ID by diffirent relation.</p>
+<div class="line-block">
+<div class="line">Such as child, parent, narrow, broad, ancestor, decendant…</div>
+<div class="line">This class inherit the duiFunc class.</div>
+</div>
+<dl class="method">
+<dt id="pyMeSHSim.Sim.MeSHProcess.MeSHProcess.convertToBroad">
+<code class="descname">convertToBroad</code><span class="sig-paren">(</span><em>dui=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/Sim/MeSHProcess.html#MeSHProcess.convertToBroad"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.Sim.MeSHProcess.MeSHProcess.convertToBroad" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method will return all broader concept of a narrow mesh concept.</p>
+<p><strong>parameter</strong></p>
+<dl class="docutils">
+<dt>dui: String</dt>
+<dd>MeSH ID.
+Narrow concept, starts with “C”.</dd>
+</dl>
+<p><strong>return</strong></p>
+<p>list of string
+Store MeSH ID.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.Sim.MeSHProcess.MeSHProcess.convertToNarrow">
+<code class="descname">convertToNarrow</code><span class="sig-paren">(</span><em>dui=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/Sim/MeSHProcess.html#MeSHProcess.convertToNarrow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.Sim.MeSHProcess.MeSHProcess.convertToNarrow" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method will return all narrow concept of a broad mesh concept.</p>
+<p><strong>parameter</strong></p>
+<dl class="docutils">
+<dt>dui: String</dt>
+<dd>MeSH ID.
+Broader concept, starts with “D”.</dd>
+</dl>
+<p><strong>return</strong></p>
+<p>list of string
+Store MeSH ID.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.Sim.MeSHProcess.MeSHProcess.getAncestors">
+<code class="descname">getAncestors</code><span class="sig-paren">(</span><em>dui=None</em>, <em>category=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/Sim/MeSHProcess.html#MeSHProcess.getAncestors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.Sim.MeSHProcess.MeSHProcess.getAncestors" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method will return all ancestors of a MeSH concept.</p>
+<p><strong>parameter</strong></p>
+<dl class="docutils">
+<dt>dui: String</dt>
+<dd>MeSH ID.
+Main heading concept, starts with “D”.</dd>
+</dl>
+<p><strong>return</strong></p>
+<p>list of string.
+Store MeSH ID.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.Sim.MeSHProcess.MeSHProcess.getAncestorsConceptID">
+<code class="descname">getAncestorsConceptID</code><span class="sig-paren">(</span><em>dui=None</em>, <em>category=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/Sim/MeSHProcess.html#MeSHProcess.getAncestorsConceptID"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.Sim.MeSHProcess.MeSHProcess.getAncestorsConceptID" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.Sim.MeSHProcess.MeSHProcess.getChildrenConceptID">
+<code class="descname">getChildrenConceptID</code><span class="sig-paren">(</span><em>dui=None</em>, <em>category=None</em>, <em>data=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/Sim/MeSHProcess.html#MeSHProcess.getChildrenConceptID"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.Sim.MeSHProcess.MeSHProcess.getChildrenConceptID" title="Permalink to this definition">¶</a></dt>
+<dd><p>From MeSH ID get its children concepts MeSHID.</p>
+<div class="line-block">
+<div class="line">We only return the children concepts in only one category, so when use this method, category must be denoted.</div>
+<div class="line">If you don’t know the category of one MeSH descriptor. please see getCategory method in duiFunc.</div>
+</div>
+<p><strong>parameter</strong></p>
+<dl class="docutils">
+<dt>dui: String</dt>
+<dd>MeSH ID.</dd>
+<dt>data: Pandas dataFrame</dt>
+<dd><p class="first">Where to search the children dui from.</p>
+<p class="last">default: None</p>
+</dd>
+<dt>category: String</dt>
+<dd>The category of the dui, if you make sure the dui belong to what category, you can set this parameter.
+One of the value in (‘A’, ‘B’, ‘C’, ‘D’, ‘E’, ‘F’, ‘G’, ‘H’, ‘I’, ‘J’, ‘K’, ‘L’, ‘M’, ‘N’, ‘V’, ‘Z’).</dd>
+</dl>
+<p><strong>return</strong></p>
+<p>list of String</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.Sim.MeSHProcess.MeSHProcess.getDescendant">
+<code class="descname">getDescendant</code><span class="sig-paren">(</span><em>dui=None</em>, <em>category=None</em>, <em>data=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/Sim/MeSHProcess.html#MeSHProcess.getDescendant"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.Sim.MeSHProcess.MeSHProcess.getDescendant" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method will return all decendant of a mesh concept.</p>
+<p><strong>parameter</strong></p>
+<dl class="docutils">
+<dt>dui: String</dt>
+<dd>MeSH ID.
+Main heading concept, starts with “D”.</dd>
+<dt>category: String</dt>
+<dd>The category of the dui, if you make sure the dui belong to what category, you can set this parameter.
+One of the value in (‘A’, ‘B’, ‘C’, ‘D’, ‘E’, ‘F’, ‘G’, ‘H’, ‘I’, ‘J’, ‘K’, ‘L’, ‘M’, ‘N’, ‘V’, ‘Z’).</dd>
+</dl>
+<p><strong>return</strong></p>
+<p>list of string
+Store MeSH ID.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="pyMeSHSim.Sim.MeSHProcess.MeSHProcess.getMeSHConcept">
+<em class="property">static </em><code class="descname">getMeSHConcept</code><span class="sig-paren">(</span><em>cui=None</em>, <em>dui=None</em>, <em>tree_code=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/Sim/MeSHProcess.html#MeSHProcess.getMeSHConcept"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.Sim.MeSHProcess.MeSHProcess.getMeSHConcept" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>cui: String</dt>
+<dd>UMLS ID.</dd>
+<dt>dui: String</dt>
+<dd>MeSH ID.</dd>
+<dt>tree_code: String</dt>
+<dd>MeSH tree number.</dd>
+</dl>
+<p><strong>return</strong></p>
+<p>list</p>
+<p>pyMeSHSim.metamapWrap.Concept</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.Sim.MeSHProcess.MeSHProcess.getOffspringConceptID">
+<code class="descname">getOffspringConceptID</code><span class="sig-paren">(</span><em>dui=None</em>, <em>category=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/Sim/MeSHProcess.html#MeSHProcess.getOffspringConceptID"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.Sim.MeSHProcess.MeSHProcess.getOffspringConceptID" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.Sim.MeSHProcess.MeSHProcess.getParentsConceptID">
+<code class="descname">getParentsConceptID</code><span class="sig-paren">(</span><em>dui=None</em>, <em>data=None</em>, <em>category=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/Sim/MeSHProcess.html#MeSHProcess.getParentsConceptID"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.Sim.MeSHProcess.MeSHProcess.getParentsConceptID" title="Permalink to this definition">¶</a></dt>
+<dd><p>From MeSH ID get its parent concepts MeSHID.</p>
+<div class="line-block">
+<div class="line">We only return the parent concept in only one category, so when use this method, category must be denoted.</div>
+<div class="line">If you don’t know the category of one MeSH descriptor. please see getCategory method in duiFunc.</div>
+</div>
+<dl class="docutils">
+<dt>dui: String</dt>
+<dd>MeSH ID.</dd>
+<dt>data: Pandas dataFrame</dt>
+<dd><p class="first">Where to search the parent dui from.</p>
+<p class="last">default: None.</p>
+</dd>
+<dt>category: String</dt>
+<dd>The category of the dui, if you make sure the dui belong to what category, you can set this parameter.
+One of the value in (‘A’, ‘B’, ‘C’, ‘D’, ‘E’, ‘F’, ‘G’, ‘H’, ‘I’, ‘J’, ‘K’, ‘L’, ‘M’, ‘N’, ‘V’, ‘Z’).</dd>
+</dl>
+<p><strong>return</strong></p>
+<p>list of String</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.Sim.MeSHProcess.MeSHProcess.getTopConceptID">
+<code class="descname">getTopConceptID</code><span class="sig-paren">(</span><em>dui=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/Sim/MeSHProcess.html#MeSHProcess.getTopConceptID"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.Sim.MeSHProcess.MeSHProcess.getTopConceptID" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to return the top MeSH ID of some MeSH concept.</p>
+<div class="line-block">
+<div class="line">eg. D012559(Schizophrenia)</div>
+<div class="line">Belong to {‘D001523’: ‘Disorders, Mental’}</div>
+</div>
+<p><strong>parameter</strong></p>
+<dl class="docutils">
+<dt>dui: String</dt>
+<dd>MeSH ID.
+Main heading concept, starts with “D”.</dd>
+</dl>
+<p><strong>return</strong></p>
+<p>dict.
+key is MeSH id, value is preffered name.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-pyMeSHSim.Sim.similarity"></span><dl class="class">
+<dt id="pyMeSHSim.Sim.similarity.metamapFilter">
+<em class="property">class </em><code class="descclassname">pyMeSHSim.Sim.similarity.</code><code class="descname">metamapFilter</code><span class="sig-paren">(</span><em>path=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/Sim/similarity.html#metamapFilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.Sim.similarity.metamapFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="metamapWrap.html#pyMeSHSim.metamapWrap.MetamapInterface.MetaMap" title="pyMeSHSim.metamapWrap.MetamapInterface.MetaMap"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyMeSHSim.metamapWrap.MetamapInterface.MetaMap</span></code></a>, <a class="reference internal" href="#pyMeSHSim.Sim.PathScore.pathMethod" title="pyMeSHSim.Sim.PathScore.pathMethod"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyMeSHSim.Sim.PathScore.pathMethod</span></code></a></p>
+<p>This class inherits from MetaMap and pathMethod.</p>
+<dl class="method">
+<dt id="pyMeSHSim.Sim.similarity.metamapFilter.discardAncestor">
+<code class="descname">discardAncestor</code><span class="sig-paren">(</span><em>concepts=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/Sim/similarity.html#metamapFilter.discardAncestor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.Sim.similarity.metamapFilter.discardAncestor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Discard the ancestor concept in one parse result.</p>
+<p><strong>parameter</strong></p>
+<dl class="docutils">
+<dt>concepts: list</dt>
+<dd>A list of dict, result of runmetamap.</dd>
+</dl>
+<p><strong>return</strong></p>
+<p>a list of concept</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyMeSHSim.Sim.similarity.metamapFilter.discardNodeHigh">
+<code class="descname">discardNodeHigh</code><span class="sig-paren">(</span><em>number=None</em>, <em>concepts=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/Sim/similarity.html#metamapFilter.discardNodeHigh"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.Sim.similarity.metamapFilter.discardNodeHigh" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method will discard the concept which is in a high leve, has many offsprings.</p>
+<p><strong>parameter</strong></p>
+<dl class="docutils">
+<dt>number: int</dt>
+<dd>Threshold value, above this value will be discarded.</dd>
+<dt>concepts: list</dt>
+<dd>A list of dict, result of runmetamap.</dd>
+</dl>
+<p><strong>return</strong></p>
+<p>list of concept</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyMeSHSim.Sim.similarity.termComp">
+<em class="property">class </em><code class="descclassname">pyMeSHSim.Sim.similarity.</code><code class="descname">termComp</code><a class="reference internal" href="_modules/pyMeSHSim/Sim/similarity.html#termComp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.Sim.similarity.termComp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyMeSHSim.Sim.PathScore.pathMethod" title="pyMeSHSim.Sim.PathScore.pathMethod"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyMeSHSim.Sim.PathScore.pathMethod</span></code></a></p>
+<dl class="method">
+<dt id="pyMeSHSim.Sim.similarity.termComp.termSim">
+<code class="descname">termSim</code><span class="sig-paren">(</span><em>dui1=None</em>, <em>dui2=None</em>, <em>category=None</em>, <em>method=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyMeSHSim/Sim/similarity.html#termComp.termSim"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyMeSHSim.Sim.similarity.termComp.termSim" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function used to measure the distance between two MeSH terms. including MHs and SCRs.</p>
+<p><strong>parameter</strong></p>
+<dl class="docutils">
+<dt>dui1: String</dt>
+<dd>MeSH ID.</dd>
+<dt>dui1: String</dt>
+<dd>MeSH ID.</dd>
+<dt>category: String</dt>
+<dd>A MeSH category.
+One of the value in (‘A’, ‘B’, ‘C’, ‘D’, ‘E’, ‘F’, ‘G’, ‘H’, ‘I’, ‘J’, ‘K’, ‘L’, ‘M’, ‘N’, ‘V’, ‘Z’).
+It can’t be None.</dd>
+<dt>method: String</dt>
+<dd>One value in [“lin”, “res”, “jiang”, “rel”, “wang”].</dd>
+</dl>
+<p><strong>return</strong></p>
+<p>list of float</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="_autosummary/pyMeSHSim.Sim.ICScore.html" class="btn btn-neutral float-right" title="pyMeSHSim.Sim.ICScore" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="_autosummary/pyMeSHSim.metamapWrap.MetamapInterface.html" class="btn btn-neutral" title="pyMeSHSim.metamapWrap.MetamapInterface" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Zhihui Luo.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

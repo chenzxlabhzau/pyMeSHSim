@@ -1,0 +1,474 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyMeSHSim.Sim.PathScore &mdash; pyMeSHSim 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> pyMeSHSim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference.html">Library reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">pyMeSHSim</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>pyMeSHSim.Sim.PathScore</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pyMeSHSim.Sim.PathScore</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Author: ZhiHui Luo</span>
+<span class="c1"># Organization: HuaZhong Agricultural University</span>
+
+<span class="c1">#!/usr/bin/python3</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="k">import</span> <span class="n">deepcopy</span>
+<span class="kn">from</span> <span class="nn">.ICScore</span> <span class="k">import</span> <span class="n">InformationContent</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<div class="viewcode-block" id="pathMethod"><a class="viewcode-back" href="../../../Sim.html#pyMeSHSim.Sim.PathScore.pathMethod">[docs]</a><span class="k">class</span> <span class="nc">pathMethod</span><span class="p">(</span><span class="n">InformationContent</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This class implement the path based similarity.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="pathMethod.__init__"><a class="viewcode-back" href="../../../_autosummary/pyMeSHSim.Sim.PathScore.pathMethod.html#pyMeSHSim.Sim.PathScore.pathMethod.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">InformationContent</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="pathMethod.pathSim"><a class="viewcode-back" href="../../../Sim.html#pyMeSHSim.Sim.PathScore.pathMethod.pathSim">[docs]</a>    <span class="k">def</span> <span class="nf">pathSim</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cui1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cui2</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Shortest path measurement.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">cui1</span> <span class="o">==</span> <span class="n">cui2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">1</span>
+        <span class="n">length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">findShortestPath</span><span class="p">(</span><span class="n">cui1</span><span class="o">=</span><span class="n">cui1</span><span class="p">,</span> <span class="n">cui2</span><span class="o">=</span><span class="n">cui2</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">length</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">length</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="n">length</span></div>
+
+
+
+<div class="viewcode-block" id="pathMethod.findShortestPath"><a class="viewcode-back" href="../../../Sim.html#pyMeSHSim.Sim.PathScore.pathMethod.findShortestPath">[docs]</a>    <span class="k">def</span> <span class="nf">findShortestPath</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cui1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cui2</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">cui1</span> <span class="o">==</span> <span class="n">cui2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">1</span>
+        <span class="n">visited1</span><span class="p">,</span> <span class="n">visited2</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">{}</span>
+        <span class="n">concept1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getMeSHConcept</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">cui1</span><span class="p">)</span>
+        <span class="n">concept2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getMeSHConcept</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">cui2</span><span class="p">)</span>
+        <span class="n">stack1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRelated</span><span class="p">(</span><span class="n">concept</span><span class="o">=</span><span class="n">concept1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">stack1</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">stack1</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">stack2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRelated</span><span class="p">(</span><span class="n">concept</span><span class="o">=</span><span class="n">concept2</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">stack2</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">stack2</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1">#stack1 = deepcopy(rstack1)</span>
+        <span class="c1">#stack2 = deepcopy(rstack2)</span>
+
+        <span class="n">directions1</span><span class="p">,</span> <span class="n">directions2</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="n">relations1</span><span class="p">,</span> <span class="n">relations2</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="n">paths1</span><span class="p">,</span> <span class="n">paths2</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="n">pathLength1</span><span class="p">,</span> <span class="n">pathLength2</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span>
+
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">stack1</span><span class="p">:</span>
+            <span class="n">paths1</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
+            <span class="n">directions1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">relations1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;PAR&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">stack2</span><span class="p">:</span>
+            <span class="n">paths2</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
+            <span class="n">directions2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">relations2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;PAR&quot;</span><span class="p">)</span>
+
+        <span class="k">while</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">stack1</span><span class="p">)</span> <span class="o">&gt;=</span><span class="mi">1</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">stack2</span><span class="p">)</span><span class="o">&gt;=</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span>
+            <span class="n">path1</span><span class="p">,</span> <span class="n">path2</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+            <span class="n">direction1</span><span class="p">,</span> <span class="n">direction2</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span>
+            <span class="n">relation1</span><span class="p">,</span> <span class="n">relation2</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span>
+            <span class="c1">#this is the most important variable</span>
+            <span class="n">tmpArray1</span><span class="p">,</span> <span class="n">tmpArray2</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+            <span class="n">distance1</span><span class="p">,</span> <span class="n">distance2</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+            <span class="n">cui1Flag</span><span class="p">,</span> <span class="n">cui2Flag</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">stack1</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">c1</span> <span class="o">=</span> <span class="n">stack1</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+                <span class="n">path1</span> <span class="o">=</span> <span class="n">paths1</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+                <span class="n">direction1</span> <span class="o">=</span> <span class="n">directions1</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+                <span class="n">relation1</span> <span class="o">=</span> <span class="n">relations1</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+                <span class="n">tmpArray1</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">path1</span><span class="p">)</span>
+                <span class="n">tmpArray1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c1</span><span class="p">)</span>
+                <span class="n">distance1</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tmpArray1</span><span class="p">)</span>
+                <span class="n">cui1Flag</span> <span class="o">=</span> <span class="n">cui1Flag</span> <span class="o">+</span> <span class="mi">1</span>
+
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">stack2</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">c2</span> <span class="o">=</span> <span class="n">stack2</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+                <span class="n">path2</span> <span class="o">=</span> <span class="n">paths2</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+                <span class="n">direction2</span> <span class="o">=</span> <span class="n">directions2</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+                <span class="n">relation2</span> <span class="o">=</span> <span class="n">relations2</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+                <span class="n">tmpArray2</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">path2</span><span class="p">)</span>
+                <span class="n">tmpArray2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c2</span><span class="p">)</span>
+                <span class="n">distance2</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tmpArray2</span><span class="p">)</span>
+                <span class="n">cui2Flag</span> <span class="o">=</span> <span class="n">cui2Flag</span> <span class="o">+</span> <span class="mi">1</span>
+
+            <span class="k">if</span> <span class="n">c1</span> <span class="o">==</span> <span class="n">cui2</span><span class="p">:</span>
+                <span class="n">pathLength1</span> <span class="o">=</span> <span class="n">distance1</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">stack2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="n">pathLength1</span>
+            <span class="k">if</span> <span class="n">c2</span> <span class="o">==</span> <span class="n">cui1</span><span class="p">:</span>
+                <span class="n">pathLength2</span> <span class="o">=</span> <span class="n">distance2</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">stack1</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="n">pathLength2</span>
+
+            <span class="k">if</span> <span class="n">pathLength1</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">pathLength2</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="n">pathLength1</span><span class="p">,</span> <span class="n">pathLength2</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">pathLength1</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">pathLength1</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="n">distance2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">pathLength1</span>
+            <span class="k">if</span> <span class="n">pathLength2</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">pathLength2</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="n">distance1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">pathLength2</span>
+
+            <span class="n">flag1</span><span class="p">,</span> <span class="n">flag2</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+            <span class="k">if</span> <span class="n">c1</span> <span class="ow">in</span> <span class="n">visited1</span><span class="p">:</span>
+                <span class="n">flag1</span> <span class="o">=</span> <span class="n">flag1</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">visited1</span><span class="p">[</span><span class="n">c1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">c2</span> <span class="ow">in</span> <span class="n">visited2</span><span class="p">:</span>
+                <span class="n">flag2</span> <span class="o">=</span> <span class="n">flag2</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">visited2</span><span class="p">[</span><span class="n">c2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">cui1Flag</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">flag1</span> <span class="o">=</span> <span class="n">flag1</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">cui2Flag</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">flag2</span> <span class="o">=</span> <span class="n">flag2</span> <span class="o">+</span> <span class="mi">1</span>
+
+            <span class="k">if</span> <span class="n">flag1</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">flag2</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="n">dchange1</span><span class="p">,</span> <span class="n">dchange2</span> <span class="o">=</span> <span class="n">direction1</span><span class="p">,</span> <span class="n">direction2</span>
+            <span class="n">C1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getMeSHConcept</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">c1</span><span class="p">)</span>
+            <span class="n">C2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getMeSHConcept</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">c2</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">flag1</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">dchange1</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">parents1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRelated</span><span class="p">(</span><span class="n">concept</span><span class="o">=</span><span class="n">C1</span><span class="p">,</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;PAR&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">parents1</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">parents1</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">if</span> <span class="n">flag2</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">dchange2</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">parents2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRelated</span><span class="p">(</span><span class="n">concept</span><span class="o">=</span><span class="n">C2</span><span class="p">,</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;PAR&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">parents2</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">parents2</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="c1">#if parensts1 is [], it will not run the for loop</span>
+            <span class="k">for</span> <span class="n">par1</span> <span class="ow">in</span> <span class="n">parents1</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">par1</span> <span class="ow">in</span> <span class="n">tmpArray1</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="n">stack1</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">par1</span><span class="p">)</span>
+                <span class="n">paths1</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">tmpArray1</span><span class="p">)</span>
+                <span class="n">relations1</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;PAR&quot;</span><span class="p">)</span>
+                <span class="n">directions1</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">dchange1</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">par2</span> <span class="ow">in</span> <span class="n">parents2</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">par2</span> <span class="ow">in</span> <span class="n">tmpArray2</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="n">stack2</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">par2</span><span class="p">)</span>
+                <span class="n">paths2</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">tmpArray2</span><span class="p">)</span>
+                <span class="n">relations2</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;PAR&quot;</span><span class="p">)</span>
+                <span class="n">directions2</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">dchange2</span><span class="p">)</span>
+
+            <span class="n">dchange1</span> <span class="o">=</span> <span class="n">direction1</span>
+            <span class="n">dchange2</span> <span class="o">=</span> <span class="n">direction2</span>
+
+            <span class="k">if</span> <span class="n">flag1</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">dchange1</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">children1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRelated</span><span class="p">(</span><span class="n">concept1</span><span class="o">=</span><span class="n">C1</span><span class="p">,</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;CHD&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">flag2</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">dchange2</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">children2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRelated</span><span class="p">(</span><span class="n">concept</span><span class="o">=</span><span class="n">C2</span><span class="p">,</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;CHD&quot;</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">child1</span> <span class="ow">in</span> <span class="n">children1</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">child1</span> <span class="ow">in</span> <span class="n">tmpArray1</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="n">stack1</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">child1</span><span class="p">)</span>
+                <span class="n">paths1</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">tmpArray1</span><span class="p">)</span>
+                <span class="n">relations1</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;CHD&quot;</span><span class="p">)</span>
+                <span class="n">directions1</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">dchange1</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">child2</span> <span class="ow">in</span> <span class="n">children2</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">child2</span> <span class="ow">in</span> <span class="n">tmpArray2</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="n">stack2</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">child2</span><span class="p">)</span>
+                <span class="n">paths2</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">tmpArray2</span><span class="p">)</span>
+                <span class="n">relations2</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;CHD&quot;</span><span class="p">)</span>
+                <span class="n">directions2</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">dchange2</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span></div>
+
+    <span class="k">def</span> <span class="nf">_getSV</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dui</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;this is the base function of calPathSimilarity.</span>
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        dui1: str</span>
+<span class="sd">            MeSH ID.</span>
+
+<span class="sd">        weight: float</span>
+<span class="sd">            defaut is 0.7.</span>
+
+<span class="sd">        category: str</span>
+<span class="sd">            A MeSH category.</span>
+<span class="sd">            One of the value in (&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;D&#39;, &#39;E&#39;, &#39;F&#39;, &#39;G&#39;, &#39;H&#39;, &#39;I&#39;, &#39;J&#39;, &#39;K&#39;, &#39;L&#39;, &#39;M&#39;, &#39;N&#39;, &#39;V&#39;, &#39;Z&#39;).</span>
+<span class="sd">            It can&#39;t be None.</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">parents</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getParentsConceptID</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">parents</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">1</span>
+        <span class="n">stack</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">parents</span><span class="p">)</span>
+        <span class="n">SVDict</span> <span class="o">=</span> <span class="p">{</span><span class="n">dui</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+        <span class="n">loopFlag</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="n">stack</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">stack</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">stackTmp</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">stack</span><span class="p">)</span>
+            <span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">con</span> <span class="ow">in</span> <span class="n">stackTmp</span><span class="p">:</span>
+                <span class="n">SVDict</span><span class="p">[</span><span class="n">con</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">*</span> <span class="n">weight</span><span class="o">**</span><span class="n">loopFlag</span>
+                <span class="n">par</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getParentsConceptID</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">con</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">par</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">stack</span> <span class="o">=</span> <span class="n">stack</span> <span class="o">+</span> <span class="n">par</span>
+            <span class="n">loopFlag</span> <span class="o">=</span> <span class="n">loopFlag</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">SVDict</span>
+
+
+
+<div class="viewcode-block" id="pathMethod.calPathSimilarity"><a class="viewcode-back" href="../../../Sim.html#pyMeSHSim.Sim.PathScore.pathMethod.calPathSimilarity">[docs]</a>    <span class="k">def</span> <span class="nf">calPathSimilarity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dui1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dui2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Calculating the term similarity based on term path.</span>
+
+<span class="sd">        This is the &quot;wang&quot; method.</span>
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        dui1: str</span>
+<span class="sd">            MeSH ID.</span>
+
+<span class="sd">        dui2: str</span>
+<span class="sd">            MeSH ID.</span>
+
+<span class="sd">        category: String</span>
+<span class="sd">            A MeSH category.</span>
+<span class="sd">            One of the value in (&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;D&#39;, &#39;E&#39;, &#39;F&#39;, &#39;G&#39;, &#39;H&#39;, &#39;I&#39;, &#39;J&#39;, &#39;K&#39;, &#39;L&#39;, &#39;M&#39;, &#39;N&#39;, &#39;V&#39;, &#39;Z&#39;).</span>
+<span class="sd">            It can&#39;t be None.</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">category</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;category can&#39;t be None</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkDui</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui1</span><span class="p">):</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;invalid MeSH ID in dui1</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkDui</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui2</span><span class="p">):</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;invalid MeSH ID in dui2</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">dui1</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;C&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">dui2</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;C&quot;</span><span class="p">):</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;narrow concept can&#39;t as inpput</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">dui1</span> <span class="o">==</span> <span class="n">dui2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="n">dui1</span> <span class="o">==</span> <span class="n">dui2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">1</span>
+
+        <span class="n">SV1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getSV</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui1</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">)</span>
+        <span class="n">SV2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getSV</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui2</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">)</span>
+        <span class="n">intersection</span> <span class="o">=</span> <span class="n">SV1</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">SV2</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="n">interSV1</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">SV1</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">intersection</span><span class="p">])</span>
+        <span class="n">interSV2</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">SV2</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">intersection</span><span class="p">])</span>
+        <span class="n">allSV1</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">SV1</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="n">allSV2</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">SV2</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="n">score</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">interSV1</span> <span class="o">+</span> <span class="n">interSV2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">allSV1</span> <span class="o">+</span> <span class="n">allSV2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">score</span></div></div>
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Zhihui Luo.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

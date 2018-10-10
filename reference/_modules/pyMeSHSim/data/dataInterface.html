@@ -1,0 +1,425 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyMeSHSim.data.dataInterface &mdash; pyMeSHSim 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> pyMeSHSim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference.html">Library reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">pyMeSHSim</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>pyMeSHSim.data.dataInterface</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pyMeSHSim.data.dataInterface</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Author: ZhiHui Luo</span>
+<span class="c1"># Organization: HuaZhong Agricultural University</span>
+
+<span class="c1">#!/usr/bin/python3</span>
+<span class="kn">import</span> <span class="nn">bcolz</span> <span class="k">as</span> <span class="nn">bz</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">os</span>
+
+
+<div class="viewcode-block" id="dataHandle"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.dataInterface.dataHandle">[docs]</a><span class="k">class</span> <span class="nc">dataHandle</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;This class is used to parse MeSH data, which stored in bcolz.</span>
+
+<span class="sd">    | It contains 6 tables: parent child relation table, RN and RB relation table, main heading detail data table, and RN detail data table,</span>
+<span class="sd">    | supplement main heading table, offspring and ancestor table.</span>
+
+<span class="sd">    **parameters**</span>
+
+<span class="sd">    path: string</span>
+<span class="sd">        The directory path, which contain all the bcolz file.</span>
+
+<span class="sd">    **attribute**</span>
+
+<span class="sd">    dataPath: String</span>
+<span class="sd">        The directory path, which contain all the bcolz file.</span>
+
+<span class="sd">    _parentFilePath: String</span>
+<span class="sd">        The path to table parents.</span>
+
+<span class="sd">    _RNtoRBFilePath: String</span>
+<span class="sd">        The path to table RNtoRB.</span>
+
+<span class="sd">    _RNDataFilePath: String</span>
+<span class="sd">        the path to table RNData.</span>
+
+<span class="sd">    _totalDataFilePath: String</span>
+<span class="sd">        the path to table totalData.</span>
+
+<span class="sd">    allCategory: list</span>
+<span class="sd">        contain all category in MeSH</span>
+
+<span class="sd">    **see also**</span>
+
+<span class="sd">    pyMeSHSim.data.createData</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="dataHandle.__init__"><a class="viewcode-back" href="../../../_autosummary/pyMeSHSim.data.dataInterface.dataHandle.html#pyMeSHSim.data.dataInterface.dataHandle.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dataPath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="s2">&quot;testData&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parChdRelFilePath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dataPath</span><span class="p">,</span> <span class="s2">&quot;ParentChildRel&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_RNRBRelFilePath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dataPath</span><span class="p">,</span> <span class="s2">&quot;RNandRBRel&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_RNDetailDataFilePath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dataPath</span><span class="p">,</span> <span class="s2">&quot;RNDetailData&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_MainHeadingDetailDataFilePath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dataPath</span><span class="p">,</span> <span class="s2">&quot;MainHeadingDetailData&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_supMainHeadingDetailDataFilePath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dataPath</span><span class="p">,</span> <span class="s2">&quot;supplementMainHeading&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_offspringAncestorDataFilePath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dataPath</span><span class="p">,</span> <span class="s2">&quot;offspringAndAncestorRel&quot;</span><span class="p">)</span>
+        <span class="c1">#self.allCategory = [&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;D&#39;, &#39;E&#39;, &#39;F&#39;, &#39;G&#39;, &#39;H&#39;, &#39;I&#39;, &#39;J&#39;, &#39;K&#39;, &#39;L&#39;, &#39;M&#39;, &#39;N&#39;, &#39;V&#39;, &#39;Z&#39;, &#39;all&#39;]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">allCategory</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getAllCategory</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;all&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maxIDInCategory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getMaxIDInCategory</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="dataHandle.getRelData"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.dataInterface.dataHandle.getRelData">[docs]</a>    <span class="k">def</span> <span class="nf">getRelData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This method used to select data from table ParentChildRel or RNandRBRel.</span>
+
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        data: String</span>
+<span class="sd">            One of the value in (&quot;ParentChildRel&quot;, &quot;RNandRBRel&quot;).</span>
+
+<span class="sd">            | ParentChildRel data is the tree structure core data, it cantains  all main heading descriptors</span>
+<span class="sd">            | RNandRBRel data is the relation data, contians all Narrow concept and its Broarder concept</span>
+<span class="sd">            | ParentChildRel table has three columns &quot;Child&quot;, &quot;Parent&quot;, &quot;Category&quot;</span>
+<span class="sd">            | RNandRBRel table has three columns &quot;RNconcept&quot;, &quot;RBconcept&quot;, &quot;Category&quot;</span>
+<span class="sd">            | default: None</span>
+
+<span class="sd">        category: string</span>
+<span class="sd">            | one of the value in (&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;D&#39;, &#39;E&#39;, &#39;F&#39;, &#39;G&#39;, &#39;H&#39;, &#39;I&#39;, &#39;J&#39;, &#39;K&#39;, &#39;L&#39;, &#39;M&#39;, &#39;N&#39;, &#39;V&#39;, &#39;Z&#39;, &#39;all&#39;)</span>
+<span class="sd">            | &quot;all&quot; means select all data</span>
+
+<span class="sd">            | default: &quot;all&quot;</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        DataFrame object</span>
+
+<span class="sd">        **see also**</span>
+
+<span class="sd">        pandas.dataframe</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dataSet</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;ParentChildRel&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parChdRelFilePath</span><span class="p">,</span> <span class="s2">&quot;RNandRBRel&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_RNRBRelFilePath</span><span class="p">}</span>
+        <span class="k">if</span> <span class="n">data</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dataSet</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;error: the data </span><span class="si">%s</span><span class="s2"> is not in our data</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">data</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">filePath</span> <span class="o">=</span> <span class="n">dataSet</span><span class="p">[</span><span class="n">data</span><span class="p">]</span>
+            <span class="n">bz1</span> <span class="o">=</span> <span class="n">bz</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">rootdir</span><span class="o">=</span><span class="n">filePath</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">category</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">category</span> <span class="o">=</span> <span class="s2">&quot;all&quot;</span>
+        <span class="k">if</span> <span class="n">category</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">allCategory</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;error: the category </span><span class="si">%s</span><span class="s2"> is not in our data.&quot;</span> <span class="o">%</span> <span class="n">category</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">category</span> <span class="o">==</span> <span class="s2">&quot;all&quot;</span><span class="p">:</span>
+            <span class="n">df1</span> <span class="o">=</span> <span class="n">bz1</span><span class="o">.</span><span class="n">todataframe</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">df1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span> <span class="o">=</span> <span class="n">bz1</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;myattr&quot;</span><span class="p">][</span><span class="n">category</span><span class="p">]</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;data </span><span class="si">%s</span><span class="s2"> has no category </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">category</span><span class="p">))</span>
+                <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">df1</span> <span class="o">=</span> <span class="n">bz1</span><span class="o">.</span><span class="n">todataframe</span><span class="p">()</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">end</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="n">dftmp</span> <span class="o">=</span> <span class="n">df1</span><span class="p">[</span><span class="n">start</span><span class="p">:</span> <span class="n">end</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">dftmp</span></div>
+
+    <span class="c1">#def getTreeSubnodeDetailData(self, category=&quot;all&quot;):</span>
+<div class="viewcode-block" id="dataHandle.getMainHeadingDetailData"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.dataInterface.dataHandle.getMainHeadingDetailData">[docs]</a>    <span class="k">def</span> <span class="nf">getMainHeadingDetailData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This method used to select data from table totalData.</span>
+
+<span class="sd">        | MainHeadingDetailData table contains all information about descriptors in ParentChildRel table.</span>
+<span class="sd">        | columns in this table is:</span>
+<span class="sd">        | MeSHID, UMLSID, Tree_Code, Preferred_Name, Category, Frequence, Semantic_Type</span>
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        category: string</span>
+<span class="sd">            | one of the value in (&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;D&#39;, &#39;E&#39;, &#39;F&#39;, &#39;G&#39;, &#39;H&#39;, &#39;I&#39;, &#39;J&#39;, &#39;K&#39;, &#39;L&#39;, &#39;M&#39;, &#39;N&#39;, &#39;V&#39;, &#39;Z&#39;, &#39;all&#39;)</span>
+<span class="sd">            | &quot;all&quot; means select all data</span>
+<span class="sd">            | default: &quot;all&quot;</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        DataFrame object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">bz1</span> <span class="o">=</span> <span class="n">bz</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">rootdir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_MainHeadingDetailDataFilePath</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">category</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">category</span> <span class="o">=</span> <span class="s2">&quot;all&quot;</span>
+        <span class="k">if</span> <span class="n">category</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">allCategory</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;error: the category </span><span class="si">%s</span><span class="s2"> is not in our data.</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">category</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">category</span> <span class="o">==</span> <span class="s2">&quot;all&quot;</span><span class="p">:</span>
+            <span class="n">df1</span> <span class="o">=</span> <span class="n">bz1</span><span class="o">.</span><span class="n">todataframe</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">df1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span> <span class="o">=</span> <span class="n">bz1</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;myattr&quot;</span><span class="p">][</span><span class="n">category</span><span class="p">]</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;data has no category </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">category</span><span class="p">)</span>
+                <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">df1</span> <span class="o">=</span> <span class="n">bz1</span><span class="o">.</span><span class="n">todataframe</span><span class="p">()</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">end</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="n">dftmp</span> <span class="o">=</span> <span class="n">df1</span><span class="p">[</span><span class="n">start</span><span class="p">:</span> <span class="n">end</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">dftmp</span></div>
+
+<div class="viewcode-block" id="dataHandle.getRNDetailData"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.dataInterface.dataHandle.getRNDetailData">[docs]</a>    <span class="k">def</span> <span class="nf">getRNDetailData</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This method used to select data from table RNdetailData.</span>
+
+<span class="sd">        | RNdetailData contains full information about the narrow concept in MeSH.</span>
+
+<span class="sd">        | RNdetailData table has 4 columns:</span>
+<span class="sd">        | MeSHID, UMLSID, Prefered_Name, Semantic_Type</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        dataframe object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">bz1</span> <span class="o">=</span> <span class="n">bz</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">rootdir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_RNDetailDataFilePath</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
+        <span class="n">df1</span> <span class="o">=</span> <span class="n">bz1</span><span class="o">.</span><span class="n">todataframe</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">df1</span></div>
+
+
+<div class="viewcode-block" id="dataHandle.getParentTableSemantiTypes"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.dataInterface.dataHandle.getParentTableSemantiTypes">[docs]</a>    <span class="k">def</span> <span class="nf">getParentTableSemantiTypes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get all semantic types from main heading concepts in disease category.</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">bz1</span> <span class="o">=</span> <span class="n">bz</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">rootdir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_MainHeadingDetailDataFilePath</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
+        <span class="n">semanticTypes</span> <span class="o">=</span> <span class="n">bz1</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;DiseaseCategoryST&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">semanticTypes</span></div>
+
+<div class="viewcode-block" id="dataHandle.getSupplementMainHeadingData"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.dataInterface.dataHandle.getSupplementMainHeadingData">[docs]</a>    <span class="k">def</span> <span class="nf">getSupplementMainHeadingData</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get supplementary main heading data.&quot;&quot;&quot;</span>
+        <span class="n">bz1</span> <span class="o">=</span> <span class="n">bz</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">rootdir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_supMainHeadingDetailDataFilePath</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
+        <span class="n">df1</span> <span class="o">=</span> <span class="n">bz1</span><span class="o">.</span><span class="n">todataframe</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">df1</span></div>
+
+<div class="viewcode-block" id="dataHandle.getOffspringAncestorData"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.dataInterface.dataHandle.getOffspringAncestorData">[docs]</a>    <span class="k">def</span> <span class="nf">getOffspringAncestorData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get offsping and ancestor data.&quot;&quot;&quot;</span>
+
+        <span class="n">bz1</span> <span class="o">=</span> <span class="n">bz</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">rootdir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_offspringAncestorDataFilePath</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">category</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">category</span> <span class="o">=</span> <span class="s2">&quot;all&quot;</span>
+        <span class="k">if</span> <span class="n">category</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">allCategory</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;error: the category </span><span class="si">%s</span><span class="s2"> is not in our data.</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">category</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">category</span> <span class="o">==</span> <span class="s2">&quot;all&quot;</span><span class="p">:</span>
+            <span class="n">df1</span> <span class="o">=</span> <span class="n">bz1</span><span class="o">.</span><span class="n">todataframe</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">df1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span> <span class="o">=</span> <span class="n">bz1</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;myattr&quot;</span><span class="p">][</span><span class="n">category</span><span class="p">]</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;data has no category </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">category</span><span class="p">)</span>
+                <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">df1</span> <span class="o">=</span> <span class="n">bz1</span><span class="o">.</span><span class="n">todataframe</span><span class="p">()</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">end</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="n">dftmp</span> <span class="o">=</span> <span class="n">df1</span><span class="p">[</span><span class="n">start</span><span class="p">:</span> <span class="n">end</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">dftmp</span></div>
+
+<div class="viewcode-block" id="dataHandle.getAllCategory"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.dataInterface.dataHandle.getAllCategory">[docs]</a>    <span class="k">def</span> <span class="nf">getAllCategory</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get all category.&quot;&quot;&quot;</span>
+        <span class="n">bz1</span> <span class="o">=</span> <span class="n">bz</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">rootdir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_MainHeadingDetailDataFilePath</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
+        <span class="n">cateDict</span> <span class="o">=</span> <span class="n">bz1</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;allCategory&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">cateDict</span></div>
+
+    <span class="k">def</span> <span class="nf">_getMaxIDInCategory</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get max IC terms.&quot;&quot;&quot;</span>
+        <span class="n">bz1</span> <span class="o">=</span> <span class="n">bz</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">rootdir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_MainHeadingDetailDataFilePath</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
+        <span class="n">cateDict</span> <span class="o">=</span> <span class="n">bz1</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;maxIDInCategory&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">cateDict</span></div>
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Zhihui Luo.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

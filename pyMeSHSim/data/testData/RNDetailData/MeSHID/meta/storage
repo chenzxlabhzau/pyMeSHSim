@@ -1,0 +1,1 @@
+{"dtype": "<U10", "cparams": {"clevel": 5, "shuffle": 1, "cname": "lz4", "quantize": 0}, "chunklen": 13107, "expectedlen": 319060, "dflt": ""}

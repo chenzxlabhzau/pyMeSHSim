@@ -1,0 +1,751 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyMeSHSim.data.duiFunc &mdash; pyMeSHSim 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> pyMeSHSim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference.html">Library reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">pyMeSHSim</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>pyMeSHSim.data.duiFunc</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pyMeSHSim.data.duiFunc</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Author: ZhiHui Luo</span>
+<span class="c1"># Organization: HuaZhong Agricultural University</span>
+
+<span class="c1">#!/usr/bin/python3</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">..data.dataInterface</span> <span class="k">import</span> <span class="n">dataHandle</span>
+
+
+<div class="viewcode-block" id="duiFunc"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.duiFunc.duiFunc">[docs]</a><span class="k">class</span> <span class="nc">duiFunc</span><span class="p">(</span><span class="n">dataHandle</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This is an base class for MeSH concept retrive its diffirent attribute.</span>
+
+<span class="sd">    | It contains MeSH ID, UMLSID, Tree Code, Preffered Name, Category.</span>
+<span class="sd">    | And allows the interconversion between them.</span>
+
+<span class="sd">    **attribute**</span>
+
+<span class="sd">    parChdRelData: dataframe or None</span>
+<span class="sd">        data cache for parentData.</span>
+
+<span class="sd">    MainHeadingDetailData: dataframe or None</span>
+<span class="sd">        data cache for totalData.</span>
+
+<span class="sd">    RNdetailData : dataframe</span>
+<span class="sd">        data cache for RNData or None.</span>
+
+<span class="sd">    RNtoRBData: dataframe or None</span>
+<span class="sd">        data cache for RNtoRBData.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">dataHandle</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parChdRelData</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">MainHeadingDetailData</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">RNDetailData</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">RNRBRelData</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parChdRelDataInCategory</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">RNRBRelDataInCategory</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">offspringAncestorDataInCategory</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">MainHeadingDetailDataInCategory</span> <span class="o">=</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="duiFunc.checkDui"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.duiFunc.duiFunc.checkDui">[docs]</a>    <span class="k">def</span> <span class="nf">checkDui</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dui</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check the MeSH ID, if it is legal.</span>
+
+<span class="sd">        | The MeSH heading concept starts with a capital letter &quot;D&quot;,</span>
+<span class="sd">        | SCR concepts start with &quot;C&quot;,</span>
+<span class="sd">        | usually followed with 6 digital number, or 9 digital number.</span>
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        dui: string</span>
+<span class="sd">            MeSH ID.</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        True or False.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># old mesh id</span>
+        <span class="n">regx</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;^C|D[0-9][0-9][0-9][0-9][0-9][0-9]$&quot;</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">regx</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">dui</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="c1"># new mesh id</span>
+        <span class="n">regx</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;^C|D[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]$&quot;</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">regx</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">dui</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="duiFunc.checkCui"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.duiFunc.duiFunc.checkCui">[docs]</a>    <span class="k">def</span> <span class="nf">checkCui</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cui</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check the UMLS ID, if it is legal.</span>
+
+<span class="sd">        | The UMLS concept starts with a capital letter &quot;C&quot;,</span>
+<span class="sd">        | Usually followed with 7 digital number.</span>
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        cui: String</span>
+<span class="sd">            UMLS ID.</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        True or False.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">regx</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;^C[0-9][0-9][0-9][0-9][0-9][0-9][0-9]$&quot;</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">regx</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">cui</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="duiFunc.selectDataByDui"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.duiFunc.duiFunc.selectDataByDui">[docs]</a>    <span class="k">def</span> <span class="nf">selectDataByDui</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dui</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">selectCol</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">queryCol</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Selecting value in diffirent table.</span>
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        dui: String</span>
+<span class="sd">            MeSH ID.</span>
+
+<span class="sd">        selectCol: String</span>
+<span class="sd">            column names in MainHeadingDetailData and RNdetailData.</span>
+
+<span class="sd">        queryCol: string</span>
+<span class="sd">            column name in MainHeadingDetailData and RNdetailData.</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        None or list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">dui</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;D&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">MainHeadingDetailData</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getMainHeadingDetailData</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">MainHeadingDetailData</span> <span class="o">=</span> <span class="n">df</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">MainHeadingDetailData</span>
+            <span class="c1"># semantictype is a series</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">selectCol</span><span class="p">][</span><span class="n">df</span><span class="p">[</span><span class="n">queryCol</span><span class="p">]</span> <span class="o">==</span> <span class="n">dui</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Your string </span><span class="si">%s</span><span class="s2"> is not in the data</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">dui</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">None</span>
+            <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">dui</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;C&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">RNDetailData</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRNDetailData</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">RNDetailData</span> <span class="o">=</span> <span class="n">df</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RNDetailData</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">selectCol</span><span class="p">][</span><span class="n">df</span><span class="p">[</span><span class="n">queryCol</span><span class="p">]</span> <span class="o">==</span> <span class="n">dui</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;your string </span><span class="si">%s</span><span class="s2"> is not in the data</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">dui</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">None</span>
+            <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">result</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="duiFunc.selectDataByCui"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.duiFunc.duiFunc.selectDataByCui">[docs]</a>    <span class="k">def</span> <span class="nf">selectDataByCui</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cui</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">selectCol</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">queryCol</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Select value in diffirent pandas dataframe, not suggestion.</span>
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        cui: String</span>
+<span class="sd">            UMLS ID.</span>
+
+<span class="sd">        selectCol: String</span>
+<span class="sd">            column names in TreeSubnodeDetailData and RNdetailData.</span>
+
+<span class="sd">        queryCol: string</span>
+<span class="sd">            column name in TreeSubnodeDetailData and RNdetailData.</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        None or list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># retrive TreeSubnodeDetailData</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">MainHeadingDetailData</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getMainHeadingDetailData</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">MainHeadingDetailData</span> <span class="o">=</span> <span class="n">df</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">MainHeadingDetailData</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">selectCol</span><span class="p">][</span><span class="n">df</span><span class="p">[</span><span class="n">queryCol</span><span class="p">]</span> <span class="o">==</span> <span class="n">cui</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">selectCol</span> <span class="o">==</span> <span class="s2">&quot;Tree_Code&quot;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+            <span class="c1"># retrive RNdetailData</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">RNDetailData</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRNDetailData</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">RNDetailData</span> <span class="o">=</span> <span class="n">df</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RNDetailData</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">selectCol</span><span class="p">][</span><span class="n">df</span><span class="p">[</span><span class="n">queryCol</span><span class="p">]</span> <span class="o">==</span> <span class="n">cui</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+                <span class="c1">#sys.stderr.write(&quot;the string %s not in the MeSH data\n&quot; % cui)</span>
+                <span class="k">return</span> <span class="kc">None</span>
+            <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">result</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="duiFunc.getSemanticType"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.duiFunc.duiFunc.getSemanticType">[docs]</a>    <span class="k">def</span> <span class="nf">getSemanticType</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dui</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cui</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Useing mesh ID or UMLS ID to get the concept semantic type.</span>
+
+<span class="sd">        We suggest to use dui retrive the semantic type.</span>
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        dui: string</span>
+<span class="sd">            MeSH ID.</span>
+
+<span class="sd">        cui: string</span>
+<span class="sd">            UMLS ID.</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        None or string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">dui</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">cui</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;please input a MeSH ID or a UMLS ID</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">dui</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">cui</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;can&#39;t input both MeSH ID and UMLS ID, please select only one</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># for dui</span>
+        <span class="k">if</span> <span class="n">dui</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkDui</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui</span><span class="p">):</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;this is an invalid MeSH ID</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectDataByDui</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui</span><span class="p">,</span> <span class="n">selectCol</span><span class="o">=</span><span class="s2">&quot;Semantic_Type&quot;</span><span class="p">,</span> <span class="n">queryCol</span><span class="o">=</span><span class="s2">&quot;MeSHID&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">result</span>
+        <span class="c1"># for cui</span>
+        <span class="k">if</span> <span class="n">cui</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkCui</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">cui</span><span class="p">):</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;this is an invalid UMLS ID</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+            <span class="c1"># retrive TreeSubnodeDetailData</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectDataByCui</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">cui</span><span class="p">,</span> <span class="n">selectCol</span><span class="o">=</span><span class="s2">&quot;Semantic_Type&quot;</span><span class="p">,</span> <span class="n">queryCol</span><span class="o">=</span><span class="s2">&quot;UMLSID&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">result</span></div>
+
+<div class="viewcode-block" id="duiFunc.getMeSHTreecode"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.duiFunc.duiFunc.getMeSHTreecode">[docs]</a>    <span class="k">def</span> <span class="nf">getMeSHTreecode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dui</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cui</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Use mesh ID or UMLS ID to get the concept tree code.</span>
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        dui: string</span>
+<span class="sd">            MeSH ID.</span>
+
+<span class="sd">        cui: string</span>
+<span class="sd">            UMLS ID.</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        None or list of string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">cui</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">dui</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;please input a MeSH ID or UMLS ID</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">dui</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">cui</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;can&#39;t input both MeSH ID and UMLS ID, please select only one</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># for dui</span>
+        <span class="k">if</span> <span class="n">dui</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkDui</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui</span><span class="p">):</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;this is an invalid MeSH ID</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">dui</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;C&quot;</span><span class="p">):</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;no tree code for </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">dui</span><span class="p">)</span>
+                <span class="c1"># return None or exit(1)</span>
+                <span class="k">return</span> <span class="kc">None</span>
+
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectDataByDui</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui</span><span class="p">,</span> <span class="n">selectCol</span><span class="o">=</span><span class="s2">&quot;Tree_Code&quot;</span><span class="p">,</span> <span class="n">queryCol</span><span class="o">=</span><span class="s2">&quot;MeSHID&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">result</span>
+
+        <span class="c1"># for cui</span>
+
+        <span class="k">if</span> <span class="n">cui</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkCui</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">cui</span><span class="p">):</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;this is an invalid UMLS ID</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectDataByCui</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">cui</span><span class="p">,</span> <span class="n">selectCol</span><span class="o">=</span><span class="s2">&quot;Tree_Code&quot;</span><span class="p">,</span> <span class="n">queryCol</span><span class="o">=</span><span class="s2">&quot;UMLSID&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">result</span></div>
+
+<div class="viewcode-block" id="duiFunc.getMeSHIDbyUMLSID"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.duiFunc.duiFunc.getMeSHIDbyUMLSID">[docs]</a>    <span class="k">def</span> <span class="nf">getMeSHIDbyUMLSID</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cui</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get MeSH ID from UMLS ID.</span>
+
+<span class="sd">        | This function will query three tables:</span>
+<span class="sd">        | MainHeadingDetailData</span>
+<span class="sd">        | supplementMainHeadingDetailData</span>
+<span class="sd">        | RNDetailData</span>
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        cui: string</span>
+<span class="sd">            UMLS ID.</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        None or string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkCui</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">cui</span><span class="p">):</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;this is an invalid UMLS ID</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectDataByCui</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">cui</span><span class="p">,</span> <span class="n">selectCol</span><span class="o">=</span><span class="s2">&quot;MeSHID&quot;</span><span class="p">,</span> <span class="n">queryCol</span><span class="o">=</span><span class="s2">&quot;UMLSID&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">MeSHID</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_queryDataInSupplementData</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">cui</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">MeSHID</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">MeSHID</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_queryDataInRNDetailData</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">cui</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">MeSHID</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">MeSHID</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">MeSHID</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">MeSHID</span></div>
+
+    <span class="k">def</span> <span class="nf">_queryDataInSupplementData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cui</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Query MeSH ID by UMLS ID in supplementMainHeadingData.&quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkCui</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">cui</span><span class="p">):</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;this is an invalid UMLS ID</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">df1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getSupplementMainHeadingData</span><span class="p">()</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">df1</span><span class="p">[</span><span class="s2">&quot;MeSHID&quot;</span><span class="p">][</span><span class="n">df1</span><span class="p">[</span><span class="s2">&quot;UMLSID&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">cui</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">MeSHID</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">result</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="c1"># print(MeSHID)</span>
+            <span class="c1"># exit(1)</span>
+            <span class="k">return</span> <span class="n">MeSHID</span>
+
+    <span class="k">def</span> <span class="nf">_queryDataInRNDetailData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cui</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Query MeSH ID by UMLS ID in RNDetailData.&quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkCui</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">cui</span><span class="p">):</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;this is an invalid UMLS ID</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">df1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRNDetailData</span><span class="p">()</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">df1</span><span class="p">[</span><span class="s2">&quot;MeSHID&quot;</span><span class="p">][</span><span class="n">df1</span><span class="p">[</span><span class="s2">&quot;UMLSID&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">cui</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">MeSHID</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">result</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">MeSHID</span>
+
+<div class="viewcode-block" id="duiFunc.getUMLSIDbyMeSHID"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.duiFunc.duiFunc.getUMLSIDbyMeSHID">[docs]</a>    <span class="k">def</span> <span class="nf">getUMLSIDbyMeSHID</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dui</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get UMLS ID from MeSH ID.</span>
+
+<span class="sd">        | This function only return the preferred UMLS concept.</span>
+<span class="sd">        | Not the whole UMLS ID corresponding to the mesh descriptor.</span>
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        dui: string</span>
+<span class="sd">            MeSH ID.</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        None or string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkDui</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui</span><span class="p">):</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;this is an invalid MeSH ID</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectDataByDui</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui</span><span class="p">,</span> <span class="n">selectCol</span><span class="o">=</span><span class="s2">&quot;UMLSID&quot;</span><span class="p">,</span> <span class="n">queryCol</span><span class="o">=</span><span class="s2">&quot;MeSHID&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">UMLSID</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">UMLSID</span></div>
+
+<div class="viewcode-block" id="duiFunc.getPrefferedName"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.duiFunc.duiFunc.getPrefferedName">[docs]</a>    <span class="k">def</span> <span class="nf">getPrefferedName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dui</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cui</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Use mesh ID or UMLS ID to get the concept prefferd name.</span>
+
+<span class="sd">        We suggest to use dui get preffered name.</span>
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        dui: string</span>
+<span class="sd">            MeSH ID.</span>
+
+<span class="sd">        cui: string</span>
+<span class="sd">            UMLS ID.</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        None or string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">cui</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">dui</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;please input a MeSH ID or UMLS ID</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">dui</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">cui</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;can&#39;t input both MeSH ID and UMLS ID, please select only one</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">dui</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkDui</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui</span><span class="p">):</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;this is an invalid MeSH ID</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectDataByDui</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui</span><span class="p">,</span> <span class="n">selectCol</span><span class="o">=</span><span class="s2">&quot;Preferred_Name&quot;</span><span class="p">,</span> <span class="n">queryCol</span><span class="o">=</span><span class="s2">&quot;MeSHID&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">result</span>
+
+        <span class="k">if</span> <span class="n">cui</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkCui</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">cui</span><span class="p">):</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;this is an invalid UMLS ID</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+            <span class="c1"># retrive TreeSubnodeDetailData</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectDataByCui</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">cui</span><span class="p">,</span> <span class="n">selectCol</span><span class="o">=</span><span class="s2">&quot;Preferred_Name&quot;</span><span class="p">,</span> <span class="n">queryCol</span><span class="o">=</span><span class="s2">&quot;UMLSID&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">result</span></div>
+
+<div class="viewcode-block" id="duiFunc.getCategory"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.duiFunc.duiFunc.getCategory">[docs]</a>    <span class="k">def</span> <span class="nf">getCategory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dui</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cui</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the concept category by MeSH id or UMLS ID.</span>
+
+<span class="sd">        | For main heading concept, the category is its tree code first letter.</span>
+<span class="sd">        | In fact, for NB concept, it has no tree code, so it will has no category, but in this module.</span>
+<span class="sd">        | We classfy the RN concept to its RB concept&#39;s category.</span>
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        dui: string</span>
+<span class="sd">            MeSH ID.</span>
+
+<span class="sd">        cui: string</span>
+<span class="sd">            UMLS ID.</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        None or list of string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">cui</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">dui</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;please input a MeSH ID or UMLS ID</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">dui</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">cui</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;can&#39;t input both MeSH ID and UMLS ID, please select only one</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># for cui</span>
+        <span class="k">if</span> <span class="n">cui</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">MeSHID</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getMeSHIDbyUMLSID</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">cui</span><span class="p">)</span>
+            <span class="n">dui</span> <span class="o">=</span> <span class="n">MeSHID</span>
+        <span class="c1"># for dui</span>
+        <span class="k">if</span> <span class="n">dui</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkDui</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui</span><span class="p">):</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;this is an invalid MeSH ID</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">dui</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;D&quot;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">MainHeadingDetailData</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getMainHeadingDetailData</span><span class="p">()</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">MainHeadingDetailData</span> <span class="o">=</span> <span class="n">df</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">MainHeadingDetailData</span>
+                <span class="c1"># semantictype is a series</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Category&quot;</span><span class="p">][</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;MeSHID&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">dui</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+                    <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;your string </span><span class="si">%s</span><span class="s2"> is not in the data</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">dui</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="kc">None</span>
+                <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
+
+            <span class="k">if</span> <span class="n">dui</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;C&quot;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">RNRBRelData</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRelData</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s2">&quot;RNandRBRel&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">RNRBRelData</span> <span class="o">=</span> <span class="n">df</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RNRBRelData</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Category&quot;</span><span class="p">][</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;RNconcept&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">dui</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+                    <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;your string </span><span class="si">%s</span><span class="s2"> is not in the data</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">dui</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="kc">None</span>
+                <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">result</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="duiFunc.getDuiFromTreeCode"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.duiFunc.duiFunc.getDuiFromTreeCode">[docs]</a>    <span class="k">def</span> <span class="nf">getDuiFromTreeCode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">treeCode</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Only the main heading concept has tree code.</span>
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        treeCode: string</span>
+<span class="sd">            MeSH tree code.</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        string or None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">treeCode</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;please input the treecode</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">regx</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;^[A-Z][0-9][0-9](\.[0-9][0-9][0-9])*$&quot;</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">regx</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">treeCode</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">MainHeadingDetailData</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getMainHeadingDetailData</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">MainHeadingDetailData</span> <span class="o">=</span> <span class="n">df</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">MainHeadingDetailData</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;MeSHID&quot;</span><span class="p">][</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Tree_Code&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">treeCode</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;your string </span><span class="si">%s</span><span class="s2"> is not in the data</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">treeCode</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">None</span>
+            <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">result</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;this is an invalid tree code</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="duiFunc.getFrequenceByDui"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.duiFunc.duiFunc.getFrequenceByDui">[docs]</a>    <span class="k">def</span> <span class="nf">getFrequenceByDui</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dui</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This function will return the counts of the concept which retrived in a specific text(pubmed article) set</span>
+
+<span class="sd">        | Only the main heading concept has this attribute.</span>
+<span class="sd">        | It is used to calculate the IC(Information Content) Value.</span>
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        dui: string</span>
+<span class="sd">            MeSH ID.</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">dui</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;please input the MeSH ID</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkDui</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui</span><span class="p">):</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;this is an invalid MeSH ID</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">dui</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;C&quot;</span><span class="p">):</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;RN concept has no frequence</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectDataByDui</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui</span><span class="p">,</span> <span class="n">selectCol</span><span class="o">=</span><span class="s2">&quot;Frequence&quot;</span><span class="p">,</span> <span class="n">queryCol</span><span class="o">=</span><span class="s2">&quot;MeSHID&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="duiFunc.getAllMHsConceptInOneCategory"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.duiFunc.duiFunc.getAllMHsConceptInOneCategory">[docs]</a>    <span class="k">def</span> <span class="nf">getAllMHsConceptInOneCategory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get all MHs in one category.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">category</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">MainHeadingDetailDataInCategory</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getMainHeadingDetailData</span><span class="p">(</span><span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">MainHeadingDetailDataInCategory</span><span class="p">[</span><span class="n">category</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">MainHeadingDetailDataInCategory</span><span class="p">[</span><span class="n">category</span><span class="p">]</span>
+        <span class="n">conceptList</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;MeSHID&quot;</span><span class="p">])))</span>
+        <span class="k">return</span> <span class="n">conceptList</span></div>
+
+<div class="viewcode-block" id="duiFunc.getAllSCRsConceptInOneCategory"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.duiFunc.duiFunc.getAllSCRsConceptInOneCategory">[docs]</a>    <span class="k">def</span> <span class="nf">getAllSCRsConceptInOneCategory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get all SCRs in one category.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">category</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">RNRBRelDataInCategory</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRelData</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s2">&quot;RNandRBRel&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">RNRBRelDataInCategory</span><span class="p">[</span><span class="n">category</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RNRBRelDataInCategory</span><span class="p">[</span><span class="n">category</span><span class="p">]</span>
+        <span class="n">conceptList</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;RNconcept&quot;</span><span class="p">])))</span>
+        <span class="k">return</span> <span class="n">conceptList</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Zhihui Luo.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

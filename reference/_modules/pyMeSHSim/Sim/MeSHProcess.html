@@ -1,0 +1,604 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyMeSHSim.Sim.MeSHProcess &mdash; pyMeSHSim 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> pyMeSHSim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference.html">Library reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">pyMeSHSim</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>pyMeSHSim.Sim.MeSHProcess</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pyMeSHSim.Sim.MeSHProcess</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Author: ZhiHui Luo</span>
+<span class="c1"># Organization: HuaZhong Agricultural University</span>
+
+<span class="c1">#!/usr/bin/python3</span>
+<span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">copy</span>
+<span class="c1">#from ..data.dataDB import dataDB</span>
+<span class="kn">from</span> <span class="nn">..data.duiFunc</span> <span class="k">import</span> <span class="n">duiFunc</span>
+<span class="kn">from</span> <span class="nn">..metamapWrap.Concept</span> <span class="k">import</span> <span class="n">Concept</span>
+<span class="c1">#from ..metamapWrap.MetamapInterface import MetaMap</span>
+
+<div class="viewcode-block" id="MeSHProcess"><a class="viewcode-back" href="../../../Sim.html#pyMeSHSim.Sim.MeSHProcess.MeSHProcess">[docs]</a><span class="k">class</span> <span class="nc">MeSHProcess</span><span class="p">(</span><span class="n">duiFunc</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This calss contains methods that can search MeSH ID by diffirent relation.</span>
+
+<span class="sd">    | Such as child, parent, narrow, broad, ancestor, decendant...</span>
+<span class="sd">    | This class inherit the duiFunc class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="MeSHProcess.__init__"><a class="viewcode-back" href="../../../_autosummary/pyMeSHSim.Sim.MeSHProcess.MeSHProcess.html#pyMeSHSim.Sim.MeSHProcess.MeSHProcess.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">duiFunc</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MeSHProcess.getMeSHConcept"><a class="viewcode-back" href="../../../Sim.html#pyMeSHSim.Sim.MeSHProcess.MeSHProcess.getMeSHConcept">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">getMeSHConcept</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dui</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tree_code</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        **parameter**</span>
+<span class="sd">        ----------</span>
+<span class="sd">        cui: String</span>
+<span class="sd">            UMLS ID.</span>
+
+<span class="sd">        dui: String</span>
+<span class="sd">            MeSH ID.</span>
+
+<span class="sd">        tree_code: String</span>
+<span class="sd">            MeSH tree number.</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        list</span>
+
+<span class="sd">        see also</span>
+<span class="sd">        ----------</span>
+<span class="sd">        pyMeSHSim.metamapWrap.Concept</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">concept</span> <span class="o">=</span> <span class="n">Concept</span><span class="o">.</span><span class="n">MeSHConcept</span><span class="p">(</span><span class="n">cui</span><span class="o">=</span><span class="n">cui</span><span class="p">,</span> <span class="n">dui</span><span class="o">=</span><span class="n">dui</span><span class="p">,</span> <span class="n">tree_code</span><span class="o">=</span><span class="n">tree_code</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">concept</span></div>
+
+    <span class="k">def</span> <span class="nf">_getParentOrchildConceptID</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dui</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rel</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;From MeSH ID get its parents or children concepts MeSHID.</span>
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        rel: String</span>
+<span class="sd">            One value in [&quot;PAR&quot;, &quot;CHD&quot;].</span>
+
+<span class="sd">        data: DataFrame</span>
+<span class="sd">            default None.</span>
+
+<span class="sd">        category: String</span>
+<span class="sd">            The category of the dui, if you make sure the dui belong to what category, you can set this parameter.</span>
+<span class="sd">            One of the value in (&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;D&#39;, &#39;E&#39;, &#39;F&#39;, &#39;G&#39;, &#39;H&#39;, &#39;I&#39;, &#39;J&#39;, &#39;K&#39;, &#39;L&#39;, &#39;M&#39;, &#39;N&#39;, &#39;V&#39;, &#39;Z&#39;).</span>
+
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        a list of MeSH ID</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">rel</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;PAR&quot;</span><span class="p">,</span> <span class="s2">&quot;CHD&quot;</span><span class="p">]:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;invalid rel</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">rel</span> <span class="o">==</span> <span class="s2">&quot;PAR&quot;</span><span class="p">:</span>
+            <span class="n">column</span>  <span class="o">=</span> <span class="s2">&quot;Parent&quot;</span>
+        <span class="k">if</span> <span class="n">rel</span> <span class="o">==</span> <span class="s2">&quot;CHD&quot;</span><span class="p">:</span>
+            <span class="n">column</span> <span class="o">=</span> <span class="s2">&quot;Child&quot;</span>
+
+        <span class="c1"># if has no category, means it not main heading concept</span>
+        <span class="k">if</span> <span class="n">category</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;category can&#39;t be none</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;can&#39;t input a list as category</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">category</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">allCategory</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;category </span><span class="si">%s</span><span class="s2"> not in category list.</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">category</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">pa</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">column</span><span class="p">][</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;MeSHID&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">dui</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">pa</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">pa</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">category</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parChdRelDataInCategory</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRelData</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s2">&quot;ParentChildRel&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parChdRelDataInCategory</span><span class="p">[</span><span class="n">category</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parChdRelDataInCategory</span><span class="p">[</span><span class="n">category</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">rel</span> <span class="o">==</span> <span class="s2">&quot;PAR&quot;</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">][</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Child&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">dui</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">][</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Parent&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">dui</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">res</span><span class="p">))</span>
+
+
+
+<div class="viewcode-block" id="MeSHProcess.getParentsConceptID"><a class="viewcode-back" href="../../../Sim.html#pyMeSHSim.Sim.MeSHProcess.MeSHProcess.getParentsConceptID">[docs]</a>    <span class="k">def</span> <span class="nf">getParentsConceptID</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dui</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;From MeSH ID get its parent concepts MeSHID.</span>
+
+<span class="sd">        | We only return the parent concept in only one category, so when use this method, category must be denoted.</span>
+<span class="sd">        | If you don&#39;t know the category of one MeSH descriptor. please see getCategory method in duiFunc.</span>
+
+<span class="sd">        parameter</span>
+<span class="sd">        ----------</span>
+<span class="sd">        dui: String</span>
+<span class="sd">            MeSH ID.</span>
+
+<span class="sd">        data: Pandas dataFrame</span>
+<span class="sd">            Where to search the parent dui from.</span>
+
+<span class="sd">            default: None.</span>
+
+<span class="sd">        category: String</span>
+<span class="sd">            The category of the dui, if you make sure the dui belong to what category, you can set this parameter.</span>
+<span class="sd">            One of the value in (&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;D&#39;, &#39;E&#39;, &#39;F&#39;, &#39;G&#39;, &#39;H&#39;, &#39;I&#39;, &#39;J&#39;, &#39;K&#39;, &#39;L&#39;, &#39;M&#39;, &#39;N&#39;, &#39;V&#39;, &#39;Z&#39;).</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        list of String</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getParentOrchildConceptID</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">,</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;PAR&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MeSHProcess.getChildrenConceptID"><a class="viewcode-back" href="../../../Sim.html#pyMeSHSim.Sim.MeSHProcess.MeSHProcess.getChildrenConceptID">[docs]</a>    <span class="k">def</span> <span class="nf">getChildrenConceptID</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dui</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;From MeSH ID get its children concepts MeSHID.</span>
+
+<span class="sd">        | We only return the children concepts in only one category, so when use this method, category must be denoted.</span>
+<span class="sd">        | If you don&#39;t know the category of one MeSH descriptor. please see getCategory method in duiFunc.</span>
+
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        dui: String</span>
+<span class="sd">            MeSH ID.</span>
+
+<span class="sd">        data: Pandas dataFrame</span>
+<span class="sd">            Where to search the children dui from.</span>
+
+<span class="sd">            default: None</span>
+
+<span class="sd">        category: String</span>
+<span class="sd">            The category of the dui, if you make sure the dui belong to what category, you can set this parameter.</span>
+<span class="sd">            One of the value in (&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;D&#39;, &#39;E&#39;, &#39;F&#39;, &#39;G&#39;, &#39;H&#39;, &#39;I&#39;, &#39;J&#39;, &#39;K&#39;, &#39;L&#39;, &#39;M&#39;, &#39;N&#39;, &#39;V&#39;, &#39;Z&#39;).</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        list of String</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getParentOrchildConceptID</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">,</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;CHD&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MeSHProcess.getTopConceptID"><a class="viewcode-back" href="../../../Sim.html#pyMeSHSim.Sim.MeSHProcess.MeSHProcess.getTopConceptID">[docs]</a>    <span class="k">def</span> <span class="nf">getTopConceptID</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dui</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This method is used to return the top MeSH ID of some MeSH concept.</span>
+
+<span class="sd">        | eg. D012559(Schizophrenia)</span>
+<span class="sd">        | Belong to {&#39;D001523&#39;: &#39;Disorders, Mental&#39;}</span>
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        dui: String</span>
+<span class="sd">            MeSH ID.</span>
+<span class="sd">            Main heading concept, starts with &quot;D&quot;.</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        dict.</span>
+<span class="sd">        key is MeSH id, value is preffered name.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">treeCode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getMeSHTreecode</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">treeCode</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Dui </span><span class="si">%s</span><span class="s2"> has no top descriptor.</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">dui</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">topConcepts</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">tree</span> <span class="ow">in</span> <span class="n">treeCode</span><span class="p">:</span>
+            <span class="n">topTreeNum</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">concept</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDuiFromTreeCode</span><span class="p">(</span><span class="n">treeCode</span><span class="o">=</span><span class="n">topTreeNum</span><span class="p">)</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPrefferedName</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">concept</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">concept</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">topConcepts</span><span class="p">:</span>
+                <span class="n">topConcepts</span><span class="p">[</span><span class="n">concept</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="k">return</span> <span class="n">topConcepts</span></div>
+
+<div class="viewcode-block" id="MeSHProcess.getAncestors"><a class="viewcode-back" href="../../../Sim.html#pyMeSHSim.Sim.MeSHProcess.MeSHProcess.getAncestors">[docs]</a>    <span class="k">def</span> <span class="nf">getAncestors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dui</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This method will return all ancestors of a MeSH concept.</span>
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        dui: String</span>
+<span class="sd">            MeSH ID.</span>
+<span class="sd">            Main heading concept, starts with &quot;D&quot;.</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        list of string.</span>
+<span class="sd">        Store MeSH ID.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">parents</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getParentsConceptID</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">)</span>
+        <span class="n">contmp</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">parents</span><span class="p">)</span>
+        <span class="n">searchedcon</span> <span class="o">=</span> <span class="p">[</span><span class="n">dui</span><span class="p">]</span>
+        <span class="k">while</span> <span class="n">contmp</span><span class="p">:</span>
+            <span class="n">interCon</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">con</span> <span class="ow">in</span> <span class="n">contmp</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">con</span> <span class="ow">in</span> <span class="n">searchedcon</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="n">searchedcon</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">con</span><span class="p">)</span>
+                <span class="n">parents</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getParentsConceptID</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">con</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">parents</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">interCon</span> <span class="o">=</span> <span class="n">interCon</span> <span class="o">+</span> <span class="n">parents</span>
+            <span class="n">contmp</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">interCon</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">searchedcon</span></div>
+
+<div class="viewcode-block" id="MeSHProcess.getDescendant"><a class="viewcode-back" href="../../../Sim.html#pyMeSHSim.Sim.MeSHProcess.MeSHProcess.getDescendant">[docs]</a>    <span class="k">def</span> <span class="nf">getDescendant</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dui</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This method will return all decendant of a mesh concept.</span>
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        dui: String</span>
+<span class="sd">            MeSH ID.</span>
+<span class="sd">            Main heading concept, starts with &quot;D&quot;.</span>
+
+<span class="sd">        category: String</span>
+<span class="sd">            The category of the dui, if you make sure the dui belong to what category, you can set this parameter.</span>
+<span class="sd">            One of the value in (&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;D&#39;, &#39;E&#39;, &#39;F&#39;, &#39;G&#39;, &#39;H&#39;, &#39;I&#39;, &#39;J&#39;, &#39;K&#39;, &#39;L&#39;, &#39;M&#39;, &#39;N&#39;, &#39;V&#39;, &#39;Z&#39;).</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        list of string</span>
+<span class="sd">        Store MeSH ID.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">children</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getChildrenConceptID</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">contmp</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">children</span><span class="p">)</span>
+        <span class="n">searchedcon</span> <span class="o">=</span> <span class="p">[</span><span class="n">dui</span><span class="p">]</span>
+        <span class="k">while</span> <span class="n">contmp</span><span class="p">:</span>
+            <span class="n">interCon</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">con</span> <span class="ow">in</span> <span class="n">contmp</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">con</span> <span class="ow">in</span> <span class="n">searchedcon</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="n">searchedcon</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">con</span><span class="p">)</span>
+                <span class="n">children</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getChildrenConceptID</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">con</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">children</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">interCon</span> <span class="o">=</span> <span class="n">interCon</span> <span class="o">+</span> <span class="n">children</span>
+            <span class="n">contmp</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">interCon</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">searchedcon</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_getAncestorsOrDescendentConceptID</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dui</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rel</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;From MeSH ID get its ancestor or offspring concepts MeSHID.</span>
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        rel: String</span>
+<span class="sd">            One value in [&quot;ANC&quot;, &quot;OFF&quot;].</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        a list of MeSH ID</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">rel</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;OFF&quot;</span><span class="p">,</span> <span class="s2">&quot;ANC&quot;</span><span class="p">]:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;invalid rel</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">rel</span> <span class="o">==</span> <span class="s2">&quot;ANC&quot;</span><span class="p">:</span>
+            <span class="n">column</span> <span class="o">=</span> <span class="s2">&quot;Ancestor&quot;</span>
+        <span class="k">if</span> <span class="n">rel</span> <span class="o">==</span> <span class="s2">&quot;OFF&quot;</span><span class="p">:</span>
+            <span class="n">column</span> <span class="o">=</span> <span class="s2">&quot;Offspring&quot;</span>
+
+        <span class="k">if</span> <span class="n">category</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;category can&#39;t be none</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;can&#39;t input a list as category</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">category</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">allCategory</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;category </span><span class="si">%s</span><span class="s2"> not in category list.</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">category</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkDui</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui</span><span class="p">):</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">dui</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;C&quot;</span><span class="p">):</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;SCR record has no ancestor</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">category</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">offspringAncestorDataInCategory</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getOffspringAncestorData</span><span class="p">(</span><span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">offspringAncestorDataInCategory</span><span class="p">[</span><span class="n">category</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offspringAncestorDataInCategory</span><span class="p">[</span><span class="n">category</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">rel</span> <span class="o">==</span> <span class="s2">&quot;ANC&quot;</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">][</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Offspring&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">dui</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">][</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Ancestor&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">dui</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">res</span><span class="p">))</span>
+
+<div class="viewcode-block" id="MeSHProcess.getAncestorsConceptID"><a class="viewcode-back" href="../../../Sim.html#pyMeSHSim.Sim.MeSHProcess.MeSHProcess.getAncestorsConceptID">[docs]</a>    <span class="k">def</span> <span class="nf">getAncestorsConceptID</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dui</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getAncestorsOrDescendentConceptID</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">,</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;ANC&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MeSHProcess.getOffspringConceptID"><a class="viewcode-back" href="../../../Sim.html#pyMeSHSim.Sim.MeSHProcess.MeSHProcess.getOffspringConceptID">[docs]</a>    <span class="k">def</span> <span class="nf">getOffspringConceptID</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dui</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getAncestorsOrDescendentConceptID</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">,</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;OFF&quot;</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_convertToBroadOrNarrowConceptID</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dui</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rel</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;From MeSH ID get its broader or narrow concept MeSHID.</span>
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        rel: String</span>
+<span class="sd">            One value in [&quot;RB&quot;, &quot;RN&quot;].</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        a list of MeSH ID</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">rel</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;RB&quot;</span><span class="p">,</span> <span class="s2">&quot;RN&quot;</span><span class="p">]:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;invalid rel</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">rel</span> <span class="o">==</span> <span class="s2">&quot;RB&quot;</span><span class="p">:</span>
+            <span class="n">column</span> <span class="o">=</span> <span class="s2">&quot;RBconcept&quot;</span>
+        <span class="k">if</span> <span class="n">rel</span> <span class="o">==</span> <span class="s2">&quot;RN&quot;</span><span class="p">:</span>
+            <span class="n">column</span> <span class="o">=</span> <span class="s2">&quot;RNconcept&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkDui</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui</span><span class="p">):</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Dui </span><span class="si">%s</span><span class="s2"> is an invalid MeSH id</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">dui</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">RNRBRelData</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRelData</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s2">&quot;RNandRBRel&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">RNRBRelData</span> <span class="o">=</span> <span class="n">df</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RNRBRelData</span>
+
+        <span class="k">if</span> <span class="n">rel</span> <span class="o">==</span> <span class="s2">&quot;RB&quot;</span><span class="p">:</span>
+            <span class="n">Con</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">][</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;RNconcept&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">dui</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">Con</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">][</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;RBconcept&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">dui</span><span class="p">]</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">Con</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="MeSHProcess.convertToBroad"><a class="viewcode-back" href="../../../Sim.html#pyMeSHSim.Sim.MeSHProcess.MeSHProcess.convertToBroad">[docs]</a>    <span class="k">def</span> <span class="nf">convertToBroad</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dui</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This method will return all broader concept of a narrow mesh concept.</span>
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        dui: String</span>
+<span class="sd">            MeSH ID.</span>
+<span class="sd">            Narrow concept, starts with &quot;C&quot;.</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        list of string</span>
+<span class="sd">        Store MeSH ID.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convertToBroadOrNarrowConceptID</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui</span><span class="p">,</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;RB&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MeSHProcess.convertToNarrow"><a class="viewcode-back" href="../../../Sim.html#pyMeSHSim.Sim.MeSHProcess.MeSHProcess.convertToNarrow">[docs]</a>    <span class="k">def</span> <span class="nf">convertToNarrow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dui</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This method will return all narrow concept of a broad mesh concept.</span>
+
+<span class="sd">        **parameter**</span>
+
+<span class="sd">        dui: String</span>
+<span class="sd">            MeSH ID.</span>
+<span class="sd">            Broader concept, starts with &quot;D&quot;.</span>
+
+<span class="sd">        **return**</span>
+
+<span class="sd">        list of string</span>
+<span class="sd">        Store MeSH ID.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convertToBroadOrNarrowConceptID</span><span class="p">(</span><span class="n">dui</span><span class="o">=</span><span class="n">dui</span><span class="p">,</span> <span class="n">rel</span><span class="o">=</span><span class="s2">&quot;RN&quot;</span><span class="p">)</span></div></div>
+
+
+
+    <span class="c1">#def getAllTopConceptofCategory(self, category):</span>
+
+
+
+
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Zhihui Luo.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
