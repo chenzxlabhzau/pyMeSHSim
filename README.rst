@@ -116,7 +116,8 @@ Install pyMeSHSim
 ===================
     To install pyMeSHSim from source code::
 
-        $ tar -zxvf pyMeSHSim-0.0.1.tar.gz
+        $ git clone https://github.com/luozhhub/pyMeSHSim.git
+        $ cd pyMeSHSim
         $ python3 ./setup.py install
 
 
