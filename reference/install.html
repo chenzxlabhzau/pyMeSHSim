@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Install &mdash; pyMeSHSim 0.0.1 documentation</title>
+  <title>Installation &mdash; pyMeSHSim 0.0.1 documentation</title>
   
 
   
@@ -81,11 +81,11 @@
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Install</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#dependences">Dependences</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#metamap-install">MetaMap install</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#install-pandas-and-bcolz">Install pandas and bcolz</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#install-pymeshsim">Install pyMeSHSim</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#metamap-installation">MetaMap installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation-of-pandas-and-bcolz">Installation of pandas and bcolz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation-of-pymeshsim">Installation of pyMeSHSim</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
@@ -135,7 +135,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Install</li>
+      <li>Installation</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -154,19 +154,19 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="install">
-<h1>Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="dependences">
-<h2>Dependences<a class="headerlink" href="#dependences" title="Permalink to this headline">¶</a></h2>
+  <div class="section" id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
 <ul>
-<li><p class="first">software</p>
+<li><p class="first">Software</p>
 <blockquote>
 <div><ul class="simple">
 <li>MetaMap 2016v2</li>
 </ul>
 </div></blockquote>
 </li>
-<li><p class="first">python packages</p>
+<li><p class="first">Python packages</p>
 <blockquote>
 <div><ul class="simple">
 <li>python 3.6</li>
@@ -177,8 +177,8 @@
 </li>
 </ul>
 </div>
-<div class="section" id="metamap-install">
-<h2>MetaMap install<a class="headerlink" href="#metamap-install" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="metamap-installation">
+<h2>MetaMap installation<a class="headerlink" href="#metamap-installation" title="Permalink to this headline">¶</a></h2>
 <div class="line-block">
 <div class="line">MetaMap is the base implement of the subpackage metamapWrap.</div>
 <div class="line">You need to activate a UMLS Terminology Services (UTS) account to fetch MetaMap. Please see <a class="reference external" href="https://metamap.nlm.nih.gov/">MetaMap</a> for more information.</div>
@@ -208,8 +208,8 @@ $ wsdserverctl start
 </div>
 </div></blockquote>
 </div>
-<div class="section" id="install-pandas-and-bcolz">
-<h2>Install pandas and bcolz<a class="headerlink" href="#install-pandas-and-bcolz" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="installation-of-pandas-and-bcolz">
+<h2>Installation of pandas and bcolz<a class="headerlink" href="#installation-of-pandas-and-bcolz" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div><p>To install python package pandas and bcolz:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip3 install pandas
@@ -218,11 +218,12 @@ $ pip3 install bcolz
 </div>
 </div></blockquote>
 </div>
-<div class="section" id="install-pymeshsim">
-<h2>Install pyMeSHSim<a class="headerlink" href="#install-pymeshsim" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="installation-of-pymeshsim">
+<h2>Installation of pyMeSHSim<a class="headerlink" href="#installation-of-pymeshsim" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div><p>To install pyMeSHSim from source code:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ tar -zxvf pyMeSHSim-0.0.1.tar.gz
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/luozhhub/pyMeSHSim.git
+$ cd pyMeSHSim
 $ python3 ./setup.py install
 </pre></div>
 </div>

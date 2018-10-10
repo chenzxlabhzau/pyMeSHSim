@@ -5,7 +5,7 @@ Introduction
 pyMeSHSim at glance
 ===================
 
-DBiomedical named entity (Bio-NE) recognition, normalization, and comparison
+Biomedical named entity (Bio-NE) recognition, normalization, and comparison
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 The recognition and normalization of bio-NE, especially for diseases, play an important
 role in clinical and biomedical research, such as clinical decision support, cohort
@@ -55,4 +55,9 @@ Currently, pyMeSHSim consists of three subpackages:
     + It implemented four methods of semantic similarity measures based on information content.It implemented one method of semantic similarity measures based on path.
 
 More details can be seen in the reference.
+
+
+Download
+^^^^^^^^^^^^^^^
+This package can be download at github repository `pyMeSHSim <https://github.com/luozhhub/pyMeSHSim>`_.
 

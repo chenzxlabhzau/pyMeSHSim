@@ -79,7 +79,7 @@
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../intro.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../reference.html">Library reference</a></li>
 </ul>
@@ -189,7 +189,7 @@
 
 <span class="sd">    pyMeSHSim.data.createData</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-<div class="viewcode-block" id="dataHandle.__init__"><a class="viewcode-back" href="../../../_autosummary/pyMeSHSim.data.dataInterface.dataHandle.html#pyMeSHSim.data.dataInterface.dataHandle.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_dataPath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="s2">&quot;testData&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_parChdRelFilePath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dataPath</span><span class="p">,</span> <span class="s2">&quot;ParentChildRel&quot;</span><span class="p">)</span>
@@ -200,7 +200,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_offspringAncestorDataFilePath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dataPath</span><span class="p">,</span> <span class="s2">&quot;offspringAndAncestorRel&quot;</span><span class="p">)</span>
         <span class="c1">#self.allCategory = [&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;D&#39;, &#39;E&#39;, &#39;F&#39;, &#39;G&#39;, &#39;H&#39;, &#39;I&#39;, &#39;J&#39;, &#39;K&#39;, &#39;L&#39;, &#39;M&#39;, &#39;N&#39;, &#39;V&#39;, &#39;Z&#39;, &#39;all&#39;]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">allCategory</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getAllCategory</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;all&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">maxIDInCategory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getMaxIDInCategory</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maxIDInCategory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getMaxIDInCategory</span><span class="p">()</span>
 
 <div class="viewcode-block" id="dataHandle.getRelData"><a class="viewcode-back" href="../../../data.html#pyMeSHSim.data.dataInterface.dataHandle.getRelData">[docs]</a>    <span class="k">def</span> <span class="nf">getRelData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;This method used to select data from table ParentChildRel or RNandRBRel.</span>

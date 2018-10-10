@@ -5,7 +5,7 @@ Introduction
 pyMeSHSim at glance
 ===================
 
-DBiomedical named entity (Bio-NE) recognition, normalization, and comparison
+Biomedical named entity (Bio-NE) recognition, normalization, and comparison
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 The recognition and normalization of bio-NE, especially for diseases, play an important
 role in clinical and biomedical research, such as clinical decision support, cohort
@@ -58,17 +58,18 @@ More details can be seen in the reference.
 
 
 
-------------
-Install
-------------
 
-Dependences
+-------------------
+Installation
+-------------------
+
+Requirements
 ==============
-- software
+- Software
 
    + MetaMap 2016v2
 
-- python packages
+- Python packages
 
    + python 3.6
 
@@ -76,8 +77,8 @@ Dependences
 
    + bcolz>=1.2.1
 
-MetaMap install
-================
+MetaMap installation
+=======================
 | MetaMap is the base implement of the subpackage metamapWrap.
 | You need to activate a UMLS Terminology Services (UTS) account to fetch MetaMap. Please see `MetaMap <https://metamap.nlm.nih.gov/>`_ for more information.
 | The 2016 version has some important featrue, it will be helpful when parsing the text.
@@ -105,20 +106,19 @@ At this point, you have successfully installed MetaMap.
         $ wsdserverctl start
 
 
-Install pandas and bcolz
-========================
+Installation of pandas and bcolz
+==================================
     To install python package pandas and bcolz::
 
         $ pip3 install pandas
         $ pip3 install bcolz
 
-Install pyMeSHSim
-===================
+Installation of pyMeSHSim
+===============================
     To install pyMeSHSim from source code::
 
         $ git clone https://github.com/luozhhub/pyMeSHSim.git
         $ cd pyMeSHSim
         $ python3 ./setup.py install
-
 
 
