@@ -232,7 +232,7 @@ class InformationContent(MeSHProcess):
         """
         array1 = code1.split(".")
         array2 = code2.split(".")
-        num = max(len(array1), len(array2))
+        num = min(len(array1), len(array2))
         for i in range(0, num):
             if i == 0:
                 if array1[i] != array2[i]:
@@ -317,7 +317,7 @@ class InformationContent(MeSHProcess):
             exit(1)
 
         if dui1 == dui2:
-            return 1
+            return (1, 1, 1, 1)
 
         maxic = self._getMaxICInCategory(category=category)
         ic1 = self.getMeSHIC(dui=dui1, category=category) / float(maxic)
@@ -369,7 +369,6 @@ class InformationContent(MeSHProcess):
 
         float
         """
-
         (res, lin, jiang, rel) = self.simil(dui1=dui1, dui2=dui2, category=category)
         if method not in ["lin", "res", "jiang", "rel"]:
             sys.stderr.write("program has no method %s\n" % method)
