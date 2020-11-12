@@ -2,6 +2,10 @@
 Introduction
 ------------
 
+More details can be seen in the newest `reference <https://pymeshsim.readthedocs.io/en/latest/>`_.
+
+cite：Luo, Z., Shi, M., Yang, Z. et al. pyMeSHSim: an integrative python package for biomedical named entity recognition, normalization, and comparison of MeSH terms. BMC Bioinformatics 21, 252 (2020). https://doi.org/10.1186/s12859-020-03583-6
+
 pyMeSHSim at glance
 ===================
 
@@ -56,7 +60,7 @@ Currently, pyMeSHSim consists of three subpackages:
     + It provided useful APIs to retrieve the MeSH dataset.
     + It implemented four methods of semantic similarity measures based on information content.It implemented one method of semantic similarity measures based on path.
 
-More details can be seen in the `reference <http://pymeshsim.systemsgenetics.cn/>`_.
+
 
 
 
