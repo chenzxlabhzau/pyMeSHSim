@@ -1,3 +1,8 @@
+please use the latest version in： https://github.com/luozhhub/pyMeSHSim
+I always fix some bugs in my personal project.
+
+
+
 ------------
 Introduction
 ------------
